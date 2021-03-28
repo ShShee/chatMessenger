@@ -1,5 +1,9 @@
 # chatMessenger
 Ứng dụng native android tạo nên để kết nối trò chuyện giữa mọi người với nhau
+## Mã lớp
+- Nhập môn ứng dụng di động - SE114.L22.PMCL
+## Giáo viên hướng dẫn
+- Thầy Nguyễn Tấn Toàn
 ## Thông tin thành viên nhóm
 - Đặng Duy Bằng - 19521234 
 - Võ Đông Phong - 19522015 
