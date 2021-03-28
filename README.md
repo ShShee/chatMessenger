@@ -1,6 +1,6 @@
 # chatMessenger
 Ứng dụng native android tạo nên để kết nối trò chuyện giữa mọi người với nhau
-## Mã lớp
+## Môn học
 - Nhập môn ứng dụng di động - SE114.L22.PMCL
 ## Giáo viên hướng dẫn
 - Thầy Nguyễn Tấn Toàn
