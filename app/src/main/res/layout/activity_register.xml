@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:gravity="center"
-        android:text="Creat a new account"
+        android:text="Create new account"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.597"
