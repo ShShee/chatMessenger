@@ -1,8 +1,10 @@
-package com.example.loginandregistration;
+package com.SE114PMCL.chatMessenger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.SE114PMCL.chatMessenger.R;
 
 public class MainActivity extends AppCompatActivity {
 

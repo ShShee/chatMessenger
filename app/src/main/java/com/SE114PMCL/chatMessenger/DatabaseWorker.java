@@ -1,4 +1,4 @@
-package com.example.loginandregistration;
+package com.SE114PMCL.chatMessenger;
 
 import android.content.ContentValues;
 import android.content.Context;

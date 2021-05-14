@@ -1,15 +1,16 @@
-package com.example.loginandregistration;
+package com.SE114PMCL.chatMessenger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.SE114PMCL.chatMessenger.R;
 
 public class LoginActivity extends AppCompatActivity {
     EditText e1, e2;

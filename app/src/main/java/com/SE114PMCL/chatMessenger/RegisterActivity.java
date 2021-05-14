@@ -1,4 +1,4 @@
-package com.example.loginandregistration;
+package com.SE114PMCL.chatMessenger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.SE114PMCL.chatMessenger.R;
 
 public class RegisterActivity extends AppCompatActivity {
     DatabaseWorker db;
