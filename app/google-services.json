@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "575752194992",
+    "firebase_url": "https://chatmessenger-dfe5b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "chatmessenger-dfe5b",
+    "storage_bucket": "chatmessenger-dfe5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575752194992:android:91351ab706554b6f662475",
+        "android_client_info": {
+          "package_name": "com.SE114PMCL.chatMessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575752194992-drungalo7m4v2ljuvfnn5mbq73c9gjqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFDQCfcVJAYY1lFpLzK3Puf1LICB7kk7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575752194992-drungalo7m4v2ljuvfnn5mbq73c9gjqu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
