@@ -8,86 +8,94 @@
     android:background="@color/white"
     tools:context=".LoginActivity">
 
-
-    <EditText
-        android:id="@+id/PTtendangnhap"
-        android:layout_width="342dp"
-        android:layout_height="52dp"
-        android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_person"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColorHint="@color/black"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.303" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/PWmatkhau"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_baseline_security_24"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColorHint="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/PTtendangnhap"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/PTtendangnhap"
-        app:layout_constraintTop_toBottomOf="@+id/PTtendangnhap" />
+        <EditText
+            android:id="@+id/PTtendangnhap"
+            android:layout_width="342dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/input_bg"
+            android:drawableLeft="@drawable/ic_person"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Username"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <EditText
+            android:id="@+id/PWmatkhau"
+            android:layout_width="342dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="22dp"
+            android:background="@drawable/input_bg"
+            android:drawableLeft="@drawable/ic_baseline_security_24"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="166dp"
+            tools:layout_editor_absoluteY="194dp" />
 
     <Button
         android:id="@+id/BTNdangnhap"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="288dp"
+        android:layout_width="342dp"
+        android:layout_height="52dp"
         android:background="@drawable/btn_bg"
         android:text="LOGIN"
         android:textColor="@color/black"
         app:backgroundTint="@color/design_default_color_secondary_variant"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/PWmatkhau"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/PWmatkhau" />
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="309dp" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Don't have an account?"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/BTNdangnhap"
-        app:layout_constraintHorizontal_bias="0.216"
-        app:layout_constraintStart_toStartOf="@+id/BTNdangnhap"
-        app:layout_constraintTop_toBottomOf="@+id/BTNdangnhap" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textViewSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Sign Up"
-        android:textColor="@color/design_default_color_error"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="@+id/BTNdangnhap"
-        app:layout_constraintTop_toBottomOf="@+id/BTNdangnhap"
-        app:layout_constraintVertical_bias="1.0" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="Don't have an account?"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="3dp"
+                tools:layout_editor_absoluteY="385dp" />
 
+            <TextView
+                android:id="@+id/textViewSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textColor="@color/design_default_color_error"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="98dp"
+                tools:layout_editor_absoluteY="377dp" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
