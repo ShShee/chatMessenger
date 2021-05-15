@@ -17,6 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     Button b1;
     DatabaseWorker db;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(checknamepass == true){
                     Toast.makeText(getApplicationContext(), "Successfully Login", Toast.LENGTH_SHORT).show();
                     setContentView(R.layout.activity_main);
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    finish();
                 }
                 else
                     Toast.makeText(getApplicationContext(), "Wrong username or password !", Toast.LENGTH_SHORT).show();
