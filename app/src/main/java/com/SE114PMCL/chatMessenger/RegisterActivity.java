@@ -55,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 setContentView(R.layout.activity_login);
                                 startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                                 finish();
+                                return;
                             }
                         }
                         else{
