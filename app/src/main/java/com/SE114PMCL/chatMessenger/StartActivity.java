@@ -10,28 +10,30 @@ import android.widget.Button;
 import com.SE114PMCL.chatMessenger.R;
 
 public class StartActivity extends AppCompatActivity {
+    Button btnLogin, btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        Button login=findViewById(R.id.login);
-        Button register=findViewById(R.id.register);
+        btnLogin = (Button) findViewById(R.id.login);
+        btnRegister = (Button)findViewById(R.id.register);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StartActivity.this,LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StartActivity.this,RegisterActivity.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                finish();
             }
         });
-
     }
 }

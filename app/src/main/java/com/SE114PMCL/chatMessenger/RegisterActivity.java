@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,10 +23,10 @@ import com.google.firebase.auth.FirebaseAuthException;
 
 public class RegisterActivity extends AppCompatActivity {
     DatabaseWorker db;
-    EditText e1, e2, e3;
-    Button b1;
+    EditText gisUsername, gisEmail, gisPassword, gisCPassword;
+    Button  btnRegister;
 
-    protected FirebaseAuth auth;
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,53 +34,80 @@ public class RegisterActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         db = new DatabaseWorker(this);
-        e1 = (EditText)findViewById(R.id.tendangnhap);
-        e2 = (EditText)findViewById(R.id.pass);
-        e3 = (EditText)findViewById(R.id.cpass);
-        b1 = (Button)findViewById(R.id.dangky);
+        gisUsername = (EditText)findViewById(R.id.tendangnhap);
+        gisEmail = (EditText)findViewById(R.id.mail);
+        gisPassword = (EditText)findViewById(R.id.pass);
+        gisCPassword = (EditText)findViewById(R.id.cpass);
+        btnRegister = (Button)findViewById(R.id.dangky);
 
         TextView btn=findViewById(R.id.alreadyHaveAccount);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Username = gisUsername.getText().toString();
+                String Email = gisEmail.getText().toString();
+                String Password = gisPassword.getText().toString();
+                String CPassword = gisCPassword.getText().toString();
+
+                if(Username.isEmpty()){
+                    gisUsername.setError("Username is required");
+                    return;
+                }
+
+                if(Email.isEmpty()){
+                    gisUsername.setError("Email is required");
+                    return;
+                }
+
+                if(Password.isEmpty()){
+                    gisUsername.setError("Password is required");
+                    return;
+                }
+
+                if(CPassword.isEmpty()){
+                    gisUsername.setError("Confirm Password is required");
+                    return;
+                }
+
+                if(Password.length() < 6){
+                    gisPassword.setError("Password must have at least 6 characters !");
+                    return;
+                }
+
+                if(!Password.equals(CPassword)){
+                    gisCPassword.setError("Password Do not Match !");
+                    return;
+                }
+
+                // data is validated
+                // register the user using firebase
+
+                Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_SHORT).show();
+
+                auth.createUserWithEmailAndPassword(Email, Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        //send user to next page
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
 
-    public void dangkyFB(View view) {
-        String s1 = e1.getText().toString();
-        String s2 = e2.getText().toString();
-        String s3 = e3.getText().toString();
 
-        if (s1.equals("")||s2.equals("")||s3.equals("")){
-            Toast.makeText(getApplicationContext(), "Fields are empty !", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            if(s2.equals(s3)){
-                Boolean checkUsername = db.checkUsername(s1);
-                if(checkUsername == true){
-                    Boolean insert = db.insert(s1, s2);
-                    if(insert == true){
-                        auth.createUserWithEmailAndPassword(s1, s2).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isComplete()) {
-                                    Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                    setContentView(R.layout.activity_login);
-                                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                                }
-                            }
-                        });
-                    }
-                    return;
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Username Already exists", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-            Toast.makeText(getApplicationContext(), "Password do not match !", Toast.LENGTH_SHORT).show();
-        }
-    }
 }
