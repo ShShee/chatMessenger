@@ -84,6 +84,7 @@
             tools:layout_editor_absoluteY="335dp" />
 
         <Button
+            android:onClick="dangkyFB"
             android:id="@+id/dangky"
             android:layout_width="338dp"
             android:layout_height="59dp"
