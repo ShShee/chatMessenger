@@ -19,6 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/icon"
+            tools:layout_editor_absoluteX="231dp"
+            tools:layout_editor_absoluteY="207dp" />
         <EditText
             android:id="@+id/EMemail"
             android:layout_width="342dp"
@@ -41,7 +48,7 @@
             android:id="@+id/PWmatkhau"
             android:layout_width="342dp"
             android:layout_height="52dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/input_bg"
             android:drawableLeft="@drawable/ic_baseline_security_24"
             android:drawablePadding="10dp"

@@ -20,16 +20,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="22dp"
-            android:gravity="center"
-            android:text="Create new account"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="67dp"
-            tools:layout_editor_absoluteY="72dp" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="344dp"
+            android:layout_height="211dp"
+            app:srcCompat="@drawable/joinus"
+            tools:layout_editor_absoluteX="231dp"
+            tools:layout_editor_absoluteY="207dp" />
 
         <EditText
             android:id="@+id/tendangnhap"
@@ -89,7 +86,7 @@
             android:id="@+id/cpass"
             android:layout_width="342dp"
             android:layout_height="52dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/input_bg"
             android:drawableLeft="@drawable/ic_baseline_security_24"
             android:drawablePadding="10dp"
@@ -107,7 +104,7 @@
             android:id="@+id/dangky"
             android:layout_width="338dp"
             android:layout_height="59dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/btn_bg"
             android:onClick="dangkyFB"
             android:text="REGISTER"
