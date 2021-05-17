@@ -108,7 +108,6 @@
             android:background="@drawable/btn_bg"
             android:onClick="dangkyFB"
             android:text="REGISTER"
-            android:textColor="@color/black"
             android:textSize="18sp"
             app:backgroundTint="@color/design_default_color_secondary_variant"
             tools:layout_editor_absoluteX="74dp"
