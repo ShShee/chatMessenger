@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,46 +62,15 @@
             tools:layout_editor_absoluteX="166dp"
             tools:layout_editor_absoluteY="194dp" />
 
-    <Button
-        android:id="@+id/BTNdangnhap"
-        android:layout_width="342dp"
-        android:layout_height="52dp"
-        android:background="@drawable/btn_bg"
-        android:text="LOGIN"
-        app:backgroundTint="@color/design_default_color_secondary_variant"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="309dp" />
+        <Button
+            android:id="@+id/BTNdangnhap"
+            android:layout_width="342dp"
+            android:layout_height="52dp"
+            android:background="@drawable/btn_bg"
+            android:text="LOGIN"
+            app:backgroundTint="@color/design_default_color_secondary_variant"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="309dp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:text="Don't have an account?"
-                android:textSize="18sp"
-                tools:layout_editor_absoluteX="3dp"
-                tools:layout_editor_absoluteY="385dp" />
-
-            <TextView
-                android:id="@+id/textViewSignUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign Up"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="98dp"
-                tools:layout_editor_absoluteY="377dp" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tbnLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Messenger">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/sendMessage"
+            android:layout_width="251dp"
+            android:layout_height="52dp"
+            android:background="@drawable/input_bg"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <ImageButton
+            android:id="@+id/loginByFB"
+            android:layout_width="70dp"
+            android:layout_height="52dp"
+            android:src="@drawable/image"
+            android:background="?android:selectableItemBackground" />
+
+        <ImageButton
+            android:id="@+id/loginByGG"
+            android:layout_width="70dp"
+            android:layout_height="52dp"
+            android:src="@drawable/send"
+            android:background="?android:selectableItemBackground" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

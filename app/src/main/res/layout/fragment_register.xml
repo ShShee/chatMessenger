@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:drawable/screen_background_light"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,17 +112,6 @@
             app:backgroundTint="@color/design_default_color_secondary_variant"
             tools:layout_editor_absoluteX="74dp"
             tools:layout_editor_absoluteY="456dp" />
-
-        <TextView
-            android:id="@+id/alreadyHaveAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Already have an account"
-            android:textColor="@color/material_on_background_emphasis_medium"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="215dp"
-            tools:layout_editor_absoluteY="531dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,45 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StartActivity">
-    <LinearLayout
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="475dp"
-            app:srcCompat="@drawable/icon"
-            tools:layout_editor_absoluteX="231dp"
-            tools:layout_editor_absoluteY="207dp" />
-        <Button
-            android:id="@+id/login"
-            android:layout_width="344dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/btn_bg"
-            android:text="LOGIN"
-            app:backgroundTint="@color/design_default_color_secondary_variant"
-            tools:layout_editor_absoluteX="67dp"
-            tools:layout_editor_absoluteY="368dp" />
-
-        <Button
-            android:id="@+id/register"
-            android:layout_width="344dp"
-            android:layout_height="52dp"
-            android:background="@drawable/btn_bg"
-            android:text="REGISTER"
-            app:backgroundTint="@color/design_default_color_secondary_variant"
-            tools:layout_editor_absoluteX="306dp"
-            tools:layout_editor_absoluteY="428dp" />
-
-
-    </LinearLayout>
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

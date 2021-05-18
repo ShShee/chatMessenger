@@ -1,5 +1,13 @@
 package com.SE114PMCL.chatMessenger;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,33 +29,30 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
-public class RegisterActivity extends AppCompatActivity {
-    DatabaseWorker db;
-    EditText gisUsername, gisEmail, gisPassword, gisCPassword;
-    Button  btnRegister;
+import org.jetbrains.annotations.NotNull;
 
-    FirebaseAuth auth;
+public class RegisterFragment extends Fragment {
+
+    public RegisterFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        auth = FirebaseAuth.getInstance();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_register, container, false);
+    }
 
-        db = new DatabaseWorker(this);
-        gisUsername = (EditText)findViewById(R.id.tendangnhap);
-        gisEmail = (EditText)findViewById(R.id.mail);
-        gisPassword = (EditText)findViewById(R.id.pass);
-        gisCPassword = (EditText)findViewById(R.id.cpass);
-        btnRegister = (Button)findViewById(R.id.dangky);
-
-        TextView btn=findViewById(R.id.alreadyHaveAccount);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-            }
-        });
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        EditText gisUsername=view.findViewById(R.id.tendangnhap);
+        EditText gisEmail=view.findViewById(R.id.mail);
+        EditText gisPassword=view.findViewById(R.id.pass);
+        EditText gisCPassword=view.findViewById(R.id.cpass);;
+        Button  btnRegister=view.findViewById(R.id.dangky);;
+        FirebaseAuth auth=FirebaseAuth.getInstance();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,24 +95,22 @@ public class RegisterActivity extends AppCompatActivity {
                 // data is validated
                 // register the user using firebase
 
-                Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_SHORT).show();
 
                 auth.createUserWithEmailAndPassword(Email, Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         //send user to next page
-                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-                        finish();
+                        startActivity(new Intent(getActivity().getApplicationContext(),MainActivity.class));
+                        getActivity().finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
     }
-
-
 }
