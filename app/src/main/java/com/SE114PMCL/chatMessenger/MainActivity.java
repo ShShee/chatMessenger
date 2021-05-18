@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_friends:
                             selectedFragment = new Friends();
                             break;
-                        case R.id.nav_search:
+                        case R.id.nav_home:
                             selectedFragment = new Search();
                             break;
                     }
