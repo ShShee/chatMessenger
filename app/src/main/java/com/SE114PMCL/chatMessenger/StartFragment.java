@@ -17,7 +17,8 @@ import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 
 public class StartFragment extends Fragment {
-
+    NavController navController;
+    Button button,button2;
     public StartFragment() {
         // Required empty public constructor
     }
@@ -33,9 +34,9 @@ public class StartFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        NavController navController= Navigation.findNavController(view);
+        navController= Navigation.findNavController(view);
 
-        Button button=view.findViewById(R.id.login);
+        button=view.findViewById(R.id.login);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +44,7 @@ public class StartFragment extends Fragment {
             }
         });
 
-        Button button2=view.findViewById(R.id.register);
+        button2=view.findViewById(R.id.register);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,6 @@
 package com.SE114PMCL.chatMessenger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,6 +25,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class LoginFragment extends Fragment {
 
+    FirebaseAuth firebaseAuth;
+    EditText logEmail,logPassword;
+    Button btnLogin;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -38,10 +43,10 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        EditText logEmail = view.findViewById(R.id.EMemail);
-        EditText logPassword = view.findViewById(R.id.PWmatkhau);
-        Button btnLogin = view.findViewById(R.id.BTNdangnhap);
+        firebaseAuth = FirebaseAuth.getInstance();
+        logEmail = view.findViewById(R.id.EMemail);
+        logPassword = view.findViewById(R.id.PWmatkhau);
+        btnLogin = view.findViewById(R.id.BTNdangnhap);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupList">
+
+    <include
+        android:id="@+id/toolbarGroupList"
+        layout="@layout/toolbargroup"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendView"
+        android:layout_below="@+id/toolbarGroupList"
+        android:layout_marginTop="5dp"
+        tools:listitem="@layout/group_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
+</RelativeLayout>

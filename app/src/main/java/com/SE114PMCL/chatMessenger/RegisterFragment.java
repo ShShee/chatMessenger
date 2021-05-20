@@ -33,6 +33,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class RegisterFragment extends Fragment {
 
+    EditText gisUsername,gisEmail,gisPassword, gisCPassword;;
+    Button  btnRegister;;
+    FirebaseAuth auth;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -47,12 +51,12 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        EditText gisUsername=view.findViewById(R.id.tendangnhap);
-        EditText gisEmail=view.findViewById(R.id.mail);
-        EditText gisPassword=view.findViewById(R.id.pass);
-        EditText gisCPassword=view.findViewById(R.id.cpass);;
-        Button  btnRegister=view.findViewById(R.id.dangky);;
-        FirebaseAuth auth=FirebaseAuth.getInstance();
+        gisUsername=view.findViewById(R.id.tendangnhap);
+        gisEmail=view.findViewById(R.id.mail);
+        gisPassword=view.findViewById(R.id.pass);
+        gisCPassword=view.findViewById(R.id.cpass);;
+        btnRegister=view.findViewById(R.id.dangky);;
+        auth=FirebaseAuth.getInstance();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,11 +7,13 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Messenger">
-
+    <include
+        android:id="@+id/toolbarUsername"
+        layout="@layout/toolbar"/>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="bottom"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,31 +22,30 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/sendMessage"
-            android:layout_width="251dp"
+            android:id="@+id/inputMessage"
+            android:layout_width="259dp"
             android:layout_height="52dp"
             android:background="@drawable/input_bg"
-            android:drawableLeft="@drawable/ic_email"
             android:drawablePadding="10dp"
             android:ems="10"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="20dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"
+            android:inputType="textMultiLine"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="34dp"
             tools:layout_editor_absoluteY="126dp" />
 
         <ImageButton
-            android:id="@+id/loginByFB"
+            android:id="@+id/sendImage"
             android:layout_width="70dp"
             android:layout_height="52dp"
             android:src="@drawable/image"
             android:background="?android:selectableItemBackground" />
 
         <ImageButton
-            android:id="@+id/loginByGG"
+            android:id="@+id/sendMessage"
             android:layout_width="70dp"
             android:layout_height="52dp"
             android:src="@drawable/send"

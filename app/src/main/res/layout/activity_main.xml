@@ -19,9 +19,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_gravity="bottom"
-        app:itemIconSize="54dp"
+        app:itemIconSize="25dp"
         app:elevation="12dp"
-        app:labelVisibilityMode="unlabeled"
         android:layout_alignParentBottom="true"
         android:background="@color/cardview_light_background"
         app:menu="@menu/bottom_navigation" />
