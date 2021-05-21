@@ -23,10 +23,5 @@
         android:name="com.SE114PMCL.chatMessenger.Messenger"
         android:label="fragment_messenger"
         tools:layout="@layout/fragment_messenger" >
-        <action
-            android:id="@+id/action_messenger_to_user"
-            app:destination="@id/user"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>

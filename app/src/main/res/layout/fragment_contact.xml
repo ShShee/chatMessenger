@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginRight="6dp"
@@ -22,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:src="@drawable/more"
+        android:src="@drawable/send"
         android:background="?android:selectableItemBackground"
         android:layout_gravity="center"
         android:textAlignment="center" />
@@ -30,6 +31,7 @@
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_below="@+id/friendName"
+        android:layout_toLeftOf="@+id/openFriendList"
         android:layout_height="1dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/darker_gray"/>
@@ -40,7 +42,7 @@
         android:layout_marginBottom="20dp"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:src="@drawable/find"
+        android:src="@drawable/addfr"
         android:background="?android:selectableItemBackground"
         android:layout_gravity="center"
         android:textAlignment="center" />
@@ -82,7 +84,7 @@
         android:layout_below="@+id/inputID"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:src="@drawable/more"
+        android:src="@drawable/send"
         android:background="?android:selectableItemBackground"
         android:layout_gravity="center"
         android:textAlignment="center" />
@@ -90,6 +92,7 @@
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_below="@+id/groupName"
+        android:layout_toLeftOf="@id/openGroupList"
         android:layout_height="1dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/darker_gray"/>
@@ -99,6 +102,7 @@
         android:layout_below="@+id/divider2"
         android:layout_width="69dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
         android:src="@drawable/add"
         android:background="?android:selectableItemBackground"
         android:layout_gravity="center"
@@ -109,6 +113,7 @@
         android:layout_toRightOf="@+id/addGroup"
         android:layout_width="320dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="9dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_group"
@@ -122,4 +127,51 @@
         android:textColorHint="@color/black"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="126dp" />
+    <TextView
+        android:id="@+id/pendingRequest"
+        android:layout_below="@+id/addGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="7dp"
+        android:text="Pending"
+        android:textSize="27dp"
+        />
+    <ImageButton
+        android:id="@+id/addPending"
+        android:layout_toLeftOf="@+id/deletePending"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/inputGroupName"
+        android:src="@drawable/add3"
+        android:background="?android:selectableItemBackground"
+        android:layout_gravity="center"
+        android:textAlignment="center" />
+    <ImageButton
+        android:id="@+id/deletePending"
+        android:layout_alignParentRight="true"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/inputGroupName"
+        android:src="@drawable/minus"
+        android:background="?android:selectableItemBackground"
+        android:layout_gravity="center"
+        android:textAlignment="center" />
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/pendingRequest"
+        android:layout_toLeftOf="@+id/addPending"
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/darker_gray"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pendingView"
+        tools:listitem="@layout/group_view"
+        android:layout_below="@id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
 </RelativeLayout>

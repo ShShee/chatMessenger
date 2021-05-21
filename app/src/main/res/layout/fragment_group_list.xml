@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GroupList">
-
     <include
-        android:id="@+id/toolbarGroupList"
-        layout="@layout/toolbargroup"/>
+        android:id="@+id/toolbarGroup"
+        layout="@layout/tlbrgroup"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friendView"
-        android:layout_below="@+id/toolbarGroupList"
+        android:layout_below="@id/toolbarGroup"
         android:layout_marginTop="5dp"
         tools:listitem="@layout/group_view"
         android:layout_width="match_parent"

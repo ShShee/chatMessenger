@@ -26,17 +26,11 @@
         android:name="com.SE114PMCL.chatMessenger.FriendList"
         android:label="fragment_friend_list"
         tools:layout="@layout/fragment_friend_list" >
-        <action
-            android:id="@+id/action_friendList_to_contact"
-            app:destination="@id/contact" />
     </fragment>
     <fragment
         android:id="@+id/groupList"
         android:name="com.SE114PMCL.chatMessenger.GroupList"
         android:label="fragment_group_list"
         tools:layout="@layout/fragment_group_list" >
-        <action
-            android:id="@+id/action_groupList_to_contact"
-            app:destination="@id/contact" />
     </fragment>
 </navigation>

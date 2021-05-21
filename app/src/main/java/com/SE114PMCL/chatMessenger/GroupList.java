@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -51,21 +52,8 @@ public class GroupList extends Fragment {
         groupListAdapter=new GroupListAdapter(getActivity().getApplicationContext(),listGroup);
         recyclerView.setAdapter(groupListAdapter);
 
-        toolbar = view.findViewById(R.id.toolbarGroupList);
-        navBar = getActivity().findViewById(R.id.bottom_navigation);
-        navController= Navigation.findNavController(view);
-
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //What to do on back clicked
-                navBar.setVisibility(View.VISIBLE);
-                navController.navigate(R.id.action_groupList_to_contact);
-            }
-        });
+        toolbar = view.findViewById(R.id.toolbarGroup);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        //toolbar.inflateMenu(R.menu.groupmenu);
     }
 }

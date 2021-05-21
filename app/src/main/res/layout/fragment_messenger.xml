@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Messenger">
-    <include
-        android:id="@+id/toolbarUsername"
-        layout="@layout/toolbar"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -23,7 +20,7 @@
 
         <EditText
             android:id="@+id/inputMessage"
-            android:layout_width="259dp"
+            android:layout_width="257dp"
             android:layout_height="52dp"
             android:background="@drawable/input_bg"
             android:drawablePadding="10dp"
@@ -41,14 +38,14 @@
             android:id="@+id/sendImage"
             android:layout_width="70dp"
             android:layout_height="52dp"
-            android:src="@drawable/image"
+            android:src="@drawable/plane2"
             android:background="?android:selectableItemBackground" />
 
         <ImageButton
             android:id="@+id/sendMessage"
-            android:layout_width="70dp"
+            android:layout_width="82dp"
             android:layout_height="52dp"
-            android:src="@drawable/send"
+            android:src="@drawable/plane6"
             android:background="?android:selectableItemBackground" />
 
     </LinearLayout>

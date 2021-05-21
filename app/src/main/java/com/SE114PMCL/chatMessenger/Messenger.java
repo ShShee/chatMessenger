@@ -24,6 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class Messenger extends Fragment {
     NavController navController;
@@ -32,31 +34,35 @@ public class Messenger extends Fragment {
     public Messenger() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_messenger, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        toolbar = (Toolbar) view.findViewById(R.id.toolbarUsername);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarUsername);
         navBar = getActivity().findViewById(R.id.bottom_navigation);
         navController= Navigation.findNavController(view);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         toolbar.inflateMenu(R.menu.messengermenu);
-       toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //What to do on back clicked
+                //What to do on back clicked reset user info
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+                TextView textView=(TextView)getActivity().findViewById(R.id.chatName);
+                textView.setText(R.string.userName);
+                CircleImageView circleImageView=(CircleImageView)getActivity().findViewById(R.id.chatImage);
+                circleImageView.setImageResource(R.drawable.avatar3);
                 navBar.setVisibility(View.VISIBLE);
-                navController.navigate(R.id.action_messenger_to_user);
+                Navigation.findNavController(view).navigate(R.id.user);
             }
         });
     }

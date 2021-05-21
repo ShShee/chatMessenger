@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
@@ -36,7 +37,7 @@ public class User extends Fragment implements UserListAdapter.OnUserListener{
     RecyclerView recyclerView;
     ArrayList<FriendData> listUser;
     UserListAdapter userListAdapter;
-
+    Toolbar toolbar;
     public User() {
         // Required empty public constructor
     }
@@ -61,10 +62,18 @@ public class User extends Fragment implements UserListAdapter.OnUserListener{
         listUser.add(new FriendData("33333","Hooney",R.drawable.avatar2,"Me: Why you are crying ?",false));
         userListAdapter=new UserListAdapter(getActivity().getApplicationContext(),listUser,this::onUserClick);
         recyclerView.setAdapter(userListAdapter);
+
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarUsername);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
     public void onUserClick(int position) {
+        TextView textView=(TextView)getActivity().findViewById(R.id.chatName);
+        textView.setText(listUser.get(position).getTenUser());
+        CircleImageView circleImageView=(CircleImageView)getActivity().findViewById(R.id.chatImage);
+        circleImageView.setImageResource(listUser.get(position).getAvatar());
         navBar.setVisibility(View.GONE);
         navController.navigate(R.id.action_user_to_messenger);
     }

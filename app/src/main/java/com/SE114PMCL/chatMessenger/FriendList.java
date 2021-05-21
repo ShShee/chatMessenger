@@ -12,14 +12,21 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendList extends Fragment {
     RecyclerView recyclerView;
@@ -51,21 +58,28 @@ public class FriendList extends Fragment {
         friendListAdapter=new FriendListAdapter(getActivity().getApplicationContext(),listFriend);
         recyclerView.setAdapter(friendListAdapter);
 
-        toolbar = view.findViewById(R.id.toolbarFriendList);
-        navBar = getActivity().findViewById(R.id.bottom_navigation);
-        navController= Navigation.findNavController(view);
-
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar=view.findViewById(R.id.toolbarFriend);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //What to do on back clicked
-                navBar.setVisibility(View.VISIBLE);
-                navController.navigate(R.id.action_friendList_to_contact);
-            }
-        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        inflater.inflate(R.menu.friendmenu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.deleteFriend:
+                Toast.makeText(getActivity(), "CLick here to delete", Toast.LENGTH_SHORT).show();
+                return true;
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
