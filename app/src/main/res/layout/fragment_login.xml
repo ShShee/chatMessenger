@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tbnLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".LoginFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/icon"
+            tools:layout_editor_absoluteX="231dp"
+            tools:layout_editor_absoluteY="207dp" />
+        <EditText
+            android:id="@+id/EMemail"
+            android:layout_width="342dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/input_bg"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <EditText
+            android:id="@+id/PWmatkhau"
+            android:layout_width="342dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/input_bg"
+            android:drawableLeft="@drawable/ic_baseline_security_24"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="166dp"
+            tools:layout_editor_absoluteY="194dp" />
+
+        <Button
+            android:id="@+id/BTNdangnhap"
+            android:layout_width="342dp"
+            android:layout_height="52dp"
+            android:background="@drawable/btn_bg"
+            android:text="LOGIN"
+            app:backgroundTint="@color/design_default_color_secondary_variant"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="309dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/loginByFB"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/facebook"
+            android:background="?android:selectableItemBackground"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        <ImageButton
+            android:id="@+id/loginByGG"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/google"
+            android:background="?android:selectableItemBackground"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        <ImageButton
+            android:id="@+id/resetPassword"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/password"
+            android:background="?android:selectableItemBackground"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
