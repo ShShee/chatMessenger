@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FriendList extends Fragment {
+public class FriendList extends Fragment implements FriendListAdapter.OnFriendListener{
     RecyclerView recyclerView;
     NavController navController;
     Toolbar toolbar;
@@ -55,7 +55,7 @@ public class FriendList extends Fragment {
         listFriend.add(new FriendData("0","Chaien",R.drawable.chaien,"",false));
         listFriend.add(new FriendData("0","Hooney",R.drawable.chaien,"",false));
         listFriend.add(new FriendData("0","Cat",R.drawable.chaien,"",false));
-        friendListAdapter=new FriendListAdapter(getActivity().getApplicationContext(),listFriend);
+        friendListAdapter=new FriendListAdapter(getActivity().getApplicationContext(),listFriend,this::onFriendClick);
         recyclerView.setAdapter(friendListAdapter);
 
         toolbar=view.findViewById(R.id.toolbarFriend);
@@ -81,5 +81,12 @@ public class FriendList extends Fragment {
             default:break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    //Thong tin chon luu o day
+    @Override
+    public void onFriendClick(int position) {
+
     }
 }

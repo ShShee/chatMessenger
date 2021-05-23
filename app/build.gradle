@@ -79,4 +79,8 @@ dependencies {
     implementation "xyz.schwaab:avvylib:1.2.0"
 
     implementation  "com.daimajia.swipelayout:library:1.2.0@aar"
+
+    implementation 'com.ebanx:swipe-button:0.8.3'
+
+    implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
 }

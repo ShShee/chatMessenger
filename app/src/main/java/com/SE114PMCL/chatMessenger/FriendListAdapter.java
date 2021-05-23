@@ -20,10 +20,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
     Context context;
     ArrayList<FriendData> listFriend;
+    private FriendListAdapter.OnFriendListener mOnFriendListener;
+    private int selectedPos = RecyclerView.NO_POSITION;
 
-    public FriendListAdapter(Context context, ArrayList<FriendData> listFriend) {
+    public FriendListAdapter(Context context, ArrayList<FriendData> listFriend,OnFriendListener onFriendListener) {
         this.context = context;
         this.listFriend = listFriend;
+        this.mOnFriendListener=onFriendListener;
     }
 
     @NonNull
@@ -31,7 +34,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // gán view
         View view = LayoutInflater.from(context).inflate(R.layout.friend_view, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view,mOnFriendListener);
     }
 
     @Override
@@ -40,6 +43,15 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         FriendData friend = listFriend.get(position);
         holder.txtTenUser.setText(friend.getTenUser());
         holder.imgAvatar.setImageResource(friend.getAvatar());
+        holder.itemView.setSelected(selectedPos == position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notifyItemChanged(selectedPos);
+                selectedPos = position;
+                notifyItemChanged(selectedPos);
+            }
+        });
     }
 
     @Override
@@ -47,17 +59,25 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         return listFriend.size(); // trả item tại vị trí postion
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CircleImageView imgAvatar;
 
         TextView txtTenUser;
-
-        public ViewHolder(@NonNull View itemView) {
+        OnFriendListener onFriendListener;
+        public ViewHolder(@NonNull View itemView,OnFriendListener onFriendListener) {
             super(itemView);
             // Ánh xạ view
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
             txtTenUser = itemView.findViewById(R.id.txtTenUser);
-
+            this.onFriendListener=onFriendListener;
         }
+
+        @Override
+        public void onClick(View v) {
+            onFriendListener.onFriendClick(getBindingAdapterPosition());
+        }
+    }
+    public interface OnFriendListener{
+        void onFriendClick(int position);
     }
 }

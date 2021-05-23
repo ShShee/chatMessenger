@@ -127,51 +127,5 @@
         android:textColorHint="@color/black"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="126dp" />
-    <TextView
-        android:id="@+id/pendingRequest"
-        android:layout_below="@+id/addGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="7dp"
-        android:text="Pending"
-        android:textSize="27dp"
-        />
-    <ImageButton
-        android:id="@+id/addPending"
-        android:layout_toLeftOf="@+id/deletePending"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_below="@+id/inputGroupName"
-        android:src="@drawable/add3"
-        android:background="?android:selectableItemBackground"
-        android:layout_gravity="center"
-        android:textAlignment="center" />
-    <ImageButton
-        android:id="@+id/deletePending"
-        android:layout_alignParentRight="true"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_below="@+id/inputGroupName"
-        android:src="@drawable/minus"
-        android:background="?android:selectableItemBackground"
-        android:layout_gravity="center"
-        android:textAlignment="center" />
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/pendingRequest"
-        android:layout_toLeftOf="@+id/addPending"
-        android:layout_height="1dp"
-        android:layout_marginBottom="5dp"
-        android:background="@android:color/darker_gray"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pendingView"
-        tools:listitem="@layout/group_view"
-        android:layout_below="@id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
 
 </RelativeLayout>

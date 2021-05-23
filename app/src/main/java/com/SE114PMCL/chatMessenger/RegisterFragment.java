@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -99,7 +100,7 @@ public class RegisterFragment extends Fragment {
                 // data is validated
                 // register the user using firebase
 
-                Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(getActivity(), "Register Successfully", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
                 auth.createUserWithEmailAndPassword(Email, Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -111,7 +112,7 @@ public class RegisterFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getActivity(), e.getMessage(), TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
                 });
             }

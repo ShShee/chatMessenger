@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.sdsmdg.tastytoast.TastyToast;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +30,7 @@ public class LoginFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     EditText logEmail,logPassword;
     Button btnLogin;
+    ImageButton btnReset;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -47,7 +50,7 @@ public class LoginFragment extends Fragment {
         logEmail = view.findViewById(R.id.EMemail);
         logPassword = view.findViewById(R.id.PWmatkhau);
         btnLogin = view.findViewById(R.id.BTNdangnhap);
-
+        btnReset=view.findViewById(R.id.resetPassword);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,9 +77,15 @@ public class LoginFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(getActivity(), e.getMessage(), TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
                 });
+            }
+        });
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
     }

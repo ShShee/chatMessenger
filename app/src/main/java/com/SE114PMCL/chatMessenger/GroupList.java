@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 
-public class GroupList extends Fragment {
+public class GroupList extends Fragment implements GroupListAdapter.OnGroupListener{
     RecyclerView recyclerView;
     NavController navController;
     Toolbar toolbar;
@@ -49,11 +49,16 @@ public class GroupList extends Fragment {
         listGroup=new ArrayList<>();
         listGroup.add(new GroupData("Cat KingDom",R.drawable.avatar1));
         listGroup.add(new GroupData("Chaien and Friends",R.drawable.chaien));
-        groupListAdapter=new GroupListAdapter(getActivity().getApplicationContext(),listGroup);
+        groupListAdapter=new GroupListAdapter(getActivity().getApplicationContext(),listGroup,this::onGroupClick);
         recyclerView.setAdapter(groupListAdapter);
 
         toolbar = view.findViewById(R.id.toolbarGroup);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         //toolbar.inflateMenu(R.menu.groupmenu);
+    }
+
+    @Override
+    public void onGroupClick(int position) {
+
     }
 }

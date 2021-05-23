@@ -50,12 +50,15 @@ public class MainActivity extends AppCompatActivity{
                     Fragment selectedFragment=null;
                     switch (item.getItemId()) {
                         case R.id.nav_chat:
+                            getSupportActionBar().show();
                             selectedFragment = new Chat();
                             break;
                         case R.id.nav_friends:
+                            getSupportActionBar().show();
                             selectedFragment = new Friends();
                             break;
                         case R.id.nav_setting:
+                            getSupportActionBar().hide();
                             selectedFragment = new Setting();
                             break;
                     }

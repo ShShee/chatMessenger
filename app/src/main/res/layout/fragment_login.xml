@@ -71,6 +71,33 @@
             app:backgroundTint="@color/design_default_color_secondary_variant"
             tools:layout_editor_absoluteX="100dp"
             tools:layout_editor_absoluteY="309dp" />
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/loginByFB"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/facebook"
+            android:background="?android:selectableItemBackground"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        <ImageButton
+            android:id="@+id/loginByGG"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/google"
+            android:background="?android:selectableItemBackground"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        <ImageButton
+            android:id="@+id/resetPassword"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/password"
+            android:background="?android:selectableItemBackground"
+            android:layout_gravity="center"
+            android:textAlignment="center" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

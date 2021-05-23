@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:name=".chatMessenger"
     package="com.SE114PMCL.chatMessenger">
 
@@ -11,15 +12,16 @@
         android:label="chatMessenger"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LoginAndRegistration">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.LoginAndRegistration"
+        tools:replace="android:label">
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

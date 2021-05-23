@@ -23,12 +23,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class Contact extends Fragment {
-    RecyclerView recyclerView;
-    ImageButton btnOpenFriendList,btnOpenGroupList,btnAddPending;
+
+    ImageButton btnOpenFriendList,btnOpenGroupList;
     NavController navController;
     BottomNavigationView navBar;
-    ArrayList<FriendData> listPending;
-    PendingListAdapter pendingListAdapter;
+
     public Contact() {
         // Required empty public constructor
     }
@@ -46,7 +45,6 @@ public class Contact extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btnOpenFriendList=view.findViewById(R.id.openFriendList);
         btnOpenGroupList=view.findViewById(R.id.openGroupList);
-        btnAddPending=view.findViewById(R.id.addPending);
         navController= Navigation.findNavController(view);
         navBar = getActivity().findViewById(R.id.bottom_navigation);
         btnOpenFriendList.setOnClickListener(new View.OnClickListener() {
@@ -63,57 +61,5 @@ public class Contact extends Fragment {
                 navController.navigate(R.id.action_contact_to_groupList);
             }
         });
-        btnAddPending.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "CLick here to delete", Toast.LENGTH_SHORT).show();
-            }
-        });
-        recyclerView=view.findViewById(R.id.pendingView);
-        listPending=new ArrayList<>();
-        listPending.add(new FriendData("0","Boss",R.drawable.avatar1,"",false));
-        listPending.add(new FriendData("0","Chaien",R.drawable.chaien,"",false));
-        listPending.add(new FriendData("0","Hooney",R.drawable.chaien,"",false));
-        listPending.add(new FriendData("0","Cat",R.drawable.chaien,"",false));
-        pendingListAdapter=new PendingListAdapter(getActivity().getApplicationContext(),listPending);
-        recyclerView.setAdapter(pendingListAdapter);
-
-        /*SwipeLayout swipeLayout =  view.findViewById(R.id.sample1);
-        swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
-
-        //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
-        swipeLayout.addDrag(SwipeLayout.DragEdge.Left, view.findViewById(R.id.bottom_wrapper));
-
-        swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-            @Override
-            public void onClose(SwipeLayout layout) {
-                //when the SurfaceView totally cover the BottomView.
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-                //you are swiping.
-            }
-
-            @Override
-            public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onOpen(SwipeLayout layout) {
-                //when the BottomView totally show.
-            }
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-                //when user's hand released.
-            }
-        });*/
     }
 }
