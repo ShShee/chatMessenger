@@ -32,10 +32,6 @@
                 android:textColorHint="@color/black"
                 tools:layout_editor_absoluteX="34dp"
                 tools:layout_editor_absoluteY="126dp" />
-            <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/userView"

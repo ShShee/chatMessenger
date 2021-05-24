@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -57,7 +58,7 @@ public class FriendList extends Fragment implements FriendListAdapter.OnFriendLi
         listFriend.add(new FriendData("0","Cat",R.drawable.chaien,"",false));
         friendListAdapter=new FriendListAdapter(getActivity().getApplicationContext(),listFriend,this::onFriendClick);
         recyclerView.setAdapter(friendListAdapter);
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         toolbar=view.findViewById(R.id.toolbarFriend);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);

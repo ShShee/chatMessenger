@@ -152,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="14dp"
             android:text="Pending"
             android:textSize="27dp"
             />
@@ -174,21 +174,12 @@
             android:background="?android:selectableItemBackground"
             android:layout_gravity="center"
             android:textAlignment="center" />
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@+id/pendingRequest"
-            android:layout_toLeftOf="@+id/addPending"
-            android:layout_height="1dp"
-
-            android:background="@android:color/darker_gray"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pendingView"
             tools:listitem="@layout/group_view"
-            android:layout_below="@id/divider3"
+            android:layout_below="@id/pendingRequest"
             android:layout_width="match_parent"
-            android:layout_height="255dp"
+            android:layout_height="240dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
     </RelativeLayout>

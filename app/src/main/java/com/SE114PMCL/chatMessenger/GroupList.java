@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class GroupList extends Fragment implements GroupListAdapter.OnGroupListe
         listGroup.add(new GroupData("Chaien and Friends",R.drawable.chaien));
         groupListAdapter=new GroupListAdapter(getActivity().getApplicationContext(),listGroup,this::onGroupClick);
         recyclerView.setAdapter(groupListAdapter);
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         toolbar = view.findViewById(R.id.toolbarGroup);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         //toolbar.inflateMenu(R.menu.groupmenu);

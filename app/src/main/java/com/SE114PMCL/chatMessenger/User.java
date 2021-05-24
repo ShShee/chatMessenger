@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -62,7 +63,7 @@ public class User extends Fragment implements UserListAdapter.OnUserListener{
         listUser.add(new FriendData("33333","Hooney",R.drawable.avatar2,"Me: Why you are crying ?",false));
         userListAdapter=new UserListAdapter(getActivity().getApplicationContext(),listUser,this::onUserClick);
         recyclerView.setAdapter(userListAdapter);
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarUsername);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
