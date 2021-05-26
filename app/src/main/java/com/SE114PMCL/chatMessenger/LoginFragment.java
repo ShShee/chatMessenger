@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.sdsmdg.tastytoast.TastyToast;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +33,7 @@ public class LoginFragment extends Fragment {
     EditText logEmail,logPassword;
     Button btnLogin;
     ImageButton btnReset;
+    ImageButton btnFb;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -51,6 +54,14 @@ public class LoginFragment extends Fragment {
         logPassword = view.findViewById(R.id.PWmatkhau);
         btnLogin = view.findViewById(R.id.BTNdangnhap);
         btnReset=view.findViewById(R.id.resetPassword);
+        btnFb=view.findViewById(R.id.loginByFB);
+        btnFb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
+                getActivity().finish();
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

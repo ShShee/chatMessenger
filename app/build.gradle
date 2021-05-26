@@ -83,4 +83,8 @@ dependencies {
     implementation 'com.ebanx:swipe-button:0.8.3'
 
     implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
+
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
