@@ -33,7 +33,7 @@ public class LoginFragment extends Fragment {
     EditText logEmail,logPassword;
     Button btnLogin;
     ImageButton btnReset;
-    ImageButton btnFb;
+    ImageButton btnFb, btnGg;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -62,6 +62,16 @@ public class LoginFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        btnGg = view.findViewById(R.id.loginByGG);
+        btnGg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity().getApplicationContext(), LoginActivityGg.class));
+                getActivity().finish();
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

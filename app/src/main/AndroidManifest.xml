@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginAndRegistration"
         tools:replace="android:label">
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivityGg"></activity>
+        <activity android:name=".LoginActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
