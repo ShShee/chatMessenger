@@ -107,6 +107,8 @@ public class LoginFragment extends Fragment {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getActivity().getApplicationContext(), ForgotpassActivity.class));
+                getActivity().finish();
             }
         });
     }
