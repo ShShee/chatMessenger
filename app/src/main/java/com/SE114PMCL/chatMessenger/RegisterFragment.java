@@ -106,7 +106,7 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         //send user to next page
-                        startActivity(new Intent(getActivity().getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getActivity().getApplicationContext(),VerifyActivity.class));
                         getActivity().finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

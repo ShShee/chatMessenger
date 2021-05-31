@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginAndRegistration"
         tools:replace="android:label">
-        <activity android:name=".LoginActivityGg"></activity>
+        <activity android:name=".VerifyActivity"></activity>
+        <activity android:name=".LoginActivityGg" />
         <activity android:name=".LoginActivity" />
 
         <meta-data
