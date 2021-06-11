@@ -49,6 +49,7 @@ public class StartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_startFragment3_to_registerFragment);
+                //startActivity(new Intent(getActivity().getApplicationContext(), RegisterActivity.class));
             }
         });
     }
