@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     DatabaseReference reference;
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
         btn_register = (Button) findViewById(R.id.dangky);
 
         auth = FirebaseAuth.getInstance();
+
+        database = FirebaseDatabase.getInstance("https://chatmessenger-dfe5b-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
                             HashMap<String, String> hashMap=new HashMap<>();
-                            hashMap.put("id", userid);
+                            //hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("imageURL", "default");
 
