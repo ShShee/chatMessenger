@@ -1,7 +1,9 @@
 package com.SE114PMCL.chatMessenger;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import com.ebanx.swipebtn.SwipeButton;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,6 +69,9 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
     AvatarView image_setting;
     TextView username_setting;
 
+    LayoutInflater inflater;
+    AlertDialog.Builder rename_alert;
+
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
     private Uri imageUri;
@@ -89,6 +96,57 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
         username_setting = (TextView) view.findViewById(R.id.Name);
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
+
+        rename_alert = new AlertDialog.Builder(getContext());
+
+        username_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start alertdialog
+                //View view = inflater.inflate(R.layout.rename, null);
+                View view  = getActivity().getLayoutInflater().inflate(R.layout.rename, null);
+
+                rename_alert.setTitle("Rename")
+                        .setMessage("Enter your new name to change")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //validate the email address
+                                EditText renametxt = view.findViewById(R.id.txtRename);
+
+                                if(renametxt.getText().toString().isEmpty()){
+                                    renametxt.setError("Required Field");
+                                    return;
+                                }
+                                fuser = FirebaseAuth.getInstance().getCurrentUser();
+                                reference = FirebaseDatabase.getInstance().getReference("Users");
+
+//                                reference.addValueEventListener(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+//                                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
+//                                        username_setting.setText(renametxt.getText().toString());
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//                                    }
+//                                });
+                                HashMap hashMap = new HashMap();
+                                hashMap.put("username",renametxt.getText().toString());
+                                reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess(Object o) {
+                                        Toast.makeText(getContext(), "Your name has been changed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("Cancel", null)
+                        .setView(view)
+                        .create().show();
+            }
+        });
 
         image_setting.setOnClickListener(new View.OnClickListener() {
             @Override
