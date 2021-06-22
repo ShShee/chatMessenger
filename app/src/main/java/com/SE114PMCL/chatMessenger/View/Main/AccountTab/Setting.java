@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Main.AccountTab;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -10,7 +10,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -24,9 +23,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
+import com.SE114PMCL.chatMessenger.Adapter.PendingListAdapter;
+import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
-import com.daimajia.swipe.SwipeLayout;
 import com.ebanx.swipebtn.OnStateChangeListener;
 import com.ebanx.swipebtn.SwipeButton;
 import com.google.android.gms.tasks.Continuation;
@@ -51,13 +52,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.schwaab.avvylib.AvatarView;
 
 import static android.app.Activity.RESULT_OK;
 
 
-public class Setting extends Fragment implements PendingListAdapter.OnPendingListener{
+public class Setting extends Fragment implements PendingListAdapter.OnPendingListener {
     Toolbar toolbar;
     RecyclerView recyclerView;
     ArrayList<FriendData> listPending;
@@ -182,45 +182,6 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
             @Override
             public void onStateChange(boolean active) {
                 Toast.makeText(getActivity(), "State: " + active, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //Edit name
-        SwipeLayout swipeLayout =  view.findViewById(R.id.sample1);
-        swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
-
-        //add drag edge.(If the BottomView has 'layout_gravity' attribute, this line is unnecessary)
-        swipeLayout.addDrag(SwipeLayout.DragEdge.Left, view.findViewById(R.id.bottom_wrapper));
-
-        swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-            @Override
-            public void onClose(SwipeLayout layout) {
-                //when the SurfaceView totally cover the BottomView.
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-                //you are swiping.
-            }
-
-            @Override
-            public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onOpen(SwipeLayout layout) {
-                //when the BottomView totally show.
-            }
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-                //when user's hand released.
             }
         });
 

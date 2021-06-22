@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
 import android.os.Bundle;
 
@@ -8,15 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.SE114PMCL.chatMessenger.Adapter.GroupListAdapter;
+import com.SE114PMCL.chatMessenger.Model.GroupData;
+import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 
-public class GroupList extends Fragment implements GroupListAdapter.OnGroupListener{
+public class GroupList extends Fragment implements GroupListAdapter.OnGroupListener {
     RecyclerView recyclerView;
     NavController navController;
     Toolbar toolbar;
@@ -54,7 +55,6 @@ public class GroupList extends Fragment implements GroupListAdapter.OnGroupListe
         recyclerView.setAdapter(groupListAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         toolbar = view.findViewById(R.id.toolbarGroup);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         //toolbar.inflateMenu(R.menu.groupmenu);
     }
 

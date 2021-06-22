@@ -1,8 +1,10 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.SE114PMCL.chatMessenger.R;
 
 public class StartActivity extends AppCompatActivity {
 

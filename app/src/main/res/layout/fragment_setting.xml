@@ -4,17 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Setting">
+    tools:context="Main.AccountTab.Setting">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/accountView"
         android:layout_centerHorizontal="true">
+
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/Avatar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:padding="12dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/avatar3"
@@ -22,8 +23,8 @@
         app:civ_border_color="#FF000000"/>
     <xyz.schwaab.avvylib.AvatarView
         android:id="@+id/Image_setting"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:padding="5dp"
         app:avvy_border_color="#33cc33"
         app:avvy_border_highlight_color="#00cc00"
@@ -34,13 +35,12 @@
         app:avvy_highlighted="true"
         app:avvy_loading_arches="5"
         app:avvy_loading_arches_degree_area="90"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/Avatar"
-        android:id="@+id/nameView">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/Avatar"
+            android:layout_centerHorizontal="true">
         <TextView
             android:id="@+id/Name"
             android:layout_width="wrap_content"
@@ -59,11 +59,33 @@
             android:text="@string/userID"
             android:textSize="15dp"
             />
+    </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/accountView"
+        android:id="@+id/nameView">
 
+        <ImageButton
+            android:id="@+id/changeName"
+            android:src="@drawable/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"/>
+        <ImageButton
+            android:id="@+id/changeAvatar"
+            android:src="@drawable/account1"
+            android:layout_width="70dp"
+            android:layout_toRightOf="@id/changeName"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"/>
         <com.ebanx.swipebtn.SwipeButton
             android:id="@+id/swipe_btn"
-            android:layout_below="@+id/UID"
             android:layout_width="200dp"
+            android:layout_toRightOf="@id/changeAvatar"
             android:layout_height="70dp"
             app:inner_text="Swipe"
             app:inner_text_color="@android:color/white"
@@ -79,80 +101,25 @@
             app:has_activate_state="true"
             />
     </RelativeLayout>
-    </RelativeLayout>
-    <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="100dp"
-        android:id="@+id/sample1" android:layout_below="@+id/accountView">
-        <!-- Bottom View Start-->
-        <LinearLayout
-            android:id="@+id/bottom_wrapper"
-            android:background="#ff4d4d"
-            android:layout_width="wrap_content"
-            android:gravity="center"
-            android:layout_height="match_parent">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="#3399ff">
-            <EditText
-                android:id="@+id/inputName"
-                android:layout_marginBottom="20dp"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/input_bg"
-                android:drawableLeft="@android:drawable/ic_menu_edit"
-                android:drawablePadding="10dp"
-                android:ems="10"
-                android:inputType="text"
-                android:textSize="20dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:hint="New name"
-                android:textColorHint="@color/black"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="126dp" />
-            <ImageButton
-                android:id="@+id/changeName"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/inputName"
-                android:src="@drawable/ok"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"/>
-            </RelativeLayout>
-            <ImageButton
-                android:id="@+id/changeAvatar"
-                android:src="@drawable/account1"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"/>
-        </LinearLayout>
-        <!-- Surface View Start -->
-        <LinearLayout
-            android:background="#ffffff"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--What you want to show in SurfaceView-->
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/edit"
-                android:background="#66e18b"/>
-        </LinearLayout>
-        <!-- Surface View End -->
-    </com.daimajia.swipe.SwipeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/divider"
+        android:layout_below="@id/nameView"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/darker_gray"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/sample1">
+        android:layout_below="@+id/divider">
         <TextView
             android:id="@+id/pendingRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="14dp"
             android:text="Pending"
             android:textSize="27dp"

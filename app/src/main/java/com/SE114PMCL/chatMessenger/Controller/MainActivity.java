@@ -1,22 +1,21 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Controller;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
+import com.SE114PMCL.chatMessenger.Friends;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
@@ -31,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import Main.AccountTab.Setting;
+import Main.ChatTab.Chat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity{
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity{
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new Chat()).commit();
         }
+        getSupportActionBar().hide();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -89,19 +91,16 @@ public class MainActivity extends AppCompatActivity{
                     Fragment selectedFragment=null;
                     switch (item.getItemId()) {
                         case R.id.nav_chat:
-                            getSupportActionBar().show();
                             selectedFragment = new Chat();
                             break;
                         case R.id.nav_friends:
-                            getSupportActionBar().show();
                             selectedFragment = new Friends();
                             break;
                         case R.id.nav_setting:
-                            getSupportActionBar().hide();
                             selectedFragment = new Setting();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
                             selectedFragment).commit();
                     return true;
                 }
@@ -120,14 +119,18 @@ public class MainActivity extends AppCompatActivity{
                 navController = Navigation.findNavController(this, R.id.fragmentContainerView2);
                 currentFragment=navController.getCurrentDestination().getId();
                 if(R.id.messenger==currentFragment) {
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    /*getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     getSupportActionBar().setDisplayShowHomeEnabled(false);
                     TextView textView=findViewById(R.id.chatName);
-                    textView.setText(R.string.userName);
+                    textView.setText(R.string.userName);*/
+                    getSupportActionBar().hide();
+                    NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                    navBuilder.setEnterAnim(R.anim.fragment_open_enter).setExitAnim(R.anim.fragment_close_exit).setPopEnterAnim(R.anim.fragment_open_enter).setPopExitAnim(R.anim.fragment_close_exit);
+                    navController.navigate(R.id.user,null,navBuilder.build());
                     bottomNav.setVisibility(View.VISIBLE);
-                    CircleImageView circleImageView=findViewById(R.id.chatImage);
-                    circleImageView.setImageResource(R.drawable.avatar3);
-                    navController.navigate(R.id.user);
+                    //CircleImageView circleImageView=findViewById(R.id.chatImage);
+                    //circleImageView.setImageResource(R.drawable.avatar3);
+                    //navController.navigate(R.id.user);
                 }
                 break;
             case R.id.nav_friends:
@@ -135,10 +138,10 @@ public class MainActivity extends AppCompatActivity{
                 currentFragment=navController.getCurrentDestination().getId();
                 if(R.id.friendList==currentFragment || R.id.groupList==currentFragment) {
                     bottomNav.setVisibility(View.VISIBLE);
-                    navController.navigate(R.id.contact);
+                    navController.popBackStack();
                     setSupportActionBar(toolbar);
-                    getSupportActionBar().setDisplayShowTitleEnabled(false);
-                    getSupportActionBar().show();
+                    /*getSupportActionBar().setDisplayShowTitleEnabled(false);
+                    getSupportActionBar().show();*/
                 }
                 break;
             /*case R.id.nav_setting:

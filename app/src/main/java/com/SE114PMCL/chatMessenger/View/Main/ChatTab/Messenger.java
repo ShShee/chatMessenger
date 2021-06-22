@@ -1,9 +1,5 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ChatTab;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,8 +14,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
+import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +44,7 @@ public class Messenger extends Fragment {
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarUsername);
         navBar = getActivity().findViewById(R.id.bottom_navigation);
         navController= Navigation.findNavController(view);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -55,14 +53,18 @@ public class Messenger extends Fragment {
             @Override
             public void onClick(View v) {
                 //What to do on back clicked reset user info
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+               /* ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
                 TextView textView=(TextView)getActivity().findViewById(R.id.chatName);
                 textView.setText(R.string.userName);
                 CircleImageView circleImageView=(CircleImageView)getActivity().findViewById(R.id.chatImage);
-                circleImageView.setImageResource(R.drawable.avatar3);
+                circleImageView.setImageResource(R.drawable.avatar3);*/
+                NavOptions.Builder navBuilder =  new NavOptions.Builder();
+                navBuilder.setEnterAnim(R.anim.fragment_open_enter).setExitAnim(R.anim.fragment_close_exit).setPopEnterAnim(R.anim.fragment_open_enter).setPopExitAnim(R.anim.fragment_close_exit);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
                 navBar.setVisibility(View.VISIBLE);
-                Navigation.findNavController(view).navigate(R.id.user);
+                Navigation.findNavController(view).navigate(R.id.user,null,navBuilder.build());
             }
         });
     }

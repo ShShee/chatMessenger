@@ -1,6 +1,5 @@
-package com.SE114PMCL.chatMessenger;
+package Login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,15 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Controller.MainActivity;
+import com.SE114PMCL.chatMessenger.ForgotpassActivity;
+import com.SE114PMCL.chatMessenger.LoginActivity;
+import com.SE114PMCL.chatMessenger.LoginActivityGg;
+import com.SE114PMCL.chatMessenger.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.sdsmdg.tastytoast.TastyToast;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 
 import org.jetbrains.annotations.NotNull;

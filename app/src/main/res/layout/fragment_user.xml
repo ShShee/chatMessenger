@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".User">
+    tools:context="Main.ChatTab.User">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -115,6 +116,7 @@ public class LoginActivityGg extends AppCompatActivity {
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
 
             Log.d("Message", e.toString());
+            System.out.println("Message: "+ e.toString());
         }
     }
 }

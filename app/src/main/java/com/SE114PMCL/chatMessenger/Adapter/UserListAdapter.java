@@ -1,19 +1,18 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
-import android.icu.util.Freezable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.NumberFormat;
+import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.R;
+
 import java.util.ArrayList;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.schwaab.avvylib.AvatarView;

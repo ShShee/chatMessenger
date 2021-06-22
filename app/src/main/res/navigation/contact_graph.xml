@@ -7,29 +7,33 @@
 
     <fragment
         android:id="@+id/contact"
-        android:name="com.SE114PMCL.chatMessenger.Contact"
+        android:name="Main.ContactTab.Contact"
         android:label="fragment_contact"
         tools:layout="@layout/fragment_contact" >
         <action
             android:id="@+id/action_contact_to_friendList"
             app:destination="@id/friendList"
             app:enterAnim="@android:anim/slide_in_left"
-            app:popEnterAnim="@android:anim/slide_in_left" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_contact_to_groupList"
             app:destination="@id/groupList"
             app:enterAnim="@android:anim/slide_in_left"
-            app:popEnterAnim="@android:anim/slide_in_left" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/friendList"
-        android:name="com.SE114PMCL.chatMessenger.FriendList"
+        android:name="Main.ContactTab.FriendList"
         android:label="fragment_friend_list"
         tools:layout="@layout/fragment_friend_list" >
     </fragment>
     <fragment
         android:id="@+id/groupList"
-        android:name="com.SE114PMCL.chatMessenger.GroupList"
+        android:name="Main.ContactTab.GroupList"
         android:label="fragment_group_list"
         tools:layout="@layout/fragment_group_list" >
     </fragment>

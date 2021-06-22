@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tbnLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Messenger">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+    tools:context="Main.ChatTab.Messenger">
         <EditText
             android:id="@+id/inputMessage"
-            android:layout_width="257dp"
+            android:layout_width="230dp"
             android:layout_height="52dp"
             android:background="@drawable/input_bg"
             android:drawablePadding="10dp"
@@ -30,23 +19,31 @@
             android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:textColorHint="@color/black"
             tools:layout_editor_absoluteX="34dp"
             tools:layout_editor_absoluteY="126dp" />
-
         <ImageButton
             android:id="@+id/sendImage"
             android:layout_width="70dp"
             android:layout_height="52dp"
+            android:layout_marginRight="6dp"
             android:src="@drawable/plane2"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/inputMessage"
             android:background="?android:selectableItemBackground" />
 
         <ImageButton
             android:id="@+id/sendMessage"
-            android:layout_width="82dp"
+            android:layout_width="70dp"
             android:layout_height="52dp"
-            android:src="@drawable/plane6"
+            android:src="@drawable/plane"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:background="?android:selectableItemBackground" />
-
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
