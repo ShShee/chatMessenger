@@ -54,9 +54,9 @@ public class User extends Fragment implements UserListAdapter.OnUserListener {
         navBar = getActivity().findViewById(R.id.bottom_navigation);
         recyclerView=view.findViewById(R.id.userView);
         listUser=new ArrayList<>();
-        listUser.add(new FriendData("11111","Boss",R.drawable.avatar1,"Boss: Feed me hooman !",true));
-        listUser.add(new FriendData("22222","Chaien",R.drawable.chaien,"Chaien: No don't leave me",true));
-        listUser.add(new FriendData("33333","Hooney",R.drawable.avatar2,"Me: Why you are crying ?",false));
+        listUser.add(new FriendData("11111","Boss",R.drawable.avatar1,"Boss: Feed me hooman !",true, ""));
+        listUser.add(new FriendData("22222","Chaien",R.drawable.chaien,"Chaien: No don't leave me",true, ""));
+        listUser.add(new FriendData("33333","Hooney",R.drawable.avatar2,"Me: Why you are crying ?",false, ""));
         userListAdapter=new UserListAdapter(getActivity().getApplicationContext(),listUser,this::onUserClick);
         recyclerView.setAdapter(userListAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));

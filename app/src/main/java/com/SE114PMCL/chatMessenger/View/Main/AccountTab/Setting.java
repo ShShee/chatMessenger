@@ -20,9 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Controller.StartActivity;
 import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.Adapter.PendingListAdapter;
@@ -68,6 +70,8 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
     AvatarView image_setting;
     TextView username_setting;
+    ImageButton change_name;
+    ImageButton change_avatar;
 
     LayoutInflater inflater;
     AlertDialog.Builder rename_alert;
@@ -95,9 +99,56 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
         image_setting = (AvatarView) view.findViewById(R.id.Image_setting);
         username_setting = (TextView) view.findViewById(R.id.Name);
 
+        change_name = (ImageButton) view.findViewById(R.id.changeName);
+        change_avatar = (ImageButton) view.findViewById(R.id.changeAvatar);
+
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
 
         rename_alert = new AlertDialog.Builder(getContext());
+
+        change_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start alertdialog
+                //View view = inflater.inflate(R.layout.rename, null);
+                View view  = getActivity().getLayoutInflater().inflate(R.layout.rename, null);
+
+                rename_alert.setTitle("Rename")
+                        .setMessage("Enter your new name to change")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //validate the email address
+                                EditText renametxt = view.findViewById(R.id.txtRename);
+
+                                if(renametxt.getText().toString().isEmpty()){
+                                    renametxt.setError("Required Field");
+                                    return;
+                                }
+                                fuser = FirebaseAuth.getInstance().getCurrentUser();
+                                reference = FirebaseDatabase.getInstance().getReference("Users");
+
+                                HashMap hashMap = new HashMap();
+                                hashMap.put("username",renametxt.getText().toString());
+                                reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess(Object o) {
+                                        Toast.makeText(getContext(), "Your name has been changed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("Cancel", null)
+                        .setView(view)
+                        .create().show();
+            }
+        });
+
+        change_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openImage();
+            }
+        });
 
         username_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,12 +212,14 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
-                UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                username_setting.setText(userModel.getUsername());
-                if(userModel.getImageURL().equals("default")){
+                FriendData friendData = dataSnapshot.getValue(FriendData.class);
+
+                username_setting.setText(friendData.getTenUser());
+
+                if(friendData.getImageURL().equals("default")){
                     image_setting.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(getContext()).load(userModel.getImageURL()).into(image_setting);
+                    Glide.with(getContext()).load(friendData.getImageURL()).into(image_setting);
                 }
             }
 
@@ -181,17 +234,20 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
         enableButton.setOnStateChangeListener(new OnStateChangeListener() {
             @Override
             public void onStateChange(boolean active) {
-                Toast.makeText(getActivity(), "State: " + active, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "State: " + active, Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(), StartActivity.class));
+                getActivity().finish();
             }
         });
 
         //Pending
         recyclerView=view.findViewById(R.id.pendingView);
         listPending=new ArrayList<>();
-        listPending.add(new FriendData("0","Boss",R.drawable.avatar1,"",false));
-        listPending.add(new FriendData("0","Chaien",R.drawable.chaien,"",false));
-        listPending.add(new FriendData("0","Hooney",R.drawable.chaien,"",false));
-        listPending.add(new FriendData("0","Cat",R.drawable.chaien,"",false));
+        listPending.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
+        listPending.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
+        listPending.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
+        listPending.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
         pendingListAdapter=new PendingListAdapter(getActivity().getApplicationContext(),listPending,this::onPendingClick);
         recyclerView.setAdapter(pendingListAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));

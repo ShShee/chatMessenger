@@ -52,10 +52,10 @@ public class FriendList extends Fragment implements FriendListAdapter.OnFriendLi
         super.onViewCreated(view, savedInstanceState);
         recyclerView=view.findViewById(R.id.friendView);
         listFriend=new ArrayList<>();
-        listFriend.add(new FriendData("0","Boss",R.drawable.avatar1,"",false));
-        listFriend.add(new FriendData("0","Chaien",R.drawable.chaien,"",false));
-        listFriend.add(new FriendData("0","Hooney",R.drawable.chaien,"",false));
-        listFriend.add(new FriendData("0","Cat",R.drawable.chaien,"",false));
+        listFriend.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
+        listFriend.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
+        listFriend.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
+        listFriend.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
         friendListAdapter=new FriendListAdapter(getActivity().getApplicationContext(),listFriend,this::onFriendClick);
         recyclerView.setAdapter(friendListAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
