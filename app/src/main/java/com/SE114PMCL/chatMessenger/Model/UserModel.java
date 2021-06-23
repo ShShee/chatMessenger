@@ -5,12 +5,14 @@ public class UserModel {
     private String username;
     private String imageURL;
     private String status;
+    private String search;
 
     public UserModel(String id, String username, String imageURL, String status) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.status = status;
+        this.search = search;
     }
 
     public UserModel(){
@@ -47,5 +49,13 @@ public class UserModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

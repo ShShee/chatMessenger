@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -23,22 +24,34 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class User extends Fragment implements UserListAdapter.OnUserListener{
+public class User extends Fragment {
     NavController navController;
     BottomNavigationView navBar;
     RecyclerView recyclerView;
-    ArrayList<FriendData> listUser;
-    UserListAdapter userListAdapter;
+    UserAdapter userAdapter;
     Toolbar toolbar;
+    List<UserModel> mUsers;
+    List<Chatlist> mchatlist;
+    FirebaseUser fuser;
+    DatabaseReference reference;
     public User() {
         // Required empty public constructor
     }
@@ -56,28 +69,60 @@ public class User extends Fragment implements UserListAdapter.OnUserListener{
 
         navController= Navigation.findNavController(view);
         navBar = getActivity().findViewById(R.id.bottom_navigation);
-        recyclerView=view.findViewById(R.id.userView);
-        listUser=new ArrayList<>();
-        listUser.add(new FriendData("11111","Boss",R.drawable.avatar1,"Boss: Feed me hooman !",true));
-        listUser.add(new FriendData("22222","Chaien",R.drawable.chaien,"Chaien: No don't leave me",true));
-        listUser.add(new FriendData("33333","Hooney",R.drawable.avatar2,"Me: Why you are crying ?",false));
-        userListAdapter=new UserListAdapter(getActivity().getApplicationContext(),listUser,this::onUserClick);
-        recyclerView.setAdapter(userListAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        recyclerView = view.findViewById(R.id.userView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarUsername);
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        mchatlist = new ArrayList<>();
+
+        reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mchatlist.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    mchatlist.add(chatlist);
+                }
+
+                chatList();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    @Override
-    public void onUserClick(int position) {
-        TextView textView=(TextView)getActivity().findViewById(R.id.chatName);
-        textView.setText(listUser.get(position).getTenUser());
-        CircleImageView circleImageView=(CircleImageView)getActivity().findViewById(R.id.chatImage);
-        circleImageView.setImageResource(listUser.get(position).getAvatar());
-        navBar.setVisibility(View.GONE);
-        navController.navigate(R.id.action_user_to_messenger);
-    }
+    private void chatList() {
+        mUsers = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    UserModel user = snapshot.getValue(UserModel.class);
+                    for (Chatlist chatlist : mchatlist){
+                        if (user.getId().equals(chatlist.getId())){
+                            mUsers.add(user);
+                        }
+                    }
+                }
+                userAdapter = new UserAdapter(getContext(), mUsers, true);
+                recyclerView.setAdapter(userAdapter);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

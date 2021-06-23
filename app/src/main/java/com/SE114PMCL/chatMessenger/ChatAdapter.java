@@ -43,7 +43,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             View view=LayoutInflater.from(mContext).inflate(R.layout.chat_item_left,parent,false);
             return new ChatAdapter.ViewHolder(view);
         }
-        }
+    }
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder,int position){

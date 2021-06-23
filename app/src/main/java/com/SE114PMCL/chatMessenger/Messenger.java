@@ -1,7 +1,9 @@
 package com.SE114PMCL.chatMessenger;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -89,58 +91,8 @@ public class Messenger extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_messenger, container, false);
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        return inflater.inflate(R.layout.fragment_messenger, container, false);
 
-        recyclerView = v.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        profile_image = v.findViewById(R.id.profile_image);
-        username = v.findViewById(R.id.chatName);
-        btn_send = v.findViewById(R.id.btn_send);
-        text_send = v.findViewById(R.id.inputMessage);
-
-        intent = getActivity().getIntent();
-        userid = intent.getStringExtra("userid");
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
-
-        btn_send.setOnClickListener(view -> {
-            notify = true;
-            String msg = text_send.getText().toString();
-            if (!msg.equals("")){
-                sendMessage(fuser.getUid(), userid, msg);
-            } else {
-                Toast.makeText(getActivity(), "You can't send empty message", Toast.LENGTH_SHORT).show();
-            }
-            text_send.setText("");
-        });
-
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserModel user = dataSnapshot.getValue(UserModel.class);
-                username.setText(user.getUsername());
-                if (user.getImageURL().equals("default")){
-                    profile_image.setImageResource(R.mipmap.ic_launcher);
-                } else {
-                    Glide.with(getContext()).load(user.getImageURL()).into(profile_image);
-                }
-
-                readMesagges(fuser.getUid(), userid, user.getImageURL());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        seenMessage(userid);
-
-        return v;
     }
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -167,6 +119,59 @@ public class Messenger extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.user);
             }
         });
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        profile_image = view.findViewById(R.id.chatImage);
+        username = view.findViewById(R.id.chatName);
+        btn_send = view.findViewById(R.id.btn_send);
+        text_send = view.findViewById(R.id.inputMessage);
+
+        intent = getActivity().getIntent();
+        userid = intent.getStringExtra("userid");
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notify = true;
+                String msg = text_send.getText().toString();
+                if (!msg.equals("")){
+                    sendMessage(fuser.getUid(), userid, msg);
+                } else {
+                    Toast.makeText(getActivity(), "You can't send empty message", Toast.LENGTH_SHORT).show();
+                }
+                text_send.setText("");
+            }
+        });
+
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserModel user = dataSnapshot.getValue(UserModel.class);
+                username.setText(user.getUsername());
+                if (user.getImageURL().equals("default")){
+                    profile_image.setImageResource(R.mipmap.ic_launcher);
+                } else {
+                    Glide.with(getContext()).load(user.getImageURL()).into(profile_image);
+                }
+
+                readMesagges(fuser.getUid(), userid, user.getImageURL());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        seenMessage(userid);
     }
     private void seenMessage(final String userid){
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -309,5 +314,34 @@ public class Messenger extends Fragment {
 
             }
         });
+    }
+    private void currentUser(String userid){
+        SharedPreferences.Editor editor = this.getActivity().getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+        editor.putString("currentuser", userid);
+        editor.apply();
+    }
+
+    private void status(String status){
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        status("online");
+        currentUser(userid);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        reference.removeEventListener(seenListener);
+        status("offline");
+        currentUser("none");
     }
 }
