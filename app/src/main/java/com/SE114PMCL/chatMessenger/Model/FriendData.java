@@ -2,15 +2,15 @@ package com.SE114PMCL.chatMessenger.Model;
 
 public class FriendData {
     private String UID;
-    private String tenUser;
+    private String username;
     private String lastMessage;
     private Boolean activeStatus;
     private int avatar;
     private String imageURL;
 
-    public FriendData(String UID,String tenUser, int avatar,String lastMessage,Boolean activeStatus, String imageURL) {
+    public FriendData(String UID,String username, int avatar,String lastMessage,Boolean activeStatus, String imageURL) {
         this.UID=UID;
-        this.tenUser = tenUser;
+        this.username = username;
         this.avatar = avatar;
         this.lastMessage=lastMessage;
         this.activeStatus=activeStatus;
@@ -29,12 +29,12 @@ public class FriendData {
         this.UID = UID;
     }
 
-    public String getTenUser() {
-        return tenUser;
+    public String getUsername() {
+        return username;
     }
 
-    public void setTenUser(String tenUser) {
-        this.tenUser = tenUser;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLastMessage() {

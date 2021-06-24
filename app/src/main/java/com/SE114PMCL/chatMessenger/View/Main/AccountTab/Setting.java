@@ -214,7 +214,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
             public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
                 FriendData friendData = dataSnapshot.getValue(FriendData.class);
 
-                username_setting.setText(friendData.getTenUser());
+                username_setting.setText(friendData.getUsername());
 
                 if(friendData.getImageURL().equals("default")){
                     image_setting.setImageResource(R.mipmap.ic_launcher);

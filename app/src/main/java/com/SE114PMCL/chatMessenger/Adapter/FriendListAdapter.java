@@ -40,7 +40,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
         FriendData friend = listFriend.get(position);
-        holder.txtTenUser.setText(friend.getTenUser());
+        holder.txtTenUser.setText(friend.getUsername());
         holder.imgAvatar.setImageResource(friend.getAvatar());
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

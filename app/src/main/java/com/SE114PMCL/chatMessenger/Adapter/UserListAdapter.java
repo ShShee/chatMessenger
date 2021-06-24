@@ -40,7 +40,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
         FriendData friend = listUser.get(position);
-        holder.txtTenUser.setText(friend.getTenUser());
+        holder.txtTenUser.setText(friend.getUsername());
         holder.txtChatMessage.setText(friend.getLastMessage());
         holder.avatarView.setShowBadge(friend.getActiveStatus());
         holder.imgAvatar.setImageResource(friend.getAvatar());

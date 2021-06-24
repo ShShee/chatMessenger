@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 FriendData friendData = dataSnapshot.getValue(FriendData.class);
-                username_chat.setText(friendData.getTenUser());
+                username_chat.setText(friendData.getUsername());
                 if(friendData.getImageURL().equals("default")){
                     image_chat.setImageResource(R.mipmap.ic_launcher);
                 }else{

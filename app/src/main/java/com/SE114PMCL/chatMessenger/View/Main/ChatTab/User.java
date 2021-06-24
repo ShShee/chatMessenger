@@ -68,7 +68,7 @@ public class User extends Fragment implements UserListAdapter.OnUserListener {
     @Override
     public void onUserClick(int position) {
         TextView textView=(TextView)getActivity().findViewById(R.id.chatName);
-        textView.setText(listUser.get(position).getTenUser());
+        textView.setText(listUser.get(position).getUsername());
         CircleImageView circleImageView=(CircleImageView)getActivity().findViewById(R.id.chatImage);
         circleImageView.setImageResource(listUser.get(position).getAvatar());
         navBar.setVisibility(View.GONE);
