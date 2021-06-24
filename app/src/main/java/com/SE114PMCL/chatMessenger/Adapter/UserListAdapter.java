@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.SE114PMCL.chatMessenger.Model.ChatData;
+import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
+import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,16 +24,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+import de.hdodenhof.circleimageview.CircleImageView;
+import xyz.schwaab.avvylib.AvatarView;
+
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
     private Context mContext;
     private List<UserModel> mUsers;
     private boolean ischat;
 
     String theLastMessage;
 
-    public UserAdapter(Context mContext, List<UserModel> mUsers, boolean ischat){
+    public UserListAdapter(Context mContext, List<UserModel> mUsers, boolean ischat){
         this.mUsers = mUsers;
         this.mContext = mContext;
         this.ischat = ischat;
@@ -40,7 +47,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.user_view, parent, false);
-        return new UserAdapter.ViewHolder(view);
+        return new UserListAdapter.ViewHolder(view);
     }
 
     @Override
@@ -146,3 +153,4 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         });
     }
 }
+

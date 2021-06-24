@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ChatTab;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
+import com.SE114PMCL.chatMessenger.Chatlist;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
+import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +49,7 @@ public class User extends Fragment {
     NavController navController;
     BottomNavigationView navBar;
     RecyclerView recyclerView;
-    UserAdapter userAdapter;
+    UserListAdapter userAdapter;
     Toolbar toolbar;
     List<UserModel> mUsers;
     List<Chatlist> mchatlist;
@@ -72,7 +75,7 @@ public class User extends Fragment {
         recyclerView = view.findViewById(R.id.userView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarUsername);
+
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         mchatlist = new ArrayList<>();
@@ -114,7 +117,7 @@ public class User extends Fragment {
                         }
                     }
                 }
-                userAdapter = new UserAdapter(getContext(), mUsers, true);
+                userAdapter = new UserListAdapter(getContext(), mUsers, true);
                 recyclerView.setAdapter(userAdapter);
             }
 

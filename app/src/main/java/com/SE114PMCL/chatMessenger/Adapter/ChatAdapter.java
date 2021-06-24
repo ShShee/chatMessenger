@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.SE114PMCL.chatMessenger.Model.ChatData;
+import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +33,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         this.mChat=mChat;
         this.mContext=mContext;
         this.imageurl=imageurl;
-        }
+    }
 
     @NonNull
     @Override
@@ -66,13 +68,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             }
         }else{
             holder.txt_seen.setVisibility(View.GONE);
-            }
         }
+    }
 
     @Override
     public int getItemCount(){
         return mChat.size();
-        }
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

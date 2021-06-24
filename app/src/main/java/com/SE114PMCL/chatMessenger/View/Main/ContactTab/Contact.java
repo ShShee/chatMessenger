@@ -1,9 +1,10 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.R;
 import com.daimajia.swipe.SwipeLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

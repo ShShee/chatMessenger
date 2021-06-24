@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Model;
 
 public class ChatData {
 

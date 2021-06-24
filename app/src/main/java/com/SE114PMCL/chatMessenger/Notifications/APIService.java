@@ -1,7 +1,4 @@
-package com.SE114PMCL.chatMessenger.Notification;
-
-import com.SE114PMCL.chatMessenger.Notifications.MyResponse;
-import com.SE114PMCL.chatMessenger.Notifications.Sender;
+package com.SE114PMCL.chatMessenger.Notifications;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

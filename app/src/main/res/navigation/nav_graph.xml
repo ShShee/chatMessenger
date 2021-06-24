@@ -6,7 +6,7 @@
     app:startDestination="@id/startFragment3">
     <fragment
         android:id="@+id/startFragment3"
-        android:name="com.SE114PMCL.chatMessenger.StartFragment"
+        android:name="Login.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
@@ -26,12 +26,12 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.SE114PMCL.chatMessenger.LoginFragment"
+        android:name="Login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.SE114PMCL.chatMessenger.RegisterFragment"
+        android:name="Login.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
 </navigation>

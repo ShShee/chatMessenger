@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
 import android.os.Bundle;
 
@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,18 +17,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Adapter.FriendListAdapter;
+import com.SE114PMCL.chatMessenger.Controller.MainActivity;
+import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class FriendList extends Fragment implements FriendListAdapter.OnFriendListener{
+public class FriendList extends Fragment implements FriendListAdapter.OnFriendListener {
     RecyclerView recyclerView;
     NavController navController;
     Toolbar toolbar;
@@ -60,7 +60,6 @@ public class FriendList extends Fragment implements FriendListAdapter.OnFriendLi
         recyclerView.setAdapter(friendListAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         toolbar=view.findViewById(R.id.toolbarFriend);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);

@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.SE114PMCL.chatMessenger.Model.GroupData;
+import com.SE114PMCL.chatMessenger.R;
 
 import java.util.ArrayList;
 
@@ -46,6 +49,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                 notifyItemChanged(selectedPos);
                 selectedPos = position;
                 notifyItemChanged(selectedPos);
+                mOnGroupListener.onGroupClick(holder.getBindingAdapterPosition());
             }
         });
     }
@@ -55,7 +59,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         return listGroup.size(); // trả item tại vị trí postion
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView imgAvatar;
         TextView txtTenGroup;
         OnGroupListener onGroupListener;
@@ -65,11 +69,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
             txtTenGroup = itemView.findViewById(R.id.txtTenGroup);
             this.onGroupListener=mOnGroupListener;
-        }
-
-        @Override
-        public void onClick(View v) {
-            onGroupListener.onGroupClick(getBindingAdapterPosition());
         }
     }
     public interface OnGroupListener{

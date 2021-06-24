@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ChatTab;
 
 
 import android.content.Context;
@@ -19,20 +19,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.SE114PMCL.chatMessenger.Adapter.ChatAdapter;
+import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
-import com.SE114PMCL.chatMessenger.Notification.APIService;
+import com.SE114PMCL.chatMessenger.Notifications.APIService;
 import com.SE114PMCL.chatMessenger.Notifications.Client;
 import com.SE114PMCL.chatMessenger.Notifications.Data;
 import com.SE114PMCL.chatMessenger.Notifications.MyResponse;
 import com.SE114PMCL.chatMessenger.Notifications.Sender;
 import com.SE114PMCL.chatMessenger.Notifications.Token;
-import com.SE114PMCL.chatMessenger.Notifications.Client;
+
+import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,7 +61,7 @@ import retrofit2.Response;
 
 public class Messenger extends Fragment {
     NavController navController;
-    Toolbar toolbar;
+
     BottomNavigationView navBar;
     CircleImageView profile_image;
     TextView username;
@@ -97,28 +99,11 @@ public class Messenger extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbarUsername);
         navBar = getActivity().findViewById(R.id.bottom_navigation);
         navController= Navigation.findNavController(view);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        toolbar.inflateMenu(R.menu.messengermenu);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //What to do on back clicked reset user info
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
-                TextView textView=(TextView)getActivity().findViewById(R.id.chatName);
-                textView.setText(R.string.userName);
-                CircleImageView circleImageView=(CircleImageView)getActivity().findViewById(R.id.chatImage);
-                circleImageView.setImageResource(R.drawable.avatar3);
-                navBar.setVisibility(View.VISIBLE);
-                Navigation.findNavController(view).navigate(R.id.user);
-            }
-        });
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
@@ -236,9 +221,9 @@ public class Messenger extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                FriendData user = dataSnapshot.getValue(FriendData.class);
+                UserModel user = dataSnapshot.getValue(UserModel.class);
                 if (notify) {
-                    sendNotifiaction(receiver, user.getTenUser(), msg);
+                    sendNotifiaction(receiver, user.getUsername(), msg);
                 }
                 notify = false;
             }

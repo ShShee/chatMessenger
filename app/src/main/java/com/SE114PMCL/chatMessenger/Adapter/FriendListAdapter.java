@@ -1,19 +1,18 @@
-package com.SE114PMCL.chatMessenger;
+package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
-import android.icu.util.Freezable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.NumberFormat;
+import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.R;
+
 import java.util.ArrayList;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,6 +49,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 notifyItemChanged(selectedPos);
                 selectedPos = position;
                 notifyItemChanged(selectedPos);
+                mOnFriendListener.onFriendClick(holder.getBindingAdapterPosition());
             }
         });
     }
@@ -59,7 +59,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         return listFriend.size(); // trả item tại vị trí postion
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView imgAvatar;
 
         TextView txtTenUser;
@@ -70,11 +70,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
             txtTenUser = itemView.findViewById(R.id.txtTenUser);
             this.onFriendListener=onFriendListener;
-        }
-
-        @Override
-        public void onClick(View v) {
-            onFriendListener.onFriendClick(getBindingAdapterPosition());
         }
     }
     public interface OnFriendListener{

@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Login;
 
 import android.os.Bundle;
 
@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.R;
+import com.SE114PMCL.chatMessenger.VerifyActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -106,7 +107,7 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         //send user to next page
-                        startActivity(new Intent(getActivity().getApplicationContext(),VerifyActivity.class));
+                        startActivity(new Intent(getActivity().getApplicationContext(), VerifyActivity.class));
                         getActivity().finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

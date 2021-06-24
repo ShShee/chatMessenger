@@ -3,11 +3,11 @@ package com.SE114PMCL.chatMessenger;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
