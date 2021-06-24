@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -24,6 +25,13 @@ import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,11 +39,14 @@ import java.util.ArrayList;
 
 public class FriendList extends Fragment implements FriendListAdapter.OnFriendListener {
     RecyclerView recyclerView;
+    FriendListAdapter friendListAdapter;
+    ArrayList<FriendData> listFriend;
+
     NavController navController;
     Toolbar toolbar;
     BottomNavigationView navBar;
-    ArrayList<FriendData> listFriend;
-    FriendListAdapter friendListAdapter;
+    private FriendListAdapter.OnFriendListener mOnFriendListener;
+
     public FriendList() {
         // Required empty public constructor
     }
@@ -50,19 +61,54 @@ public class FriendList extends Fragment implements FriendListAdapter.OnFriendLi
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView=view.findViewById(R.id.friendView);
-        listFriend=new ArrayList<>();
-        listFriend.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
-        listFriend.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
-        listFriend.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
-        listFriend.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
-        friendListAdapter=new FriendListAdapter(getActivity().getApplicationContext(),listFriend,this::onFriendClick);
+        recyclerView = view.findViewById(R.id.friendView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        listFriend = new ArrayList<>();
+
+        readUsers();
+
+//        listFriend.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
+//        listFriend.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
+//        listFriend.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
+//        listFriend.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
+
+        friendListAdapter = new FriendListAdapter(getActivity().getApplicationContext(),listFriend,this::onFriendClick);
         recyclerView.setAdapter(friendListAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+
         toolbar=view.findViewById(R.id.toolbarFriend);
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    private void readUsers() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+                listFriend.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    FriendData friend = snapshot.getValue(FriendData.class);
+
+                    if(!friend.getUsername().equals(firebaseUser.getUid())){
+                        listFriend.add(friend);
+                    }
+                }
+
+                friendListAdapter = new FriendListAdapter(getContext(), listFriend, mOnFriendListener);
+                recyclerView.setAdapter(friendListAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
