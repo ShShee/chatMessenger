@@ -63,17 +63,22 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 FriendData friendData = dataSnapshot.getValue(FriendData.class);
-                username_chat.setText(friendData.getUsername());
-                if(friendData.getImageURL().equals("default")){
+                assert friendData != null;
+                if(!friendData.getUsername().equals(null)) {
+                    username_chat.setText(friendData.getUsername());
+                    if (friendData.getImageURL().equals("default")) {
+                        image_chat.setImageResource(R.mipmap.ic_launcher);
+                    } else {
+                        Glide.with(MainActivity.this).load(friendData.getImageURL()).into(image_chat);
+                    }
+                }
+                else{
+                    username_chat.setText("User Name");
                     image_chat.setImageResource(R.mipmap.ic_launcher);
-                }else{
-                    Glide.with(MainActivity.this).load(friendData.getImageURL()).into(image_chat);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
             }
         });
 
