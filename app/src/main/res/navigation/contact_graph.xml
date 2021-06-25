@@ -30,6 +30,7 @@
         android:name="Main.ContactTab.FriendList"
         android:label="fragment_friend_list"
         tools:layout="@layout/fragment_friend_list" >
+
     </fragment>
     <fragment
         android:id="@+id/groupList"
