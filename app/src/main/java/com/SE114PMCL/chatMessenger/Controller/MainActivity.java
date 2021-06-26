@@ -16,7 +16,9 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.SE114PMCL.chatMessenger.Friends;
+
 import com.SE114PMCL.chatMessenger.Model.FriendData;
+
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
@@ -62,21 +64,15 @@ public class MainActivity extends AppCompatActivity{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                FriendData friendData = dataSnapshot.getValue(FriendData.class);
-                assert friendData != null;
-                if(!friendData.getUsername().equals(null)) {
-                    username_chat.setText(friendData.getUsername());
-                    if (friendData.getImageURL().equals("default")) {
-                        image_chat.setImageResource(R.mipmap.ic_launcher);
-                    } else {
-                        Glide.with(MainActivity.this).load(friendData.getImageURL()).into(image_chat);
-                    }
-                }
-                else{
-                    username_chat.setText("User Name");
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                username_chat.setText(userModel.getUsername());
+                if(userModel.getImageURL().equals("default")){
                     image_chat.setImageResource(R.mipmap.ic_launcher);
+                }else{
+                    Glide.with(MainActivity.this).load(userModel.getImageURL()).into(image_chat);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
             }

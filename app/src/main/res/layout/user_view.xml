@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:clickable="true"
-    android:background="@drawable/selected_item"
-    android:padding="5dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
     android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imgAvatar"
-        android:layout_width="69dp"
-        android:layout_height="69dp"
-        android:layout_marginRight="8dp"
-        android:src="@drawable/avatar2"
-        app:civ_border_width="0dp"
-        app:civ_border_color="#FF000000"/>
-    <xyz.schwaab.avvylib.AvatarView
-        android:id="@+id/activeStatus"
-        app:avvy_show_badge="true"
-        android:layout_width="69dp"
-        android:layout_height="69dp"
-        app:avvy_border_color="#33cc33"
-        app:avvy_border_highlight_color="#ff0000"
-        app:avvy_border_highlight_color_end="#ffff1a"
-        app:avvy_border_thickness="2dp"
-        app:avvy_border_thickness_highlight="3dp"
-        app:avvy_distance_to_border="3dp"
-        app:avvy_highlighted="true"
-        app:avvy_loading_arches="5"
-        app:avvy_loading_arches_degree_area="90"/>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/imgAvatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="Boss"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:textColor="#00AC47"
-            android:id="@+id/txtTenUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:text="Boss: Feed me hooman !!!"
-            android:textSize="14dp"
-            android:id="@+id/txtChatMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</RelativeLayout>
 
-<!--app:avvy_show_badge=false là offline-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imgAvatar"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="txtTenUser"
+        android:id="@+id/txtTenUser"
+        android:layout_toRightOf="@id/imgAvatar"
+        android:layout_toEndOf="@id/imgAvatar"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:textSize="18sp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_width="10dp"
+        app:civ_border_color="#05df29"
+        android:id="@+id/img_on"
+        android:visibility="gone"
+        android:src="@mipmap/ic_launcher"
+        android:layout_below="@id/txtTenUser"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_toRightOf="@id/imgAvatar"
+        android:layout_toEndOf="@id/imgAvatar"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:civ_border_width="10dp"
+        app:civ_border_color="#bfbfbf"
+        android:id="@+id/img_off"
+        android:visibility="gone"
+        android:src="@mipmap/ic_launcher"
+        android:layout_below="@id/txtTenUser"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_toRightOf="@id/imgAvatar"
+        android:layout_toEndOf="@id/imgAvatar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtTenUser"
+        android:layout_toRightOf="@id/imgAvatar"
+        android:layout_marginTop="5dp"
+        android:paddingTop="5dp"
+        android:id="@+id/last_msg"
+        android:textColor="#226e6e"
+        android:layout_marginLeft="20dp"
+        android:maxLines="1"/>
+
+</RelativeLayout>

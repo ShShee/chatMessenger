@@ -1,79 +1,160 @@
 package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.schwaab.avvylib.AvatarView;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
-    Context context;
-    ArrayList<FriendData> listUser;
-    private OnUserListener mOnUserListener;
+  
+    private Context mContext;
+    private List<UserModel> mUsers;
+    private boolean ischat;
 
-    public UserListAdapter(Context context, ArrayList<FriendData> listUser,OnUserListener onUserListener) {
-        this.context = context;
-        this.listUser = listUser;
-        this.mOnUserListener=onUserListener;
+    String theLastMessage;
+
+    public UserListAdapter(Context mContext, List<UserModel> mUsers, boolean ischat){
+        this.mUsers = mUsers;
+        this.mContext = mContext;
+        this.ischat = ischat;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // gán view
-        View view = LayoutInflater.from(context).inflate(R.layout.user_view, parent, false);
-        return new ViewHolder(view,mOnUserListener);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.user_view, parent, false);
+        return new UserListAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Gán dữ liêuk
-        FriendData friend = listUser.get(position);
-        holder.txtTenUser.setText(friend.getUsername());
-        holder.txtChatMessage.setText(friend.getLastMessage());
-        holder.avatarView.setShowBadge(friend.getActiveStatus());
-        holder.imgAvatar.setImageResource(friend.getAvatar());
+
+        final UserModel user = mUsers.get(position);
+        holder.username.setText(user.getUsername());
+        if (user.getImageURL().equals("default")){
+            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+        } else {
+            Glide.with(mContext).load(user.getImageURL()).into(holder.profile_image);
+        }
+
+        if (ischat){
+            lastMessage(user.getId(), holder.last_msg);
+        } else {
+            holder.last_msg.setVisibility(View.GONE);
+        }
+
+        if (ischat){
+            if (user.getStatus().equals("online")){
+                holder.img_on.setVisibility(View.VISIBLE);
+                holder.img_off.setVisibility(View.GONE);
+            } else {
+                holder.img_on.setVisibility(View.GONE);
+                holder.img_off.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.img_on.setVisibility(View.GONE);
+            holder.img_off.setVisibility(View.GONE);
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, getClass());
+                intent.putExtra("userid", user.getId());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return listUser.size(); // trả item tại vị trí postion
+        return mUsers.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        CircleImageView imgAvatar;
-        AvatarView avatarView;
-        TextView txtTenUser,txtChatMessage;
-        OnUserListener onUserListener;
-        public ViewHolder(@NonNull View itemView,OnUserListener onUserListener) {
+    public  class ViewHolder extends RecyclerView.ViewHolder{
+
+        public TextView username;
+        public ImageView profile_image;
+        private ImageView img_on;
+        private ImageView img_off;
+        private TextView last_msg;
+
+        public ViewHolder(View itemView) {
             super(itemView);
-            // Ánh xạ view
-            imgAvatar = itemView.findViewById(R.id.imgAvatar);
-            avatarView=itemView.findViewById(R.id.activeStatus);
-            txtTenUser = itemView.findViewById(R.id.txtTenUser);
-            txtChatMessage=itemView.findViewById(R.id.txtChatMessage);
-            this.onUserListener=onUserListener;
-            itemView.setOnClickListener(this);
-        }
 
-        @Override
-        public void onClick(View v) {
-            onUserListener.onUserClick(getBindingAdapterPosition());
+            username = itemView.findViewById(R.id.txtTenUser);
+            profile_image = itemView.findViewById(R.id.imgAvatar);
+            img_on = itemView.findViewById(R.id.img_on);
+            img_off = itemView.findViewById(R.id.img_off);
+            last_msg = itemView.findViewById(R.id.last_msg);
         }
     }
-    public interface OnUserListener{
-        void onUserClick(int position);
+
+    //check for last message
+    private void lastMessage(final String userid, final TextView last_msg){
+        theLastMessage = "default";
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    ChatData chat = snapshot.getValue(ChatData.class);
+                    if (firebaseUser != null && chat != null) {
+                        if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid) ||
+                                chat.getReceiver().equals(userid) && chat.getSender().equals(firebaseUser.getUid())) {
+                            theLastMessage = chat.getMessage();
+                        }
+                    }
+                }
+
+                switch (theLastMessage){
+                    case  "default":
+                        last_msg.setText("No Message");
+                        break;
+
+                    default:
+                        last_msg.setText(theLastMessage);
+                        break;
+                }
+
+                theLastMessage = "default";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
 

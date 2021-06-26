@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.R;
+
 import com.bumptech.glide.Glide;
+
 
 import java.util.ArrayList;
 
@@ -34,13 +36,16 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // gán view
         View view = LayoutInflater.from(context).inflate(R.layout.friend_view, parent, false);
+
         return new FriendListAdapter.ViewHolder(view, mOnFriendListener); //ViewHolder(view,mOnFriendListener);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
         FriendData friend = listFriend.get(position);
+
         holder.txtTenUser.setText(friend.getUsername());
         if(friend.getImageURL().equals("default")){
             holder.imgAvatar.setImageResource(R.mipmap.ic_launcher);
@@ -49,6 +54,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         }
 
         //holder.imgAvatar.setImageResource(friend.getAvatar());
+
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

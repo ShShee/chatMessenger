@@ -20,11 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Controller.StartActivity;
+
 import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.Adapter.PendingListAdapter;
@@ -70,8 +72,10 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
     AvatarView image_setting;
     TextView username_setting;
+
     ImageButton change_name;
     ImageButton change_avatar;
+
 
     LayoutInflater inflater;
     AlertDialog.Builder rename_alert;
@@ -98,6 +102,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
         image_setting = (AvatarView) view.findViewById(R.id.Image_setting);
         username_setting = (TextView) view.findViewById(R.id.Name);
+
 
         change_name = (ImageButton) view.findViewById(R.id.changeName);
         change_avatar = (ImageButton) view.findViewById(R.id.changeAvatar);
@@ -149,6 +154,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
                 openImage();
             }
         });
+
 
         username_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,6 +218,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+
                 FriendData friendData = dataSnapshot.getValue(FriendData.class);
 
                 username_setting.setText(friendData.getUsername());
@@ -220,6 +227,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
                     image_setting.setImageResource(R.mipmap.ic_launcher);
                 }else{
                     Glide.with(getContext()).load(friendData.getImageURL()).into(image_setting);
+
                 }
             }
 
@@ -234,20 +242,24 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
         enableButton.setOnStateChangeListener(new OnStateChangeListener() {
             @Override
             public void onStateChange(boolean active) {
+
                 //Toast.makeText(getActivity(), "State: " + active, Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getContext(), StartActivity.class));
                 getActivity().finish();
+
             }
         });
 
         //Pending
         recyclerView=view.findViewById(R.id.pendingView);
         listPending=new ArrayList<>();
+
         listPending.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
         listPending.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
         listPending.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
         listPending.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
+
         pendingListAdapter=new PendingListAdapter(getActivity().getApplicationContext(),listPending,this::onPendingClick);
         recyclerView.setAdapter(pendingListAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
