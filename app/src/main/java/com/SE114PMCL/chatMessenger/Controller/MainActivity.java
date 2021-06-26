@@ -117,24 +117,6 @@ public class MainActivity extends AppCompatActivity{
         int seletedItemId = bottomNav.getSelectedItemId();
         int currentFragment;
         switch (seletedItemId) {
-            case R.id.nav_chat:
-                navController = Navigation.findNavController(this, R.id.fragmentContainerView2);
-                currentFragment=navController.getCurrentDestination().getId();
-                if(R.id.messenger==currentFragment) {
-                    /*getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setDisplayShowHomeEnabled(false);
-                    TextView textView=findViewById(R.id.chatName);
-                    textView.setText(R.string.userName);*/
-                    getSupportActionBar().hide();
-                    NavOptions.Builder navBuilder =  new NavOptions.Builder();
-                    navBuilder.setEnterAnim(R.anim.fragment_open_enter).setExitAnim(R.anim.fragment_close_exit).setPopEnterAnim(R.anim.fragment_open_enter).setPopExitAnim(R.anim.fragment_close_exit);
-                    navController.navigate(R.id.user,null,navBuilder.build());
-                    bottomNav.setVisibility(View.VISIBLE);
-                    //CircleImageView circleImageView=findViewById(R.id.chatImage);
-                    //circleImageView.setImageResource(R.drawable.avatar3);
-                    //navController.navigate(R.id.user);
-                }
-                break;
             case R.id.nav_friends:
                 navController = Navigation.findNavController(this, R.id.fragmentContainerView3);
                 currentFragment=navController.getCurrentDestination().getId();

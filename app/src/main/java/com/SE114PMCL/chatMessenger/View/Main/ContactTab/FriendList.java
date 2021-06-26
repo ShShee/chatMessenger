@@ -52,9 +52,7 @@ import java.util.List;
 
 public class FriendList extends Fragment {
     RecyclerView recyclerView;
-    NavController navController;
     Toolbar toolbar;
-    BottomNavigationView navBar;
     List<UserModel> mUsers;
     UserListAdapter userListAdapter;
     EditText search_users;
