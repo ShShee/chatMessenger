@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 
 
 import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
-import com.SE114PMCL.chatMessenger.Chatlist;
+import com.SE114PMCL.chatMessenger.Model.Chatlist;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 

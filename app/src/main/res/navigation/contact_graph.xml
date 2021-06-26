@@ -31,6 +31,9 @@
         android:label="fragment_friend_list"
         tools:layout="@layout/fragment_friend_list" >
 
+        <action
+            android:id="@+id/action_friendList_to_messenger2"
+            app:destination="@id/messenger2" />
     </fragment>
     <fragment
         android:id="@+id/groupList"
@@ -38,4 +41,9 @@
         android:label="fragment_group_list"
         tools:layout="@layout/fragment_group_list" >
     </fragment>
+    <fragment
+        android:id="@+id/messenger2"
+        android:name="Main.ChatTab.Messenger"
+        android:label="fragment_messenger"
+        tools:layout="@layout/fragment_messenger" />
 </navigation>

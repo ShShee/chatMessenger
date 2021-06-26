@@ -16,8 +16,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:text="Friends"
-        android:textSize="27dp"
-        />
+        android:textSize="27dp" />
     <ImageButton
         android:id="@+id/openFriendList"
         android:layout_alignParentRight="true"
@@ -76,8 +75,7 @@
         android:layout_marginBottom="5dp"
         android:text="Groups"
         android:textSize="27dp"
-        android:layout_below="@+id/inputID"
-        />
+        android:layout_below="@+id/inputID" />
     <ImageButton
         android:id="@+id/openGroupList"
         android:layout_alignParentRight="true"
