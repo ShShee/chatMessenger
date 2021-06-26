@@ -95,7 +95,7 @@ public class FriendList extends Fragment implements FriendListAdapter.OnFriendLi
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     FriendData friend = snapshot.getValue(FriendData.class);
 
-                    if(!friend.getUsername().equals(firebaseUser.getUid())){
+                    if(!friend.getId().equals(firebaseUser.getUid())){
                         listFriend.add(friend);
                     }
                 }
