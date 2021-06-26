@@ -16,6 +16,9 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.SE114PMCL.chatMessenger.Friends;
+
+import com.SE114PMCL.chatMessenger.Model.FriendData;
+
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
@@ -72,7 +75,6 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
             }
         });
 

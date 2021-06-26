@@ -1,6 +1,5 @@
 package Main.ChatTab;
 
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,9 +34,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 
@@ -51,6 +52,7 @@ public class User extends Fragment {
     List<Chatlist> mchatlist;
     FirebaseUser fuser;
     DatabaseReference reference;
+  
     public User() {
         // Required empty public constructor
     }
@@ -68,6 +70,7 @@ public class User extends Fragment {
 
         navController= Navigation.findNavController(view);
         navBar = getActivity().findViewById(R.id.bottom_navigation);
+
         recyclerView = view.findViewById(R.id.userView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -123,5 +126,4 @@ public class User extends Fragment {
             }
         });
     }
-
 }

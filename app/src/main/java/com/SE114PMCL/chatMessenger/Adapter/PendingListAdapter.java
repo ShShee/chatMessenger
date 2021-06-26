@@ -40,7 +40,7 @@ public class PendingListAdapter extends RecyclerView.Adapter<PendingListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
         FriendData pending = listPending.get(position);
-        holder.txtPendingName.setText(pending.getTenUser());
+        holder.txtPendingName.setText(pending.getUsername());
         holder.pendingAvatar.setImageResource(pending.getAvatar());
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

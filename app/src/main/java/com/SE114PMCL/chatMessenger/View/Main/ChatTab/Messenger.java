@@ -1,9 +1,9 @@
 package Main.ChatTab;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -58,7 +59,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class Messenger extends Fragment {
     NavController navController;
 
@@ -87,18 +87,20 @@ public class Messenger extends Fragment {
 
     boolean notify = false;
 
+
     public Messenger() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_messenger, container, false);
 
+        return inflater.inflate(R.layout.fragment_messenger, container, false);
     }
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         navBar = getActivity().findViewById(R.id.bottom_navigation);
         navController= Navigation.findNavController(view);
 

@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
                             HashMap<String, String> hashMap=new HashMap<>();
-                            //hashMap.put("id", userid);
+                            hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("imageURL", "default");
 

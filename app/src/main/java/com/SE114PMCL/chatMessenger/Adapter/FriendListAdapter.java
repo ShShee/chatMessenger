@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.R;
 
+import com.bumptech.glide.Glide;
+
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,15 +36,25 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // gán view
         View view = LayoutInflater.from(context).inflate(R.layout.friend_view, parent, false);
-        return new ViewHolder(view,mOnFriendListener);
+
+        return new FriendListAdapter.ViewHolder(view, mOnFriendListener); //ViewHolder(view,mOnFriendListener);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
         FriendData friend = listFriend.get(position);
-        holder.txtTenUser.setText(friend.getTenUser());
-        holder.imgAvatar.setImageResource(friend.getAvatar());
+
+        holder.txtTenUser.setText(friend.getUsername());
+        if(friend.getImageURL().equals("default")){
+            holder.imgAvatar.setImageResource(R.mipmap.ic_launcher);
+        }else{
+            Glide.with(context).load(friend.getImageURL()).into(holder.imgAvatar);
+        }
+
+        //holder.imgAvatar.setImageResource(friend.getAvatar());
+
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,16 +72,17 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         return listFriend.size(); // trả item tại vị trí postion
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView imgAvatar;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public CircleImageView imgAvatar;
+        public TextView txtTenUser;
 
-        TextView txtTenUser;
-        OnFriendListener onFriendListener;
+        public OnFriendListener onFriendListener;
         public ViewHolder(@NonNull View itemView,OnFriendListener onFriendListener) {
             super(itemView);
             // Ánh xạ view
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
             txtTenUser = itemView.findViewById(R.id.txtTenUser);
+
             this.onFriendListener=onFriendListener;
         }
     }

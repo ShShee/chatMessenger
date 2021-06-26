@@ -1,11 +1,13 @@
 package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,10 +29,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.schwaab.avvylib.AvatarView;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
+  
     private Context mContext;
     private List<UserModel> mUsers;
     private boolean ischat;

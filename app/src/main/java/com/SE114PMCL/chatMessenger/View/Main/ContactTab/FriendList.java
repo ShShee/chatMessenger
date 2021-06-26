@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 
 import com.SE114PMCL.chatMessenger.Model.UserModel;
+
 import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,12 +39,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.firebase.database.Query;
+
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class FriendList extends Fragment {
@@ -67,6 +73,7 @@ public class FriendList extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         recyclerView=view.findViewById(R.id.friendView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -98,6 +105,7 @@ public class FriendList extends Fragment {
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
 
     private void searchUsers(String s) {
 
@@ -139,6 +147,7 @@ public class FriendList extends Fragment {
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
+
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (search_users.getText().toString().equals("")) {
                     mUsers.clear();
@@ -180,5 +189,7 @@ public class FriendList extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
