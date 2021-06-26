@@ -1,29 +1,20 @@
 package Main.ChatTab;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.SE114PMCL.chatMessenger.Adapter.ChatAdapter;
 import com.SE114PMCL.chatMessenger.Model.ChatData;
@@ -34,7 +25,6 @@ import com.SE114PMCL.chatMessenger.Notifications.Data;
 import com.SE114PMCL.chatMessenger.Notifications.MyResponse;
 import com.SE114PMCL.chatMessenger.Notifications.Sender;
 import com.SE114PMCL.chatMessenger.Notifications.Token;
-
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -47,93 +37,75 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Messenger extends Fragment {
-    NavController navController;
+public class MessengerActivity extends AppCompatActivity {
 
-    BottomNavigationView navBar;
-    CircleImageView profile_image;
-    TextView username;
-
+    CircleImageView avatar;
+    TextView tennguoidung;
     FirebaseUser fuser;
     DatabaseReference reference;
-
     ImageButton btn_send;
     EditText text_send;
-
     ChatAdapter chatAdapter;
     List<ChatData> mchat;
-
     RecyclerView recyclerView;
-
     Intent intent;
-
     ValueEventListener seenListener;
-
     String userid;
-
     APIService apiService;
 
     boolean notify = false;
 
-
-    public Messenger() {
-        // Required empty public constructor
-    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_messenger);
 
-        return inflater.inflate(R.layout.fragment_messenger, container, false);
-    }
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        navBar = getActivity().findViewById(R.id.bottom_navigation);
-        navController= Navigation.findNavController(view);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Toolbar toolbar = findViewById(R.id.toolbarMess);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        profile_image = view.findViewById(R.id.chatImage);
-        username = view.findViewById(R.id.chatName);
-        btn_send = view.findViewById(R.id.btn_send);
-        text_send = view.findViewById(R.id.inputMessage);
+        avatar = findViewById(R.id.chatImage);
+        tennguoidung = findViewById(R.id.chatName);
+        btn_send = findViewById(R.id.btn_send);
+        text_send = findViewById(R.id.inputMessage);
 
-        intent = getActivity().getIntent();
+        intent = getIntent();
         userid = intent.getStringExtra("userid");
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-        btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                notify = true;
-                String msg = text_send.getText().toString();
-                if (!msg.equals("")){
-                    sendMessage(fuser.getUid(), userid, msg);
-                } else {
-                    Toast.makeText(getActivity(), "You can't send empty message", Toast.LENGTH_SHORT).show();
-                }
-                text_send.setText("");
+        btn_send.setOnClickListener(view -> {
+            notify = true;
+            String msg = text_send.getText().toString();
+            if (!msg.equals("")){
+                sendMessage(fuser.getUid(), userid, msg);
+            } else {
+                Toast.makeText(MessengerActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
             }
+            text_send.setText("");
         });
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
@@ -142,11 +114,11 @@ public class Messenger extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserModel user = dataSnapshot.getValue(UserModel.class);
-                username.setText(user.getUsername());
+                tennguoidung.setText(user.getUsername());
                 if (user.getImageURL().equals("default")){
-                    profile_image.setImageResource(R.mipmap.ic_launcher);
+                    avatar.setImageResource(R.mipmap.ic_launcher);
                 } else {
-                    Glide.with(getContext()).load(user.getImageURL()).into(profile_image);
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(avatar);
                 }
 
                 readMesagges(fuser.getUid(), userid, user.getImageURL());
@@ -157,7 +129,6 @@ public class Messenger extends Fragment {
 
             }
         });
-
         seenMessage(userid);
     }
     private void seenMessage(final String userid){
@@ -194,9 +165,7 @@ public class Messenger extends Fragment {
 
         reference.child("Chats").push().setValue(hashMap);
 
-        final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
-                .child(fuser.getUid())
-                .child(userid);
+        final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid()).child(userid);
 
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -212,9 +181,7 @@ public class Messenger extends Fragment {
             }
         });
 
-        final DatabaseReference chatRefReceiver = FirebaseDatabase.getInstance().getReference("Chatlist")
-                .child(userid)
-                .child(fuser.getUid());
+        final DatabaseReference chatRefReceiver = FirebaseDatabase.getInstance().getReference("Chatlist").child(userid).child(fuser.getUid());
         chatRefReceiver.child("id").setValue(fuser.getUid());
 
         final String msg = message;
@@ -256,7 +223,7 @@ public class Messenger extends Fragment {
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if (response.code() == 200){
                                         if (response.body().success != 1){
-                                            Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MessengerActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
@@ -291,7 +258,7 @@ public class Messenger extends Fragment {
                         mchat.add(chat);
                     }
 
-                    chatAdapter = new ChatAdapter(getActivity(), mchat, imageurl);
+                    chatAdapter = new ChatAdapter(MessengerActivity.this, mchat, imageurl);
                     recyclerView.setAdapter(chatAdapter);
                 }
             }
@@ -303,7 +270,7 @@ public class Messenger extends Fragment {
         });
     }
     private void currentUser(String userid){
-        SharedPreferences.Editor editor = this.getActivity().getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
         editor.putString("currentuser", userid);
         editor.apply();
     }
@@ -318,14 +285,14 @@ public class Messenger extends Fragment {
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         status("online");
         currentUser(userid);
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         reference.removeEventListener(seenListener);
         status("offline");

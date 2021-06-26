@@ -10,18 +10,5 @@
         android:name="Main.ChatTab.User"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" >
-        <action
-            android:id="@+id/action_user_to_messenger"
-            app:destination="@id/messenger"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/messenger"
-        android:name="Main.ChatTab.Messenger"
-        android:label="fragment_messenger"
-        tools:layout="@layout/fragment_messenger" >
     </fragment>
 </navigation>

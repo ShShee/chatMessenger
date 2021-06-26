@@ -16,8 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginAndRegistration"
         tools:replace="android:label">
-        <activity android:name=".ThongtinActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name="Main.ChatTab.MessengerActivity"></activity>
+        <activity android:name=".ThongtinActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotpassActivity" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".LoginActivityGg" />
@@ -52,7 +53,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.StartActivity" >
+        <activity android:name=".Controller.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
