@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,7 +26,7 @@ import com.SE114PMCL.chatMessenger.Notifications.Sender;
 import com.SE114PMCL.chatMessenger.Notifications.Token;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -73,12 +72,7 @@ public class MessengerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> finish());
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
@@ -155,7 +149,7 @@ public class MessengerActivity extends AppCompatActivity {
 
     private void sendMessage(String sender, final String receiver, String message){
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference chatsR = FirebaseDatabase.getInstance().getReference();
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
@@ -163,7 +157,7 @@ public class MessengerActivity extends AppCompatActivity {
         hashMap.put("message", message);
         hashMap.put("isseen", false);
 
-        reference.child("Chats").push().setValue(hashMap);
+        chatsR.child("Chats").push().setValue(hashMap);
 
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid()).child(userid);
 
