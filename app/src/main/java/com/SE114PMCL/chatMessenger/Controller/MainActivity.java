@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.app.Activity;
@@ -17,8 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.SE114PMCL.chatMessenger.Friends;
 
-import com.SE114PMCL.chatMessenger.Model.FriendData;
-
+import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
@@ -32,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 import Main.AccountTab.Setting;
 import Main.ChatTab.Chat;
@@ -149,6 +149,26 @@ public class MainActivity extends AppCompatActivity{
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 activity.findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_chat);
+    }
+    private void status(String status){
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
     }
 }
 
