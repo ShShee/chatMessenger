@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,6 +80,8 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
     LayoutInflater inflater;
     AlertDialog.Builder rename_alert;
+
+    FragmentContainerView fragmentContainerView;
 
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
@@ -252,17 +255,19 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
         });
 
         //Pending
-        recyclerView=view.findViewById(R.id.pendingView);
-        listPending=new ArrayList<>();
+//        recyclerView=view.findViewById(R.id.pendingView);
+//        listPending=new ArrayList<>();
+//
+//        listPending.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
+//        listPending.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
+//        listPending.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
+//        listPending.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
+//
+//        pendingListAdapter=new PendingListAdapter(getActivity().getApplicationContext(),listPending,this::onPendingClick);
+//        recyclerView.setAdapter(pendingListAdapter);
+//        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 
-        listPending.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
-        listPending.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
-        listPending.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
-        listPending.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
-
-        pendingListAdapter=new PendingListAdapter(getActivity().getApplicationContext(),listPending,this::onPendingClick);
-        recyclerView.setAdapter(pendingListAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        fragmentContainerView = view.findViewById(R.id.fragmentContainerView4);
     }
 
     private void openImage() {

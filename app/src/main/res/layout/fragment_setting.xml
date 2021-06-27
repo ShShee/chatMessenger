@@ -142,13 +142,22 @@
             android:background="?android:selectableItemBackground"
             android:layout_gravity="center"
             android:textAlignment="center" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pendingView"
-            tools:listitem="@layout/group_view"
-            android:layout_below="@id/pendingRequest"
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView4"
+            android:name="com.SE114PMCL.chatMessenger.swipe.SwipeSelection"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            android:layout_height="match_parent"
+            android:layout_below="@id/pendingRequest"/>
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/pendingView"-->
+<!--            tools:listitem="@layout/group_view"-->
+<!--            android:layout_below="@id/pendingRequest"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="240dp"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            />-->
+
     </RelativeLayout>
 </RelativeLayout>
