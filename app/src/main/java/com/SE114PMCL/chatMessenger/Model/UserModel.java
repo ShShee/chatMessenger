@@ -5,16 +5,26 @@ public class UserModel {
     private String username;
     private String imageURL;
     private String status;
+    private String lastMessage;
 
-    public UserModel(String id, String username, String imageURL, String status) {
+    public UserModel(String id, String username, String imageURL, String status, String lastMessage) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.status = status;
+        this.lastMessage = lastMessage;
     }
 
     public UserModel(){
 
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
     }
 
     public String getId() {
