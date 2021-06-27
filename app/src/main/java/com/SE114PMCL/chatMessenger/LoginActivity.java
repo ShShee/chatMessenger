@@ -26,6 +26,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.NotNull;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getFragmentManager();
 
     FirebaseAuth mAuth;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
+
+        mAuth = FirebaseAuth.getInstance();
+
+        database = FirebaseDatabase.getInstance("https://chatmessenger-dfe5b-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
         setContentView(R.layout.activity_login);
         info = (TextView)findViewById(R.id.info);
@@ -81,7 +92,33 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+
+                            assert user != null;
+                            String userid = user.getUid();
+
+                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
+                            String name = user.getDisplayName();
+                            String mail = user.getEmail();
+                            String photoURL = user.getPhotoUrl().toString();
+
+                            HashMap<String, String> hashMap=new HashMap<>();
+                            hashMap.put("id", userid);
+                            hashMap.put("username", name);
+                            hashMap.put("imageURL", photoURL);
+
+                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+//                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                        startActivity(intent);
+//                                        finish();
+                                        updateUI(user);
+                                    }
+                                }
+                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -94,7 +131,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if(user != null){
-            Intent intent  = new Intent(LoginActivity.this, ThongtinActivity.class);
+//            Intent intent  = new Intent(LoginActivity.this, ThongtinActivity.class);
+            Intent intent  = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }else{
             Toast.makeText(this, "Please sign in to continue", Toast.LENGTH_SHORT).show();

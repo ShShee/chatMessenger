@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,8 +28,9 @@ import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Controller.StartActivity;
 
-import com.SE114PMCL.chatMessenger.Adapter.PendingListAdapter;
+import com.SE114PMCL.chatMessenger.Model.FriendData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
+import com.SE114PMCL.chatMessenger.Adapter.PendingListAdapter;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.ebanx.swipebtn.OnStateChangeListener;
@@ -63,7 +65,7 @@ import static android.app.Activity.RESULT_OK;
 public class Setting extends Fragment implements PendingListAdapter.OnPendingListener {
     Toolbar toolbar;
     RecyclerView recyclerView;
-    ArrayList<UserModel> listPending;
+    ArrayList<FriendData> listPending;
     PendingListAdapter pendingListAdapter;
 
     DatabaseReference reference;
@@ -78,6 +80,8 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
     LayoutInflater inflater;
     AlertDialog.Builder rename_alert;
+
+    FragmentContainerView fragmentContainerView;
 
     StorageReference storageReference;
     private static final int IMAGE_REQUEST = 1;
@@ -110,62 +114,72 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
         rename_alert = new AlertDialog.Builder(getContext());
 
-        change_name.setOnClickListener(v -> {
-            // start alertdialog
-            //View view = inflater.inflate(R.layout.rename, null);
-            View view12 = getActivity().getLayoutInflater().inflate(R.layout.rename, null);
+        change_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start alertdialog
+                //View view = inflater.inflate(R.layout.rename, null);
+                View view  = getActivity().getLayoutInflater().inflate(R.layout.rename, null);
 
-            rename_alert.setTitle("Rename")
-                    .setMessage("Enter your new name to change")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //validate the email address
-                            EditText renametxt = view12.findViewById(R.id.txtRename);
+                rename_alert.setTitle("Rename")
+                        .setMessage("Enter your new name to change")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //validate the email address
+                                EditText renametxt = view.findViewById(R.id.txtRename);
 
-                            if(renametxt.getText().toString().isEmpty()){
-                                renametxt.setError("Required Field");
-                                return;
-                            }
-                            fuser = FirebaseAuth.getInstance().getCurrentUser();
-                            reference = FirebaseDatabase.getInstance().getReference("Users");
-
-                            HashMap hashMap = new HashMap();
-                            hashMap.put("username",renametxt.getText().toString());
-                            reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
-                                @Override
-                                public void onSuccess(Object o) {
-                                    Toast.makeText(getContext(), "Your name has been changed.", Toast.LENGTH_SHORT).show();
+                                if(renametxt.getText().toString().isEmpty()){
+                                    renametxt.setError("Required Field");
+                                    return;
                                 }
-                            });
-                        }
-                    }).setNegativeButton("Cancel", null)
-                    .setView(view12)
-                    .create().show();
+                                fuser = FirebaseAuth.getInstance().getCurrentUser();
+                                reference = FirebaseDatabase.getInstance().getReference("Users");
+
+                                HashMap hashMap = new HashMap();
+                                hashMap.put("username",renametxt.getText().toString());
+                                reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess(Object o) {
+                                        Toast.makeText(getContext(), "Your name has been changed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("Cancel", null)
+                        .setView(view)
+                        .create().show();
+            }
         });
 
-        change_avatar.setOnClickListener(v -> openImage());
+        change_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openImage();
+            }
+        });
 
 
-        username_setting.setOnClickListener(v -> {
-            // start alertdialog
-            //View view = inflater.inflate(R.layout.rename, null);
-            View view1 = getActivity().getLayoutInflater().inflate(R.layout.rename, null);
+        username_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start alertdialog
+                //View view = inflater.inflate(R.layout.rename, null);
+                View view  = getActivity().getLayoutInflater().inflate(R.layout.rename, null);
 
-            rename_alert.setTitle("Rename")
-                    .setMessage("Enter your new name to change")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //validate the email address
-                            EditText renametxt = view1.findViewById(R.id.txtRename);
+                rename_alert.setTitle("Rename")
+                        .setMessage("Enter your new name to change")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //validate the email address
+                                EditText renametxt = view.findViewById(R.id.txtRename);
 
-                            if(renametxt.getText().toString().isEmpty()){
-                                renametxt.setError("Required Field");
-                                return;
-                            }
-                            fuser = FirebaseAuth.getInstance().getCurrentUser();
-                            reference = FirebaseDatabase.getInstance().getReference("Users");
+                                if(renametxt.getText().toString().isEmpty()){
+                                    renametxt.setError("Required Field");
+                                    return;
+                                }
+                                fuser = FirebaseAuth.getInstance().getCurrentUser();
+                                reference = FirebaseDatabase.getInstance().getReference("Users");
 
 //                                reference.addValueEventListener(new ValueEventListener() {
 //                                    @Override
@@ -179,18 +193,19 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 //
 //                                    }
 //                                });
-                            HashMap hashMap = new HashMap();
-                            hashMap.put("username",renametxt.getText().toString());
-                            reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
-                                @Override
-                                public void onSuccess(Object o) {
-                                    Toast.makeText(getContext(), "Your name has been changed.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }).setNegativeButton("Cancel", null)
-                    .setView(view1)
-                    .create().show();
+                                HashMap hashMap = new HashMap();
+                                hashMap.put("username",renametxt.getText().toString());
+                                reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess(Object o) {
+                                        Toast.makeText(getContext(), "Your name has been changed.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("Cancel", null)
+                        .setView(view)
+                        .create().show();
+            }
         });
 
         image_setting.setOnClickListener(new View.OnClickListener() {
@@ -207,14 +222,14 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
 
-                UserModel user = dataSnapshot.getValue(UserModel.class);
+                FriendData friendData = dataSnapshot.getValue(FriendData.class);
 
-                username_setting.setText(user.getUsername());
+                username_setting.setText(friendData.getUsername());
 
-                if(user.getImageURL().equals("default")){
+                if(friendData.getImageURL().equals("default")){
                     image_setting.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(getContext()).load(user.getImageURL()).into(image_setting);
+                    Glide.with(getContext()).load(friendData.getImageURL()).into(image_setting);
 
                 }
             }
@@ -227,19 +242,32 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
         //Swipe to log out
         SwipeButton enableButton = view.findViewById(R.id.swipe_btn);
-        enableButton.setOnStateChangeListener(active -> {
+        enableButton.setOnStateChangeListener(new OnStateChangeListener() {
+            @Override
+            public void onStateChange(boolean active) {
 
-            //Toast.makeText(getActivity(), "State: " + active, Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getContext(), StartActivity.class));
-            getActivity().finish();
+                //Toast.makeText(getActivity(), "State: " + active, Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(), StartActivity.class));
+                getActivity().finish();
 
+            }
         });
 
         //Pending
-        recyclerView=view.findViewById(R.id.pendingView);
-        recyclerView.setAdapter(pendingListAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+//        recyclerView=view.findViewById(R.id.pendingView);
+//        listPending=new ArrayList<>();
+//
+//        listPending.add(new FriendData("0","Boss",R.drawable.avatar1,"",false, ""));
+//        listPending.add(new FriendData("0","Chaien",R.drawable.chaien,"",false, ""));
+//        listPending.add(new FriendData("0","Hooney",R.drawable.chaien,"",false, ""));
+//        listPending.add(new FriendData("0","Cat",R.drawable.chaien,"",false, ""));
+//
+//        pendingListAdapter=new PendingListAdapter(getActivity().getApplicationContext(),listPending,this::onPendingClick);
+//        recyclerView.setAdapter(pendingListAdapter);
+//        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+
+        fragmentContainerView = view.findViewById(R.id.fragmentContainerView4);
     }
 
     private void openImage() {

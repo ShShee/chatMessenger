@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import androidx.annotation.Nullable;
 
@@ -24,11 +25,11 @@ public class DatabaseWorker extends SQLiteOpenHelper {
     }
 
     //inserting database
-    public boolean insert(String username, String password){
+    public boolean insert(Uri username, ContentValues password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("username", username);
-        contentValues.put("password", password);
+        contentValues.put("username", String.valueOf(username));
+        contentValues.put("password", String.valueOf(password));
         long ins = db.insert("user", null, contentValues);
         if(ins == -1) return false;
         else return  true;

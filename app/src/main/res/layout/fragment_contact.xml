@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginRight="6dp"
     android:layout_marginLeft="6dp"
     android:layout_marginTop="12dp"
+    android:layout_marginRight="6dp"
     tools:context="Main.ContactTab.Contact">
 
     <TextView
@@ -17,51 +17,55 @@
         android:layout_marginBottom="5dp"
         android:text="Friends"
         android:textSize="27dp" />
+
     <ImageButton
         android:id="@+id/openFriendList"
-        android:layout_alignParentRight="true"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:src="@drawable/send"
-        android:background="?android:selectableItemBackground"
+        android:layout_alignParentRight="true"
         android:layout_gravity="center"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/send"
         android:textAlignment="center" />
+
     <View
         android:id="@+id/divider1"
         android:layout_width="match_parent"
-        android:layout_below="@+id/friendName"
-        android:layout_toLeftOf="@+id/openFriendList"
         android:layout_height="1dp"
+        android:layout_below="@+id/friendName"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_toLeftOf="@+id/openFriendList"
+        android:background="@android:color/darker_gray" />
+
     <ImageButton
         android:id="@+id/findFriend"
-        android:layout_below="@+id/divider1"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="20dp"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:src="@drawable/addfr"
-        android:background="?android:selectableItemBackground"
+        android:layout_below="@+id/divider1"
+        android:layout_alignParentLeft="true"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/addfr"
         android:textAlignment="center" />
+
     <EditText
         android:id="@+id/inputID"
-        android:layout_below="@+id/divider1"
-        android:layout_marginBottom="20dp"
-        android:layout_toRightOf="@+id/findFriend"
         android:layout_width="320dp"
         android:layout_height="50dp"
+        android:layout_below="@+id/divider1"
         android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toRightOf="@+id/findFriend"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_addfriend"
         android:drawablePadding="10dp"
         android:ems="10"
         android:inputType="number"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:paddingLeft="16dp"
+        android:paddingTop="8dp"
         android:paddingRight="16dp"
+        android:paddingBottom="8dp"
         android:textColorHint="@color/black"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="126dp" />
@@ -71,59 +75,64 @@
         android:id="@+id/groupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/inputID"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:text="Groups"
-        android:textSize="27dp"
-        android:layout_below="@+id/inputID" />
+        android:textSize="27dp" />
+
     <ImageButton
         android:id="@+id/openGroupList"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/inputID"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:src="@drawable/send"
-        android:background="?android:selectableItemBackground"
+        android:layout_below="@+id/inputID"
+        android:layout_alignParentRight="true"
         android:layout_gravity="center"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/send"
         android:textAlignment="center" />
+
     <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
-        android:layout_below="@+id/groupName"
-        android:layout_toLeftOf="@id/openGroupList"
         android:layout_height="1dp"
+        android:layout_below="@+id/groupName"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_toLeftOf="@id/openGroupList"
+        android:background="@android:color/darker_gray" />
+
     <ImageButton
         android:id="@+id/addGroup"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/divider2"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/add"
-        android:background="?android:selectableItemBackground"
+        android:layout_below="@+id/divider2"
+        android:layout_alignParentLeft="true"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:background="?android:selectableItemBackground"
+        android:src="@drawable/add"
         android:textAlignment="center" />
+
     <EditText
         android:id="@+id/inputGroupName"
-        android:layout_below="@+id/divider2"
-        android:layout_toRightOf="@+id/addGroup"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="9dp"
+        android:layout_below="@+id/divider2"
         android:layout_marginLeft="20dp"
+        android:layout_marginBottom="9dp"
+        android:layout_toRightOf="@+id/addGroup"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_group"
         android:drawablePadding="10dp"
         android:ems="10"
         android:inputType="text"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:paddingLeft="16dp"
+        android:paddingTop="8dp"
         android:paddingRight="16dp"
+        android:paddingBottom="8dp"
         android:textColorHint="@color/black"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="126dp" />
+
 
 </RelativeLayout>
