@@ -7,18 +7,28 @@ public class FriendData {
     private Boolean activeStatus;
     private int avatar;
     private String imageURL;
+    private String status;
 
-    public FriendData(String id,String username, int avatar,String lastMessage,Boolean activeStatus, String imageURL) {
+    public FriendData(String id,String username, int avatar,String lastMessage,Boolean activeStatus, String imageURL, String status) {
         this.id=id;
         this.username = username;
         this.avatar = avatar;
         this.lastMessage=lastMessage;
         this.activeStatus=activeStatus;
         this.imageURL = imageURL;
+        this.status = status;
     }
 
     public FriendData(){
 
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {
