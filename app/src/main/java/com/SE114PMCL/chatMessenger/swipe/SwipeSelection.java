@@ -14,9 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
+import com.SE114PMCL.chatMessenger.Model.RequestModel;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +36,8 @@ public class SwipeSelection extends Fragment {
     RecyclerView recyclerView;
     private SwipeAdapter adapter;
     ArrayList<UserModel> userModel = new ArrayList<>();
+
+    UserListAdapter userListAdapter;
 
     public SwipeSelection() {
         // Required empty public constructor
@@ -53,11 +65,37 @@ public class SwipeSelection extends Fragment {
 
     private void CreateList() {
         userModel = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
-            UserModel user = new UserModel();
-            user.setUsername("Friend " + (i+1));
-            userModel.add(user);
-        }
-        adapter.setFriendData(userModel);
+//        for(int i = 0; i < 20; i++){
+//            UserModel user = new UserModel();
+//            user.setUsername("Friend " + (i+1));
+//            userModel.add(user);
+//        }
+//        adapter.setFriendData(userModel);
+
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userModel.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    UserModel user = snapshot.getValue(UserModel.class);
+                    if (!user.getId().equals(firebaseUser.getUid())) {
+                        userModel.add(user);
+                    }
+
+                    adapter = new SwipeAdapter(getContext(), userModel);
+                    recyclerView.setAdapter(adapter);
+                    //adapter.setFriendData(userModel);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
