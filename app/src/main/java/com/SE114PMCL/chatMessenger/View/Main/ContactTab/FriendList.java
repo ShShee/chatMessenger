@@ -184,6 +184,4 @@ public class FriendList extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-
-
 }
