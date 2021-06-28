@@ -14,7 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 public class SwipeSelection extends Fragment {
     RecyclerView recyclerView;
     private SwipeAdapter adapter;
-    ArrayList<FriendData> friendData = new ArrayList<>();
+    ArrayList<UserModel> userModel = new ArrayList<>();
 
     public SwipeSelection() {
         // Required empty public constructor
@@ -44,19 +45,19 @@ public class SwipeSelection extends Fragment {
         recyclerView = view.findViewById(R.id.swipe_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        adapter = new SwipeAdapter(getContext(), friendData);
+        adapter = new SwipeAdapter(getContext(), userModel);
         recyclerView.setAdapter(adapter);
 
         CreateList();
     }
 
     private void CreateList() {
-        friendData = new ArrayList<>();
+        userModel = new ArrayList<>();
         for(int i = 0; i < 20; i++){
-            FriendData friendData_2 = new FriendData();
-            friendData_2.setUsername("Friend " + (i+1));
-            friendData.add(friendData_2);
+            UserModel user = new UserModel();
+            user.setUsername("Friend " + (i+1));
+            userModel.add(user);
         }
-        adapter.setFriendData(friendData);
+        adapter.setFriendData(userModel);
     }
 }

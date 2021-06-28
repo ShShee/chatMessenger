@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
@@ -23,17 +23,17 @@ import java.util.ArrayList;
 public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHolder> {
     //1-
     private Context context;
-    private ArrayList<FriendData> friendData;
+    private ArrayList<UserModel> usermodel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public SwipeAdapter(Context context, ArrayList<FriendData> friendData) {
+    public SwipeAdapter(Context context, ArrayList<UserModel> usermodel) {
         this.context = context;
-        this.friendData = friendData;
+        this.usermodel = usermodel;
     }
 
-    public void setFriendData(ArrayList<FriendData> friendData){
-        this.friendData = new ArrayList<>();
-        this.friendData = friendData;
+    public void setFriendData(ArrayList<UserModel> usermodel){
+        this.usermodel = new ArrayList<>();
+        this.usermodel = usermodel;
         notifyDataSetChanged();
     }
 
@@ -48,14 +48,14 @@ public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHol
     @Override
     public void onBindViewHolder(@NonNull @NotNull SwipeViewHolder holder, int position) {
         viewBinderHelper.setOpenOnlyOne(true);
-        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(friendData.get(position).getUsername()));
-        viewBinderHelper.closeLayout(String.valueOf(friendData.get(position).getUsername()));
-        holder.bindData(friendData.get(position));
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(usermodel.get(position).getUsername()));
+        viewBinderHelper.closeLayout(String.valueOf(usermodel.get(position).getUsername()));
+        holder.bindData(usermodel.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return friendData.size();
+        return usermodel.size();
     }
 
     // 2-
@@ -86,7 +86,7 @@ public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHol
                 }
             });
         }
-        void bindData(FriendData friendData){
+        void bindData(UserModel friendData){
             textView.setText(friendData.getUsername());
         }
     }

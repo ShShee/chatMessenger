@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Controller.StartActivity;
 
-import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.Adapter.PendingListAdapter;
 import com.SE114PMCL.chatMessenger.R;
@@ -65,7 +65,7 @@ import static android.app.Activity.RESULT_OK;
 public class Setting extends Fragment implements PendingListAdapter.OnPendingListener {
     Toolbar toolbar;
     RecyclerView recyclerView;
-    ArrayList<FriendData> listPending;
+    ArrayList<UserModel> listPending;
     PendingListAdapter pendingListAdapter;
 
     DatabaseReference reference;
@@ -222,14 +222,14 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
 
-                FriendData friendData = dataSnapshot.getValue(FriendData.class);
+                UserModel userModel = dataSnapshot.getValue(UserModel.class);
 
-                username_setting.setText(friendData.getUsername());
+                username_setting.setText(userModel.getUsername());
 
-                if(friendData.getImageURL().equals("default")){
+                if(userModel.getImageURL().equals("default")){
                     image_setting.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(getContext()).load(friendData.getImageURL()).into(image_setting);
+                    Glide.with(getContext()).load(userModel.getImageURL()).into(image_setting);
 
                 }
             }
