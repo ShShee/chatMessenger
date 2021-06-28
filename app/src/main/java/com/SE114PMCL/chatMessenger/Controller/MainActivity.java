@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity{
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new Chat()).commit();
         }
-        getSupportActionBar().hide();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
