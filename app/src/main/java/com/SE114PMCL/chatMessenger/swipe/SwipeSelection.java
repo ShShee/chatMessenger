@@ -14,8 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
+import com.SE114PMCL.chatMessenger.Model.RequestModel;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +35,9 @@ import java.util.ArrayList;
 public class SwipeSelection extends Fragment {
     RecyclerView recyclerView;
     private SwipeAdapter adapter;
-    ArrayList<FriendData> friendData = new ArrayList<>();
+    ArrayList<UserModel> userModel = new ArrayList<>();
+
+    UserListAdapter userListAdapter;
 
     public SwipeSelection() {
         // Required empty public constructor
@@ -44,19 +57,97 @@ public class SwipeSelection extends Fragment {
         recyclerView = view.findViewById(R.id.swipe_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        adapter = new SwipeAdapter(getContext(), friendData);
+        adapter = new SwipeAdapter(getContext(), userModel);
         recyclerView.setAdapter(adapter);
 
         CreateList();
     }
 
     private void CreateList() {
-        friendData = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
-            FriendData friendData_2 = new FriendData();
-            friendData_2.setUsername("Friend " + (i+1));
-            friendData.add(friendData_2);
-        }
-        adapter.setFriendData(friendData);
+        userModel = new ArrayList<>();
+//        for(int i = 0; i < 20; i++){
+//            UserModel user = new UserModel();
+//            user.setUsername("Friend " + (i+1));
+//            userModel.add(user);
+//        }
+//        adapter.setFriendData(userModel);
+
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference ref_request = FirebaseDatabase.getInstance().getReference("Request").child(firebaseUser.getUid());
+
+        ref_request.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                RequestModel request = snapshot.getValue(RequestModel.class);
+
+                String id1_request = request.getId1();
+                String id2_request = request.getId2();
+                String id3_request = request.getId3();
+                String id4_request = request.getId4();
+                String id5_request = request.getId5();
+
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        userModel.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            UserModel user = snapshot.getValue(UserModel.class);
+                            if (user.getId().equals(id1_request)) {
+                                userModel.add(user);
+                            }
+                            if (user.getId().equals(id2_request)) {
+                                userModel.add(user);
+                            }
+                            if (user.getId().equals(id3_request)) {
+                                userModel.add(user);
+                            }
+                            if (user.getId().equals(id4_request)) {
+                                userModel.add(user);
+                            }
+                            if (user.getId().equals(id5_request)) {
+                                userModel.add(user);
+                            }
+
+                            adapter = new SwipeAdapter(getContext(), userModel);
+                            recyclerView.setAdapter(adapter);
+                            //adapter.setFriendData(userModel);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                userModel.clear();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    UserModel user = snapshot.getValue(UserModel.class);
+//                    if (user.getId().equals("e6qlrRjJanVrTBz4AdM5bIyZO9Z2")) {
+//                        userModel.add(user);
+//                    }
+//
+//                    adapter = new SwipeAdapter(getContext(), userModel);
+//                    recyclerView.setAdapter(adapter);
+//                    //adapter.setFriendData(userModel);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }

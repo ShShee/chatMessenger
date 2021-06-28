@@ -7,8 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,14 +23,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.SE114PMCL.chatMessenger.Adapter.FriendListAdapter;
 import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 
 import com.SE114PMCL.chatMessenger.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -187,7 +183,5 @@ public class FriendList extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 }

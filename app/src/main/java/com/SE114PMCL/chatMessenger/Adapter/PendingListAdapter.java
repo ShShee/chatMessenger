@@ -9,8 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -18,11 +19,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PendingListAdapter extends RecyclerView.Adapter<PendingListAdapter.ViewHolder> {
     Context context;
-    ArrayList<FriendData> listPending;
+    ArrayList<UserModel> listPending;
     private PendingListAdapter.OnPendingListener mOnPendingListener;
     private int selectedPos = RecyclerView.NO_POSITION;
 
-    public PendingListAdapter(Context context, ArrayList<FriendData> listPending, OnPendingListener onPendingListener) {
+    public PendingListAdapter(Context context, ArrayList<UserModel> listPending, OnPendingListener onPendingListener) {
         this.context = context;
         this.listPending = listPending;
         this.mOnPendingListener=onPendingListener;
@@ -39,9 +40,13 @@ public class PendingListAdapter extends RecyclerView.Adapter<PendingListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
-        FriendData pending = listPending.get(position);
+        UserModel pending = listPending.get(position);
         holder.txtPendingName.setText(pending.getUsername());
-        holder.pendingAvatar.setImageResource(pending.getAvatar());
+        if (pending.getImageURL().equals("default")){
+            holder.pendingAvatar.setImageResource(R.mipmap.ic_launcher);
+        } else {
+            Glide.with(context).load(pending.getImageURL()).into(holder.pendingAvatar);
+        }
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +66,6 @@ public class PendingListAdapter extends RecyclerView.Adapter<PendingListAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView pendingAvatar;
-
         TextView txtPendingName;
         OnPendingListener onPendingListener;
         public ViewHolder(@NonNull View itemView,OnPendingListener onPendingListener) {

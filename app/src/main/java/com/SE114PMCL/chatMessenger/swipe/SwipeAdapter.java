@@ -5,14 +5,16 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.SE114PMCL.chatMessenger.Model.FriendData;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
+import com.bumptech.glide.Glide;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
@@ -23,17 +25,17 @@ import java.util.ArrayList;
 public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHolder> {
     //1-
     private Context context;
-    private ArrayList<FriendData> friendData;
+    private ArrayList<UserModel> usermodel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public SwipeAdapter(Context context, ArrayList<FriendData> friendData) {
+    public SwipeAdapter(Context context, ArrayList<UserModel> usermodel) {
         this.context = context;
-        this.friendData = friendData;
+        this.usermodel = usermodel;
     }
 
-    public void setFriendData(ArrayList<FriendData> friendData){
-        this.friendData = new ArrayList<>();
-        this.friendData = friendData;
+    public void setFriendData(ArrayList<UserModel> usermodel){
+        this.usermodel = new ArrayList<>();
+        this.usermodel = usermodel;
         notifyDataSetChanged();
     }
 
@@ -48,18 +50,19 @@ public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHol
     @Override
     public void onBindViewHolder(@NonNull @NotNull SwipeViewHolder holder, int position) {
         viewBinderHelper.setOpenOnlyOne(true);
-        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(friendData.get(position).getUsername()));
-        viewBinderHelper.closeLayout(String.valueOf(friendData.get(position).getUsername()));
-        holder.bindData(friendData.get(position));
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(usermodel.get(position).getUsername()));
+        viewBinderHelper.closeLayout(String.valueOf(usermodel.get(position).getUsername()));
+        holder.bindData(usermodel.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return friendData.size();
+        return usermodel.size();
     }
 
     // 2-
     public class SwipeViewHolder extends RecyclerView.ViewHolder{
+        public ImageView profile_image;
         private TextView textView;
         private TextView txtAdd;
         private TextView txtDelete;
@@ -71,6 +74,7 @@ public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHol
             txtAdd = itemView.findViewById(R.id.txtAddFriend);
             txtDelete = itemView.findViewById(R.id.txtDeleteFriend);
             swipeRevealLayout = itemView.findViewById(R.id.swipelayout);
+            profile_image = itemView.findViewById(R.id.imgAvatar);
 
             txtAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,8 +90,13 @@ public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHol
                 }
             });
         }
-        void bindData(FriendData friendData){
-            textView.setText(friendData.getUsername());
+        void bindData(UserModel userModel){
+            textView.setText(userModel.getUsername());
+            if (userModel.getImageURL().equals("default")){
+                profile_image.setImageResource(R.mipmap.ic_launcher);
+            } else {
+                Glide.with(context).load(userModel.getImageURL()).into(profile_image);
+            }
         }
     }
 }
