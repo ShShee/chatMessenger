@@ -69,6 +69,10 @@
             android:id="@+id/sendImage"
             android:layout_width="70dp"
             android:layout_height="52dp"
+            android:layout_marginEnd="52dp"
+            android:layout_marginRight="52dp"
+            android:layout_toStartOf="@+id/btn_send"
+            android:layout_toLeftOf="@+id/btn_send"
             android:layout_toRightOf="@id/inputMessage"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane2" />

@@ -5,12 +5,14 @@ public class UserModel {
     private String username;
     private String imageURL;
     private String status;
+    private String timkiem;
 
-    public UserModel(String id, String username, String imageURL, String status) {
+    public UserModel(String id, String username, String imageURL, String status, String timkiem) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.status = status;
+        this.timkiem = timkiem;
     }
 
     public UserModel(){
@@ -49,4 +51,11 @@ public class UserModel {
         this.status = status;
     }
 
+    public String getTimkiem() {
+        return timkiem;
+    }
+
+    public void setTimkiem(String timkiem) {
+        this.timkiem = timkiem;
+    }
 }
