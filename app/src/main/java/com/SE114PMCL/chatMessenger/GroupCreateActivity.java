@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -62,11 +63,15 @@ public class GroupCreateActivity extends AppCompatActivity {
     private Button createGroupBtn;
 
     private ProgressDialog progressDialog;
+    private Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
+
+        myToolbar=findViewById(R.id.tlbCreateGroup);
+        setSupportActionBar(myToolbar);
 
         actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -172,7 +177,7 @@ public class GroupCreateActivity extends AppCompatActivity {
         hashMap.put("createBy",""+firebaseAuth.getUid());
 
         //create group
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Groups");
+        DatabaseReference ref= FirebaseDatabase.getInstance("https://chatmessenger-dfe5b-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Groups");
         ref.child(g_timestamp).setValue(hashMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -185,7 +190,7 @@ public class GroupCreateActivity extends AppCompatActivity {
                         hashMap1.put("role", "creator");
                         hashMap1.put("timestamp",g_timestamp);
 
-                        DatabaseReference ref1=FirebaseDatabase.getInstance().getReference("Groups");
+                        DatabaseReference ref1=FirebaseDatabase.getInstance("https://chatmessenger-dfe5b-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Groups");
                         ref1.child(g_timestamp).child("Participants").child(firebaseAuth.getUid())
                                 .setValue(hashMap1)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
