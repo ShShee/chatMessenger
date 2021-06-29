@@ -62,9 +62,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
         if(position==mChat.size()-1){
             if(chat.isIsseen()){
-                holder.txt_seen.setText("Seen");
+                holder.txt_seen.setText("Đã xem");
             }else{
-                holder.txt_seen.setText("Delivered");
+                holder.txt_seen.setText("Đã chuyển");
             }
         }else{
             holder.txt_seen.setVisibility(View.GONE);
