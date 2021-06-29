@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="Main.ChatTab.Messenger">
+    tools:context="Main.ChatTab.MessengerActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarMess"
@@ -51,8 +51,9 @@
 
         <EditText
             android:id="@+id/inputMessage"
-            android:layout_width="257dp"
+            android:layout_width="wrap_content"
             android:layout_height="52dp"
+            android:layout_alignParentLeft="true"
             android:background="@drawable/input_bg"
             android:drawablePadding="10dp"
             android:ems="10"
@@ -62,28 +63,21 @@
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
             android:textColorHint="@color/black"
-            tools:layout_editor_absoluteX="34dp"
-            tools:layout_editor_absoluteY="126dp" />
+            />
 
         <ImageButton
             android:id="@+id/sendImage"
             android:layout_width="70dp"
             android:layout_height="52dp"
-            android:layout_alignEnd="@+id/inputMessage"
-            android:layout_alignRight="@+id/inputMessage"
-            android:layout_marginEnd="-68dp"
-            android:layout_marginRight="-68dp"
+            android:layout_toRightOf="@id/inputMessage"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane2" />
 
         <ImageButton
             android:id="@+id/btn_send"
-            android:layout_width="82dp"
+            android:layout_width="70dp"
             android:layout_height="52dp"
-            android:layout_alignEnd="@+id/inputMessage"
-            android:layout_alignRight="@+id/inputMessage"
-            android:layout_marginEnd="-146dp"
-            android:layout_marginRight="-146dp"
+           android:layout_alignParentRight="true"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane" />
 
