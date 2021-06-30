@@ -5,16 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="Main.ContactTab.GroupList">
-    <include
-        android:id="@+id/toolbarGroup"
-        layout="@layout/tlbrgroup"/>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friendView"
-        android:layout_below="@id/toolbarGroup"
-        tools:listitem="@layout/group_view"
+        android:id="@+id/groupsRv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
+        tools:listitem="@layout/row_groupchats_list"/>
 
 </RelativeLayout>
