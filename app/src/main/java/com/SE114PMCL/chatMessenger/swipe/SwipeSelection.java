@@ -81,11 +81,11 @@ public class SwipeSelection extends Fragment {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 RequestModel request = snapshot.getValue(RequestModel.class);
 
-                String id1_request = request.getId1();
-                String id2_request = request.getId2();
-                String id3_request = request.getId3();
-                String id4_request = request.getId4();
-                String id5_request = request.getId5();
+                String id1_request = "";//request.getId1();
+                String id2_request = "";//request.getId2();
+                String id3_request = "";//request.getId3();
+                String id4_request = "";//request.getId4();
+                String id5_request = "";//request.getId5();
 
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
