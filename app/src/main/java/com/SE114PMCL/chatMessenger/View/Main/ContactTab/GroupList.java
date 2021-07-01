@@ -19,47 +19,68 @@ import com.SE114PMCL.chatMessenger.Adapter.GroupListAdapter;
 import com.SE114PMCL.chatMessenger.Model.GroupData;
 import com.SE114PMCL.chatMessenger.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 
 
-public class GroupList extends Fragment implements GroupListAdapter.OnGroupListener {
-    RecyclerView recyclerView;
-    NavController navController;
-    Toolbar toolbar;
-    BottomNavigationView navBar;
-    ArrayList<GroupData> listGroup;
-    GroupListAdapter groupListAdapter;
+public class GroupList extends Fragment {
+
+    private RecyclerView groupsRv;
+
+    private FirebaseAuth firebaseAuth;
+
+    private ArrayList<GroupData> groupData;
+    private GroupListAdapter groupListAdapter;
 
     public GroupList() {
-        // Required empty public constructor
+
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_group_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_list, container, false);
+
+        groupsRv = view.findViewById(R.id.groupsRv);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        loadGroupChatList();
+
+        return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerView=view.findViewById(R.id.friendView);
-        listGroup=new ArrayList<>();
-        listGroup.add(new GroupData("Cat KingDom",R.drawable.avatar1));
-        listGroup.add(new GroupData("Chaien and Friends",R.drawable.chaien));
-        groupListAdapter=new GroupListAdapter(getActivity().getApplicationContext(),listGroup,this::onGroupClick);
-        recyclerView.setAdapter(groupListAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        toolbar = view.findViewById(R.id.toolbarGroup);
-        //toolbar.inflateMenu(R.menu.groupmenu);
-    }
+    private void loadGroupChatList() {
+        groupData = new ArrayList<>();
 
-    @Override
-    public void onGroupClick(int position) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Groups");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                groupData.size();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds.child("Participants").child(firebaseAuth.getUid()).exists()) {
+                        GroupData model = ds.getValue(GroupData.class);
+                        groupData.add(model);
+                    }
+                    groupListAdapter = new GroupListAdapter(getActivity(), groupData);
+                    groupsRv.setAdapter(groupListAdapter);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 }

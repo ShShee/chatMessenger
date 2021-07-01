@@ -86,18 +86,27 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            item -> {
-                Fragment selectedFragment=null;
-                switch (item.getItemId()) {
-                    case R.id.nav_chat:
-                        selectedFragment = new Chat();
-                        break;
-                    case R.id.nav_friends:
-                        selectedFragment = new Friends();
-                        break;
-                    case R.id.nav_setting:
-                        selectedFragment = new Setting();
-                        break;
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem item) {
+                    Fragment selectedFragment=null;
+                    switch (item.getItemId()) {
+                        case R.id.nav_chat:
+                            getSupportActionBar().show();
+                            selectedFragment = new Chat();
+                            break;
+                        case R.id.nav_friends:
+                            selectedFragment = new Friends();
+                            getSupportActionBar().hide();
+                            break;
+                        case R.id.nav_setting:
+                            selectedFragment = new Setting();
+                            getSupportActionBar().hide();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
+                            selectedFragment).commit();
+                    return true;
                 }
                 getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
                         selectedFragment).commit();

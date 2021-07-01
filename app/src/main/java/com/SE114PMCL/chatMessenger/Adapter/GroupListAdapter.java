@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,67 +13,90 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.SE114PMCL.chatMessenger.Model.GroupData;
 import com.SE114PMCL.chatMessenger.R;
+import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.HolderGroupChatList> {
 
-public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.ViewHolder> {
-    Context context;
-    ArrayList<GroupData> listGroup;
-    private GroupListAdapter.OnGroupListener mOnGroupListener;
-    private int selectedPos = RecyclerView.NO_POSITION;
+    private Context context;
+    private ArrayList<GroupData> groupData;
 
-    public GroupListAdapter(Context context, ArrayList<GroupData> listGroup,OnGroupListener onGroupListener) {
-        this.context = context;
-        this.listGroup = listGroup;
-        this.mOnGroupListener=onGroupListener;
+    public GroupListAdapter(Context context, ArrayList<GroupData> groupData){
+        this.context=context;
+        this.groupData=groupData;
     }
 
     @NonNull
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // gán view
-        View view = LayoutInflater.from(context).inflate(R.layout.group_view, parent, false);
-        return new ViewHolder(view,mOnGroupListener);
+    public HolderGroupChatList onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        //inflate layout
+        View view = LayoutInflater.from(context).inflate(R.layout.row_groupchats_list,parent,false);
+        return new HolderGroupChatList(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Gán dữ liêuk
-        GroupData group = listGroup.get(position);
-        holder.txtTenGroup.setText(group.getTenGroup());
-        holder.imgAvatar.setImageResource(group.getAvatar());
-        holder.itemView.setSelected(selectedPos == position);
+    public void onBindViewHolder(@NonNull @NotNull HolderGroupChatList holder, int position) {
+        //get data
+        GroupData model=groupData.get(position);
+        String groupId=model.getGroupId();
+        String groupIcon=model.getGroupIcon();
+        String groupTitle=model.getGroupTitle();
+
+        //set data
+        holder.groupTitleTv.setText(groupTitle);
+        try {
+            Picasso.get().load(groupIcon).placeholder(R.drawable.ic_creategroup).into(holder.groupIconIv);
+
+        }
+        catch (Exception c){
+            holder.groupIconIv.setImageResource(R.drawable.ic_creategroup);
+
+        }
+
+        //handle group click
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notifyItemChanged(selectedPos);
-                selectedPos = position;
-                notifyItemChanged(selectedPos);
-                mOnGroupListener.onGroupClick(holder.getBindingAdapterPosition());
+                //will do
             }
         });
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return listGroup.size(); // trả item tại vị trí postion
+        return groupData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView imgAvatar;
-        TextView txtTenGroup;
-        OnGroupListener onGroupListener;
-        public ViewHolder(@NonNull View itemView,OnGroupListener onGroupListener) {
+
+    //view holder class
+    class HolderGroupChatList extends RecyclerView.ViewHolder {
+        //ui views
+        private ImageView groupIconIv;
+        private TextView groupTitleTv, nameTv, messageTv, timeTv;
+
+
+
+
+        public HolderGroupChatList(@NonNull @NotNull View itemView) {
             super(itemView);
-            // Ánh xạ view
-            imgAvatar = itemView.findViewById(R.id.imgAvatar);
-            txtTenGroup = itemView.findViewById(R.id.txtTenGroup);
-            this.onGroupListener=mOnGroupListener;
+
+            groupIconIv=itemView.findViewById(R.id.groupIconIv);
+            groupTitleTv=itemView.findViewById(R.id.groupTitleTv);
+            nameTv=itemView.findViewById(R.id.nameTv);
+            messageTv=itemView.findViewById(R.id.messageTv);
+            timeTv=itemView.findViewById(R.id.timeTv);
+
         }
     }
-    public interface OnGroupListener{
-        void onGroupClick(int position);
-    }
 }
+
+
+
