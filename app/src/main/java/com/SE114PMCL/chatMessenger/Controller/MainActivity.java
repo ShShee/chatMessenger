@@ -108,9 +108,7 @@ public class MainActivity extends AppCompatActivity{
                             selectedFragment).commit();
                     return true;
                 }
-                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
-                        selectedFragment).commit();
-                return true;
+
             };
 
     private void Reset(int name) {
