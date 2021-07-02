@@ -79,6 +79,6 @@
             android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane" />
-
     </LinearLayout>
+
 </RelativeLayout>

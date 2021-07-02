@@ -54,7 +54,7 @@
         app:stackFromEnd="true"
         android:layout_above="@+id/chatLayout" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/chatLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,23 +67,22 @@
             android:id="@+id/messageEt"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
-            android:layout_alignParentLeft="true"
             android:background="@drawable/input_bg"
             android:drawablePadding="10dp"
             android:ems="10"
+            android:layout_weight="4"
             android:inputType="textMultiLine"
             android:paddingLeft="16dp"
             android:paddingTop="8dp"
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
-            android:textColorHint="@color/black"
-            />
+            android:textColorHint="@color/black" />
 
         <ImageButton
             android:id="@+id/attachBtn"
             android:layout_width="70dp"
             android:layout_height="52dp"
-            android:layout_toRightOf="@id/messageEt"
+            android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane2" />
 
@@ -91,9 +90,8 @@
             android:id="@+id/sendBtn"
             android:layout_width="70dp"
             android:layout_height="52dp"
-            android:layout_alignParentRight="true"
+            android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane" />
-
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>
