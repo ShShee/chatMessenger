@@ -5,38 +5,60 @@
     android:padding="8dp"
     android:layout_height="wrap_content">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_image"
+        android:visibility="gone"/>
     <RelativeLayout
-        android:layout_width="300dp"
+        android:layout_width="400dp"
         android:layout_alignParentEnd="true"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_image"
-            android:visibility="gone"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_right"
-            android:text="hello"
+            android:id="@+id/timestamp"
+            android:layout_toLeftOf="@id/linearchat"
+            android:layout_marginLeft="5dp"
+            android:text="14/09/2001 11:00AM"
+            android:textColor="@color/black"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearchat"
             android:layout_alignParentEnd="true"
-            android:id="@+id/show_message"
-            android:textSize="18sp"
-            android:textColor="#fff"
-            android:padding="8dp"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true">
+            <TextView
+                android:id="@+id/show_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_right"
+                android:padding="8dp"
+                android:text="hello"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/show_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/background_left"
+                android:padding="8dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_image_send" />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txt_seen"
-            android:layout_below="@id/show_message"
+            android:layout_below="@id/linearchat"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
+
 
 </RelativeLayout>

@@ -123,7 +123,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                     if (firebaseUser != null && chat != null) {
                         if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid) ||
                                 chat.getReceiver().equals(userid) && chat.getSender().equals(firebaseUser.getUid())) {
-                            theLastMessage = chat.getMessage();
+                            if(chat.getType().equals("image")) { theLastMessage = "Gửi hình ảnh";}
+                            else {theLastMessage = chat.getMessage();}
                         }
                     }
                 }
