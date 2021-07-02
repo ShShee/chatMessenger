@@ -40,7 +40,7 @@
         android:layout_below="@+id/toolbarMess"
         android:layout_above="@id/bottom" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,27 +53,22 @@
             android:id="@+id/inputMessage"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
-            android:layout_alignParentLeft="true"
             android:background="@drawable/input_bg"
             android:drawablePadding="10dp"
             android:ems="10"
+            android:layout_weight="4"
             android:inputType="textMultiLine"
             android:paddingLeft="16dp"
             android:paddingTop="8dp"
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
-            android:textColorHint="@color/black"
-            />
+            android:textColorHint="@color/black" />
 
         <ImageButton
             android:id="@+id/sendImage"
             android:layout_width="70dp"
             android:layout_height="52dp"
-            android:layout_marginEnd="52dp"
-            android:layout_marginRight="52dp"
-            android:layout_toStartOf="@+id/btn_send"
-            android:layout_toLeftOf="@+id/btn_send"
-            android:layout_toRightOf="@id/inputMessage"
+            android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane2" />
 
@@ -81,9 +76,9 @@
             android:id="@+id/btn_send"
             android:layout_width="70dp"
             android:layout_height="52dp"
-           android:layout_alignParentRight="true"
+            android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>
