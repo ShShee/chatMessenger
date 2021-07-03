@@ -84,6 +84,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
     FragmentContainerView fragmentContainerView;
 
     StorageReference storageReference;
+
     private static final int IMAGE_REQUEST = 1;
     private Uri imageUri;
     private StorageTask uploadTask;
