@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.onesignal.OneSignal;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity{
     FirebaseUser firebaseUser;
     DatabaseReference reference;
 
+    String ext_One_Id;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,10 @@ public class MainActivity extends AppCompatActivity{
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        ext_One_Id = firebaseUser.getUid();
+
+        OneSignal.setExternalUserId(ext_One_Id);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
