@@ -124,8 +124,6 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.Hold
             messageTv=itemView.findViewById(R.id.messageTv);
             timeTv=itemView.findViewById(R.id.timeTv);
 
-
-
         }
     }
 
