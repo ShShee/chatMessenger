@@ -27,7 +27,7 @@ import android.widget.EditText;
 import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
 import com.SE114PMCL.chatMessenger.Model.Chatlist;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
-import com.SE114PMCL.chatMessenger.Notifications.Token;
+
 import com.SE114PMCL.chatMessenger.R;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -133,16 +133,9 @@ public class User extends Fragment {
             s = task.getResult();
         });
 
-        updateToken(s);
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    private void updateToken(String token){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token mToken = new Token(token);
-        reference.child(fuser.getUid()).setValue(mToken);
-    }
 
     private void chatList() {
         mUsers = new ArrayList<>();
