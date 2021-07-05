@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -38,7 +36,7 @@ import java.util.HashMap;
 public class GroupChatActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
-    private String groupId, myGroupRole="";
+    private String groupId;
 
     private Toolbar toolbar;
     private ImageView groupIconIv;
@@ -65,8 +63,6 @@ public class GroupChatActivity extends AppCompatActivity {
         sendBtn=findViewById(R.id.sendBtn);
         chatRv=findViewById(R.id.chatRv);
 
-        setSupportActionBar(toolbar);
-
         //get id of the group
         Intent intent=getIntent();
         groupId=intent.getStringExtra("groupId");
@@ -74,7 +70,6 @@ public class GroupChatActivity extends AppCompatActivity {
         firebaseAuth =FirebaseAuth.getInstance();
         loadGroupInfo();
         loadGroupMessages();
-        loadMyGroupRole();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,28 +89,6 @@ public class GroupChatActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void loadMyGroupRole() {
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups");
-        ref.child(groupId).child("Participants")
-                .orderByChild("uid").equalTo(firebaseAuth.getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds: snapshot.getChildren()){
-                            myGroupRole=""+ds.child("role").getValue();
-                            //refresh menu items
-                            invalidateOptionsMenu();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                    }
-                });
-
     }
 
     private void loadGroupMessages() {
@@ -182,8 +155,9 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void loadGroupInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Groups");
-        ref.orderByChild("groupId").equalTo(groupId).addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Group");
+        ref.orderByChild("groupId").equalTo(groupId)
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         for(DataSnapshot ds: snapshot.getChildren()){
@@ -215,27 +189,5 @@ public class GroupChatActivity extends AppCompatActivity {
                 });
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.groupmenu, menu);
 
-        if(myGroupRole.equals("creator")||myGroupRole.equals("admin")){
-            //in admin/creator, show add person option
-            menu.findItem(R.id.action_add_participant).setVisible(true);
-        }
-        else{
-            menu.findItem(R.id.action_add_participant).setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        if(id == R.id.action_add_participant){
-            Intent intent=new Intent(this,GroupParticipantAddActivity.class);
-            intent.putExtra("groupId",groupId);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

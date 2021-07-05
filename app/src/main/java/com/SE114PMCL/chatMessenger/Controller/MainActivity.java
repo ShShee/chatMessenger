@@ -19,7 +19,6 @@ import com.SE114PMCL.chatMessenger.Friends;
 import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
-import com.SE114PMCL.chatMessenger.RegisteredUsersFragment;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,10 +109,6 @@ public class MainActivity extends AppCompatActivity{
                             break;
                         case R.id.nav_setting:
                             selectedFragment = new Setting();
-                            getSupportActionBar().hide();
-                            break;
-                        case R.id.nav_user:
-                            selectedFragment=new RegisteredUsersFragment();
                             getSupportActionBar().hide();
                             break;
                     }

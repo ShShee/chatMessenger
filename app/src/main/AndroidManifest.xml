@@ -17,9 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.chatMessenger"
         tools:replace="android:label">
-        <activity android:name=".Friend_Profile_Activity"></activity>
-        <activity android:name=".GroupParticipantAddActivity" />
-        <activity android:name=".GroupChatActivity" />
+        <activity android:name=".GroupChatActivity"/>
         <activity android:name=".GroupCreateActivity" />
         <activity android:name="Main.ChatTab.MessengerActivity" />
         <activity android:name=".ThongtinActivity" />

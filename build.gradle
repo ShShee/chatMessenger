@@ -19,10 +19,15 @@ buildscript {
 allprojects {
     repositories {
         google()
+<<<<<<< HEAD
         maven { url 'https://jitpack.io' }
         mavenCentral()
         jcenter()
 
+=======
+        jcenter()
+        mavenCentral()
+>>>>>>> parent of 2c553b3 (Send Friend Request)
     }
 }
 
