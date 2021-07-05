@@ -5,19 +5,20 @@
     package="com.SE114PMCL.chatMessenger">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="chatMessenger"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.chatMessenger"
+        android:theme="@style/Theme.LoginAndRegistration"
         tools:replace="android:label">
-        <activity android:name=".GroupChatActivity"/>
+        <activity android:name=".Friend_Profile_Activity"></activity>
+        <activity android:name=".GroupParticipantAddActivity" />
+        <activity android:name=".GroupChatActivity" />
         <activity android:name=".GroupCreateActivity" />
         <activity android:name="Main.ChatTab.MessengerActivity" />
         <activity android:name=".ThongtinActivity" />
@@ -30,6 +31,15 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
+        <service
+            android:name=".Notifications.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name="com.facebook.FacebookActivity"

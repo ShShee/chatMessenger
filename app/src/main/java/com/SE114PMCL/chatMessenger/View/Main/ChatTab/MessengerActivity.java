@@ -20,9 +20,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,7 +30,12 @@ import android.widget.Toast;
 import com.SE114PMCL.chatMessenger.Adapter.ChatAdapter;
 import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
-
+import com.SE114PMCL.chatMessenger.Notifications.APIService;
+import com.SE114PMCL.chatMessenger.Notifications.Client;
+import com.SE114PMCL.chatMessenger.Notifications.Data;
+import com.SE114PMCL.chatMessenger.Notifications.MyResponse;
+import com.SE114PMCL.chatMessenger.Notifications.Sender;
+import com.SE114PMCL.chatMessenger.Notifications.Token;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 
@@ -50,15 +53,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.onesignal.OneSignal;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,7 +66,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -88,6 +86,7 @@ public class MessengerActivity extends AppCompatActivity {
     Intent intent;
     ValueEventListener seenListener;
     String userid;
+    APIService apiService;
 
     boolean notify = false;
 
@@ -111,6 +110,8 @@ public class MessengerActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(view -> finish());
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -169,8 +170,6 @@ public class MessengerActivity extends AppCompatActivity {
         });
         seenMessage(userid);
     }
-
-
 
     private void showImagePickDialog(){
         String[] options = {"Chụp", "Thư viện"};
@@ -305,60 +304,39 @@ public class MessengerActivity extends AppCompatActivity {
     }
 
     private void sendNotifiaction(String receiver, final String username, final String message){
-        AsyncTask.execute(()->{
-            int SDK_INT = android.os.Build.VERSION.SDK_INT;
-            if (SDK_INT > 8) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                        .permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-                try {
-                    String jsonResponse;
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Data data = new Data(fuser.getUid(), R.mipmap.ic_launcher, username+": "+message, "New Message", userid);
 
-                    URL url = new URL("https://onesignal.com/api/v1/notifications");
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setUseCaches(false);
-                    con.setDoOutput(true);
-                    con.setDoInput(true);
+                    Sender sender = new Sender(data, token.getToken());
 
-                    con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                    con.setRequestProperty("Authorization", "Basic ZTM5NzRjNTYtYzhmMi00NGFkLTkwZTUtODlmNjIyZmM0ZDEz");
-                    con.setRequestMethod("POST");
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if (response.code() == 200){
+                                        if (response.body().success != 1){
+                                            Toast.makeText(MessengerActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
 
-                    String strJsonBody = "{"
-                            + "\"app_id\": \"f6c11d24-4a5c-4d70-8d04-d8b1388924fc\","
-                            + "\"include_external_user_ids\": [\"" + receiver + "\"],"
-                            + "\"channel_for_external_user_ids\": \"push\","
-                            + "\"data\": {\"foo\": \"bar\"},"
-                            + "\"contents\": {\"vi\":\"" + username + ": " + message + "\"}"
-                            + "}";
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
 
-
-                    System.out.println("strJsonBody:\n" + strJsonBody);
-
-                    byte[] sendBytes = strJsonBody.getBytes("UTF-8");
-                    con.setFixedLengthStreamingMode(sendBytes.length);
-
-                    OutputStream outputStream = con.getOutputStream();
-                    outputStream.write(sendBytes);
-
-                    int httpResponse = con.getResponseCode();
-                    System.out.println("httpResponse: " + httpResponse);
-
-                    if (httpResponse >= HttpURLConnection.HTTP_OK
-                            && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
-                        Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
-                        jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
-                        scanner.close();
-                    } else {
-                        Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
-                        jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
-                        scanner.close();
-                    }
-                    System.out.println("jsonResponse:\n" + jsonResponse);
-
-                } catch (Throwable t) {
-                    t.printStackTrace();
+                                }
+                            });
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

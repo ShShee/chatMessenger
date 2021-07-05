@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 import Main.ChatTab.MessengerActivity;
 
+
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
   
     private Context mContext;

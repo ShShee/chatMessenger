@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.SE114PMCL.chatMessenger.Model.UserModel;
-
+import com.SE114PMCL.chatMessenger.Notifications.Data;
 import com.SE114PMCL.chatMessenger.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

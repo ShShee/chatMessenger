@@ -10,8 +10,17 @@
         android:id="@+id/nav_friends"
         android:icon="@drawable/ic_friend"
         android:title="Contact"/>
+
+    <item
+        android:id="@+id/nav_user"
+        android:icon="@drawable/ic_users"
+        android:title="Users"/>
+
+
     <item
         android:id="@+id/nav_setting"
         android:icon="@drawable/ic_account"
         android:title="Account"/>
+
+
 </menu>

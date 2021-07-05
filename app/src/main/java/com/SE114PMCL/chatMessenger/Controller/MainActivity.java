@@ -19,6 +19,7 @@ import com.SE114PMCL.chatMessenger.Friends;
 import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
+import com.SE114PMCL.chatMessenger.RegisteredUsersFragment;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.onesignal.OneSignal;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,9 +47,6 @@ public class MainActivity extends AppCompatActivity{
     FirebaseUser firebaseUser;
     DatabaseReference reference;
 
-    String ext_One_Id;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +61,6 @@ public class MainActivity extends AppCompatActivity{
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-
-        ext_One_Id = firebaseUser.getUid();
-
-        OneSignal.setExternalUserId(ext_One_Id);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -109,6 +102,10 @@ public class MainActivity extends AppCompatActivity{
                             break;
                         case R.id.nav_setting:
                             selectedFragment = new Setting();
+                            getSupportActionBar().hide();
+                            break;
+                        case R.id.nav_user:
+                            selectedFragment=new RegisteredUsersFragment();
                             getSupportActionBar().hide();
                             break;
                     }
