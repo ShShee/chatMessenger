@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.SE114PMCL.chatMessenger.FindFriendActivity;
 import com.SE114PMCL.chatMessenger.GroupCreateActivity;
 import com.SE114PMCL.chatMessenger.R;
 import com.SE114PMCL.chatMessenger.RegisterActivity;
@@ -26,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
         NavController navController;
         BottomNavigationView navBar;
         ImageButton btnAddGroup;
+
+        ImageButton findFriend;
 
     public Contact() {
         // Required empty public constructor
@@ -48,8 +51,17 @@ import org.jetbrains.annotations.NotNull;
         btnOpenGroupList=view.findViewById(R.id.openGroupList);
         btnAddGroup=view.findViewById(R.id.addGroup);
 
+        findFriend=view.findViewById(R.id.findFriend);
+
         navController= Navigation.findNavController(view);
         navBar = getActivity().findViewById(R.id.bottom_navigation);
+
+        findFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity().getApplicationContext(), FindFriendActivity.class));
+            }
+        });
 
         btnOpenFriendList.setOnClickListener(new View.OnClickListener() {
             @Override

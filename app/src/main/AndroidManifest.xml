@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginAndRegistration"
         tools:replace="android:label">
-        <activity android:name=".Friend_Profile_Activity"></activity>
+        <activity android:name=".FindFriendActivity"></activity>
+        <activity android:name=".Friend_Profile_Activity" />
         <activity android:name=".GroupParticipantAddActivity" />
         <activity android:name=".GroupChatActivity" />
         <activity android:name=".GroupCreateActivity" />

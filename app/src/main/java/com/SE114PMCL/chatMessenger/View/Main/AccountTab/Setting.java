@@ -51,6 +51,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -230,8 +231,8 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
                 if(userModel.getImageURL().equals("default")){
                     image_setting.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(getContext()).load(userModel.getImageURL()).into(image_setting);
-
+                    //Glide.with(getContext()).load(userModel.getImageURL()).into(image_setting);
+                    Picasso.get().load(userModel.getImageURL()).into(image_setting);
                 }
             }
 

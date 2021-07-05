@@ -71,7 +71,7 @@ public class LoginActivityGg extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://chatmessenger-dfe5b-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
-        //checkUser();
+        checkUser();
 
         binding.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
