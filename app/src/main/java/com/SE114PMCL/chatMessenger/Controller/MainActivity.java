@@ -16,10 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.SE114PMCL.chatMessenger.Friends;
 
-import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
-import com.SE114PMCL.chatMessenger.RegisteredUsersFragment;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,7 +69,8 @@ public class MainActivity extends AppCompatActivity{
                 if(userModel.getImageURL().equals("default")){
                     image_chat.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(MainActivity.this).load(userModel.getImageURL()).into(image_chat);
+                    //Glide.with(MainActivity.this).load(userModel.getImageURL()).into(image_chat);
+                    Picasso.get().load(userModel.getImageURL()).into(image_chat);
                 }
             }
 
@@ -104,16 +104,11 @@ public class MainActivity extends AppCompatActivity{
                             selectedFragment = new Setting();
                             getSupportActionBar().hide();
                             break;
-                        case R.id.nav_user:
-                            selectedFragment=new RegisteredUsersFragment();
-                            getSupportActionBar().hide();
-                            break;
                     }
                     getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
                             selectedFragment).commit();
                     return true;
                 }
-
             };
 
     private void Reset(int name) {
