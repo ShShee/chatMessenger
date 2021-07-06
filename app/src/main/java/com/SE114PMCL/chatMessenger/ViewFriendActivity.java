@@ -65,6 +65,90 @@ public class ViewFriendActivity extends AppCompatActivity {
                 PerformAction(userID);
             }
         });
+
+        CheckUserExistance(userID);
+    }
+
+    private void CheckUserExistance(String userID) {
+        friendRef.child(mUser.getUid()).child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    CurrentState = "friend";
+                    btnPerform.setText("Send Message");
+                    btnDecline.setText("Unfriend");
+                    btnDecline.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        friendRef.child(userID).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    CurrentState = "friend";
+                    btnPerform.setText("Send Message");
+                    btnDecline.setText("Unfriend");
+                    btnDecline.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        requestRef.child(mUser.getUid()).child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.child("status").getValue().toString().equals("pending")){
+                        CurrentState = "I_sent_pending";
+                        btnPerform.setText("Cancel Friend Request");
+                        btnDecline.setVisibility(View.GONE);
+                    }
+                }
+                if(snapshot.exists()){
+                    if(snapshot.child("status").getValue().toString().equals("decline")){
+                        CurrentState = "I_sent_decline";
+                        btnPerform.setText("Cancel Friend Request");
+                        btnDecline.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        requestRef.child(userID).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.child("status").getValue().toString().equals("pending")){
+                        CurrentState = "he_sent_pending";
+                        btnPerform.setText("Accept Friend Request");
+                        btnDecline.setText("Decline Friend");
+                        btnDecline.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        if(CurrentState.equals("nothing_happen")){
+            CurrentState = "nothing_happen";
+            btnPerform.setText("Send Friend Request");
+            btnDecline.setVisibility(View.GONE);
+        }
     }
 
     private void PerformAction(String userID) {
@@ -103,7 +187,7 @@ public class ViewFriendActivity extends AppCompatActivity {
             });
         }
         if(CurrentState.equals("he_sent_pending")){
-            requestRef.child(mUser.getUid()).child(userID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            requestRef.child(userID).child(mUser.getUid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<Void> task) {
                     if(task.isSuccessful()){
