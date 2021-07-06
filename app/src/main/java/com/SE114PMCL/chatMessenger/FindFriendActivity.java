@@ -48,6 +48,7 @@ public class FindFriendActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyCleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         loadUsers("");
     }
 

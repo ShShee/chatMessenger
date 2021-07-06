@@ -60,25 +60,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageViewFriend" />
 
             <Button
-                android:id="@+id/button6"
+                android:id="@+id/btnPerform"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="Button"
+                android:text="send request"
+                android:textColor="@color/black"
                 app:backgroundTint="@color/ic_minus_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/btnDecline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button"
+                android:text="decline request"
+                android:textColor="@color/black"
                 app:backgroundTint="@android:color/holo_red_light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button6" />
+                app:layout_constraintTop_toBottomOf="@+id/btnPerform" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
