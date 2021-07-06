@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/aa"
     tools:context=".Controller.MainActivity">
     <include
         android:id="@+id/toolbarUsername"
@@ -25,7 +26,7 @@
         app:itemIconSize="25dp"
         app:elevation="12dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/cardview_light_background"
+        android:background="#90caf9"
         app:menu="@menu/bottom_navigation" />
 
 </RelativeLayout>

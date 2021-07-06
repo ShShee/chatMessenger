@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/aa"
     tools:context="Main.AccountTab.Setting">
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -48,6 +49,7 @@
             android:textColor="#268F26"
             android:text="@string/userName"
             android:layout_centerHorizontal="true"
+            android:textStyle="bold"
             android:textSize="27dp"
             />
         <TextView
@@ -95,6 +97,7 @@
             app:inner_text_background="@drawable/shape_rounded"
             app:button_image_height="70dp"
             app:button_image_width="70dp"
+            app:button_background="@drawable/swipe_background"
             app:button_image_disabled="@drawable/logout"
             app:button_image_enabled="@drawable/login"
             app:button_right_padding="5dp"
@@ -103,13 +106,13 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="3dp"
         android:id="@+id/divider"
         android:layout_below="@id/nameView"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/white"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -121,8 +124,10 @@
             android:layout_marginTop="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="14dp"
+            android:textColor="@color/white"
             android:text="Pending"
             android:textSize="27dp"
+            android:textStyle="bold"
             />
 
         <androidx.fragment.app.FragmentContainerView
