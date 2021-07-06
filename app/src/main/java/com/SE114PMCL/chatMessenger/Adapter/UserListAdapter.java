@@ -54,12 +54,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         final UserModel user = mUsers.get(position);
-        holder.username.setText(user.getUsername());
-        if (user.getImageURL().equals("default")){
-            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
-        } else {
+//        if (user.getImageURL().equals("default")){
+//            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+//        } else {
             Glide.with(mContext).load(user.getImageURL()).into(holder.profile_image);
-        }
+        //}
+        holder.username.setText(user.getUsername());
 
         if (ischat){
             lastMessage(user.getId(), holder.last_msg);

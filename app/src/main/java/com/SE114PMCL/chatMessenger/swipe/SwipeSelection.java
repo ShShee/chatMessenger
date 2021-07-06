@@ -76,57 +76,57 @@ public class SwipeSelection extends Fragment {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         DatabaseReference ref_request = FirebaseDatabase.getInstance().getReference("Request").child(firebaseUser.getUid());
 
-        ref_request.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                RequestModel request = snapshot.getValue(RequestModel.class);
-
-                String id1_request = "";//request.getId1();
-                String id2_request = "";//request.getId2();
-                String id3_request = "";//request.getId3();
-                String id4_request = "";//request.getId4();
-                String id5_request = "";//request.getId5();
-
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        userModel.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            UserModel user = snapshot.getValue(UserModel.class);
-                            if (user.getId().equals(id1_request)) {
-                                userModel.add(user);
-                            }
-                            if (user.getId().equals(id2_request)) {
-                                userModel.add(user);
-                            }
-                            if (user.getId().equals(id3_request)) {
-                                userModel.add(user);
-                            }
-                            if (user.getId().equals(id4_request)) {
-                                userModel.add(user);
-                            }
-                            if (user.getId().equals(id5_request)) {
-                                userModel.add(user);
-                            }
-
-                            adapter = new SwipeAdapter(getContext(), userModel);
-                            recyclerView.setAdapter(adapter);
-                            //adapter.setFriendData(userModel);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
+//        ref_request.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                RequestModel request = snapshot.getValue(RequestModel.class);
+//
+//                String id1_request = "";//request.getId1();
+//                String id2_request = "";//request.getId2();
+//                String id3_request = "";//request.getId3();
+//                String id4_request = "";//request.getId4();
+//                String id5_request = "";//request.getId5();
+//
+//                reference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        userModel.clear();
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                            UserModel user = snapshot.getValue(UserModel.class);
+//                            if (user.getId().equals(id1_request)) {
+//                                userModel.add(user);
+//                            }
+//                            if (user.getId().equals(id2_request)) {
+//                                userModel.add(user);
+//                            }
+//                            if (user.getId().equals(id3_request)) {
+//                                userModel.add(user);
+//                            }
+//                            if (user.getId().equals(id4_request)) {
+//                                userModel.add(user);
+//                            }
+//                            if (user.getId().equals(id5_request)) {
+//                                userModel.add(user);
+//                            }
+//
+//                            adapter = new SwipeAdapter(getContext(), userModel);
+//                            recyclerView.setAdapter(adapter);
+//                            //adapter.setFriendData(userModel);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//            }
+//        });
 
 //        reference.addValueEventListener(new ValueEventListener() {
 //            @Override

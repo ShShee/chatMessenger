@@ -134,7 +134,7 @@ public class FriendList extends Fragment {
 
     private void readUsers() {
 
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -144,14 +144,12 @@ public class FriendList extends Fragment {
                 if (search_users.getText().toString().equals("")) {
                     mUsers.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        UserModel user = snapshot.getValue(UserModel.class);
+                        UserModel user1 = snapshot.getValue(UserModel.class);
 
-                        if (!user.getId().equals(firebaseUser.getUid())) {
-                            mUsers.add(user);
+                        if (!firebaseUser.getUid().equals(user1.getId())) {
+                            mUsers.add(user1);
                         }
-
                     }
-
                     userListAdapter = new UserListAdapter(getContext(), mUsers, false);
                     recyclerView.setAdapter(userListAdapter);
                 }
