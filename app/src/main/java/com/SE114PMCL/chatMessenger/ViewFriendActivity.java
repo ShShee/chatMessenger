@@ -3,6 +3,7 @@ package com.SE114PMCL.chatMessenger;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
+import Main.ChatTab.MessengerActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewFriendActivity extends AppCompatActivity {
@@ -276,7 +278,9 @@ public class ViewFriendActivity extends AppCompatActivity {
             });
         }
         if(CurrentState.equals("friend")){
-            //
+            Intent intent = new Intent(ViewFriendActivity.this, MessengerActivity.class);
+            intent.putExtra("userid", userID);
+            ViewFriendActivity.this.startActivity(intent);
         }
     }
 
