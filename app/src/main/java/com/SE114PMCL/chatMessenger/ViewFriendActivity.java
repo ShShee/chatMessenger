@@ -37,16 +37,19 @@ public class ViewFriendActivity extends AppCompatActivity {
     TextView cirName;
     Button btnPerform, btnDecline;
     String CurrentState = "nothing_happen";
+    String userID;
+
+    String myPrfileImageUrl, myUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_friend);
 
-        final String userID = getIntent().getStringExtra("userKey");
+        userID = getIntent().getStringExtra("userKey");
         Toast.makeText(this, ""+userID, Toast.LENGTH_SHORT).show();
 
-        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+        mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         requestRef = FirebaseDatabase.getInstance().getReference().child("Requests");
         friendRef = FirebaseDatabase.getInstance().getReference().child("Friends");
         mAuth = FirebaseAuth.getInstance();
@@ -58,6 +61,9 @@ public class ViewFriendActivity extends AppCompatActivity {
         btnDecline = findViewById(R.id.btnDecline);
 
         LoadUser();
+        loadMyProfile();
+
+
 
         btnPerform.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,12 +245,19 @@ public class ViewFriendActivity extends AppCompatActivity {
                         HashMap hashMap = new HashMap();
                         hashMap.put("status", "friend");
                         hashMap.put("username", nameviewFriend);
-                        hashMap.put("profileImageUrl", imageviewFriend);
+                        hashMap.put("imageURL", imageviewFriend);
+
+                        //updated
+                        final HashMap hashMap1=new HashMap();
+                        hashMap1.put("status", "friend");
+                        hashMap1.put("username", myUsername);
+                        hashMap1.put("imageURL", myPrfileImageUrl);
                         friendRef.child(mUser.getUid()).child(userID).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+
                             @Override
                             public void onComplete(@NonNull @NotNull Task task) {
                                 if(task.isSuccessful()){
-                                    friendRef.child(userID).child(mUser.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                                    friendRef.child(userID).child(mUser.getUid()).updateChildren(hashMap1).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
                                         public void onComplete(@NonNull @NotNull Task task) {
                                             Toast.makeText(ViewFriendActivity.this, "You added friend", Toast.LENGTH_SHORT).show();
@@ -268,7 +281,7 @@ public class ViewFriendActivity extends AppCompatActivity {
     }
 
     private void LoadUser() {
-        mUserRef.addValueEventListener(new ValueEventListener() {
+        mUserRef.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -290,4 +303,28 @@ public class ViewFriendActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void loadMyProfile() {
+        mUserRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    myPrfileImageUrl=snapshot.child("imageURL").getValue().toString();
+                    myUsername=snapshot.child("username").getValue().toString();
+                } else {
+                    Toast.makeText(ViewFriendActivity.this, "Data not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(ViewFriendActivity.this, ""+ error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
+    }
+
 }

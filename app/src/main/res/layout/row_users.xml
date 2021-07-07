@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-       <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+       <de.hdodenhof.circleimageview.CircleImageView
            android:id="@+id/avatarIv"
            android:src="@mipmap/ic_launcher"
             android:layout_width="70dp"

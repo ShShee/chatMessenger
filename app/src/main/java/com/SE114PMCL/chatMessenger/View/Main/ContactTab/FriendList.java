@@ -26,9 +26,13 @@ import android.widget.Toast;
 import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 
+import com.SE114PMCL.chatMessenger.Holder.FriendMyViewHolder;
+import com.SE114PMCL.chatMessenger.Model.Friends;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 
 import com.SE114PMCL.chatMessenger.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +43,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,11 +52,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendList extends Fragment {
+
+    FirebaseRecyclerOptions<Friends>options;
+    FirebaseRecyclerAdapter<Friends, FriendMyViewHolder>adapter;
+
     RecyclerView recyclerView;
     Toolbar toolbar;
-    List<UserModel> mUsers;
-    UserListAdapter userListAdapter;
     EditText search_users;
+
+    FirebaseAuth mAuth;
+    DatabaseReference mRef;
+    FirebaseUser mUser;
+
+
 
     public FriendList() {
         // Required empty public constructor
@@ -68,13 +81,17 @@ public class FriendList extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        toolbar=view.findViewById(R.id.toolbarFriend);
+
         recyclerView=view.findViewById(R.id.friendView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        toolbar=view.findViewById(R.id.toolbarFriend);
-        mUsers = new ArrayList<>();
+        mAuth=FirebaseAuth.getInstance();
+        mUser=mAuth.getCurrentUser();
+        mRef=FirebaseDatabase.getInstance().getReference().child("Friends");
 
-        readUsers();
+        LoadFriends("");
+
 
         search_users = view.findViewById(R.id.searchFriend);
         search_users.addTextChangedListener(new TextWatcher() {
@@ -100,66 +117,40 @@ public class FriendList extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
+    private void LoadFriends(String s) {
+        Query query=mRef.child(mUser.getUid()).orderByChild("username").startAt(s).endAt(s+"\uf8ff");
+        options=new FirebaseRecyclerOptions.Builder<Friends>().setQuery(query,Friends.class).build();
+        adapter =new FirebaseRecyclerAdapter<Friends, FriendMyViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull @NotNull FriendMyViewHolder holder, int position, @NonNull @NotNull Friends model) {
+                Picasso.get().load(model.getImageURL()).into(holder.imageURl);
+                holder.username.setText(model.getUsername());
+
+
+
+
+            }
+
+            @NonNull
+            @NotNull
+            @Override
+            public FriendMyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+                View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_friend,parent,false);
+
+                return new FriendMyViewHolder(view);
+            }
+        };
+        adapter.startListening();
+        recyclerView.setAdapter(adapter);
+
+    }
+
 
     private void searchUsers(String s) {
-
-        final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("timkiem").startAt(s).endAt(s+"\uf8ff");
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUsers.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    UserModel user = snapshot.getValue(UserModel.class);
-
-                    assert user != null;
-                    assert fuser != null;
-                    if (!user.getId().equals(fuser.getUid())){
-                        mUsers.add(user);
-                    }
-                }
-
-                userListAdapter = new UserListAdapter(getContext(), mUsers, false);
-                recyclerView.setAdapter(userListAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
     }
 
     private void readUsers() {
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (search_users.getText().toString().equals("")) {
-                    mUsers.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        UserModel user1 = snapshot.getValue(UserModel.class);
-
-                        if (!firebaseUser.getUid().equals(user1.getId())) {
-                            mUsers.add(user1);
-                        }
-                    }
-                    userListAdapter = new UserListAdapter(getContext(), mUsers, false);
-                    recyclerView.setAdapter(userListAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override

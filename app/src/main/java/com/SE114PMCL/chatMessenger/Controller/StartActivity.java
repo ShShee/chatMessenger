@@ -17,11 +17,11 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
     }
     @Override
-    protected void onStart() {
+   protected void onStart() {
        super.onStart();
       if (FirebaseAuth.getInstance().getCurrentUser() != null) {
          startActivity(new Intent(getApplicationContext(), MainActivity.class));
          finish();
       }
-    }
+   }
 }
