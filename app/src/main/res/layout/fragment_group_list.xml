@@ -5,6 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="Main.ContactTab.GroupList">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/searchGr"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/input_bg"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Search"
+            android:backgroundTint="@color/white"
+            android:inputType="text"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="126dp"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groupsRv"
@@ -12,5 +40,5 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/row_groupchats_list"/>
-
+    </LinearLayout>
 </RelativeLayout>

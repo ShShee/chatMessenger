@@ -1,10 +1,11 @@
 package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
-import android.text.format.DateFormat;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
 import com.SE114PMCL.chatMessenger.R;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,12 +25,11 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
+
 
 public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.HolderGroupChat> {
     private static final int MSG_TYPE_LEFT=0;
-    private static final int MSG_TYPE_right=1;
+    private static final int MSG_TYPE_RIGHT=1;
 
     private Context context;
     private ArrayList<ModelGroupChat> modelGroupChatList;
@@ -43,11 +44,10 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.Hold
     }
 
     @NonNull
-    @NotNull
     @Override
-    public HolderGroupChat onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public HolderGroupChat onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflate layouts
-        if(viewType==MSG_TYPE_right){
+        if(viewType==MSG_TYPE_RIGHT){
             View view= LayoutInflater.from(context).inflate(R.layout.row_groupchat_right,parent,false);
             return new HolderGroupChat(view);
         }
@@ -58,21 +58,28 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.Hold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull HolderGroupChat holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterGroupChat.HolderGroupChat holder, int position) {
         //get data
-        ModelGroupChat model=modelGroupChatList.get(position);
-        String timestamp=model.getTimestamp();
+        ModelGroupChat model = modelGroupChatList.get(position);
+        String timestamp = model.getTimestamp();
         String message=model.getMessage();
-        String senderUid=model.getSender();
+        String type=model.getType();
 
-        //convert time stamp to dd/mm/yyyy hh:mm am/pm
-        Calendar cal =Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(Long.parseLong(timestamp));
-        String dateTime= DateFormat.format("dd/MM/yyyy hh:mm aa",cal).toString();
-
-        //set data
         holder.timeTv.setText(timestamp);
-        holder.messageTv.setText(message);
+
+        if(type.equals("text")){
+            holder.imageSend.setVisibility(View.GONE);
+            holder.messageTv.setVisibility(View.VISIBLE);
+            holder.messageTv.setText(message);
+        }
+        else {
+            holder.imageSend.setVisibility(View.VISIBLE);
+            holder.messageTv.setVisibility(View.GONE);
+
+            Glide.with(context).load(message).into(holder.imageSend);
+
+        }
+
         setUserName(model, holder);
 
     }
@@ -80,23 +87,22 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.Hold
     private void setUserName(ModelGroupChat model, HolderGroupChat holder) {
         //get sender info from uid in model
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("uid").equalTo(model.getSender())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds:snapshot.getChildren()){
-                            String name=""+ds.child("name").getValue();
+        ref.orderByChild("id").equalTo(model.getSender()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    for(DataSnapshot ds:snapshot.getChildren()){
+                        String name = "" + ds.child("username").getValue();
 
-                            holder.nameTv.setText(name);
-                        }
-
+                        holder.nameTv.setText(name);
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                }
 
-                    }
-                });
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
     }
 
     @Override
@@ -104,26 +110,27 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.Hold
         return modelGroupChatList.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (modelGroupChatList.get(position).getSender().equals(firebaseAuth.getUid())){
-            return MSG_TYPE_right;
-        }
-        else{
-            return MSG_TYPE_LEFT;
-        }
-    }
-
-    class HolderGroupChat extends RecyclerView.ViewHolder{
+    public class HolderGroupChat extends RecyclerView.ViewHolder{
         private TextView nameTv, messageTv, timeTv;
+        private ImageView imageSend;
 
-        public HolderGroupChat(@NonNull @NotNull View itemView) {
+        public HolderGroupChat(View itemView) {
             super(itemView);
 
             nameTv=itemView.findViewById(R.id.nameTv);
             messageTv=itemView.findViewById(R.id.messageTv);
             timeTv=itemView.findViewById(R.id.timeTv);
+            imageSend = itemView.findViewById(R.id.ImageSend);
+        }
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (modelGroupChatList.get(position).getSender().equals(firebaseAuth.getUid())){
+            return MSG_TYPE_RIGHT;
+        }
+        else{
+            return MSG_TYPE_LEFT;
         }
     }
 

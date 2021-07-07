@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import com.SE114PMCL.chatMessenger.FindFriendActivity;
 import com.SE114PMCL.chatMessenger.GroupCreateActivity;
 import com.SE114PMCL.chatMessenger.R;
-import com.SE114PMCL.chatMessenger.RegisterActivity;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;

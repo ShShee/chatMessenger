@@ -1,13 +1,14 @@
 package com.SE114PMCL.chatMessenger.Model;
 
 public class GroupData {
-    private String groupId, groupTitle, groupDescription, groupIcon, timestamp, createdBy;
+    private String groupId, groupTitle, groupDescription, groupIcon, timkiemG, timestamp, createdBy;
 
-    public GroupData(String groupId, String groupTitle, String groupDescription, String groupIcon, String timestamp, String createdBy){
+    public GroupData(String groupId, String groupTitle, String groupDescription, String groupIcon, String timkiemG, String timestamp, String createdBy){
         this.groupId=groupId;
         this.groupTitle=groupTitle;
         this.groupDescription=groupDescription;
         this.groupIcon=groupIcon;
+        this.timkiemG = timkiemG;
         this.timestamp=timestamp;
         this.createdBy=createdBy;
     }
@@ -64,16 +65,11 @@ public class GroupData {
         this.createdBy=createdBy;
     }
 
+    public String getTimkiemG() {
+        return timkiemG;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
+    public void setTimkiemG(String timkiemG) {
+        this.timkiemG = timkiemG;
+    }
 }

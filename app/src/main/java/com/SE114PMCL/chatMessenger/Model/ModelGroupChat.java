@@ -7,8 +7,8 @@ public class ModelGroupChat {
 
     }
     public ModelGroupChat(String message, String sender, String timestamp,String type){
-        this.message=message;
         this.sender=sender;
+        this.message=message;
         this.timestamp=timestamp;
         this.type=type;
     }

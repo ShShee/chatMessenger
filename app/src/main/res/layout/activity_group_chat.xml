@@ -14,12 +14,7 @@
         android:background="@color/design_default_color_secondary_variant"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/groupIconIv"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -38,21 +33,17 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/groupIconIv" />
-
-
-        </RelativeLayout>
         
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        app:stackFromEnd="true"
-        android:layout_above="@+id/chatLayout" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/chatLayout"
+        android:layout_below="@+id/toolbar"/>
 
     <LinearLayout
         android:id="@+id/chatLayout"
