@@ -2,11 +2,11 @@ package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.format.DateFormat;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,10 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.HolderGroupChatList> {
 
@@ -87,9 +84,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Hold
 
             }
         });
-
-
-
     }
 
     private void loadLastMessage(GroupData model, HolderGroupChatList holder) {
@@ -102,34 +96,34 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Hold
                         for(DataSnapshot ds: snapshot.getChildren()){
                             //get data
                             String message=""+ds.child("message").getValue();
-                            String timestamp=""+ds.child("timestamp").getValue();
+                            String timestamp = ""+ds.child("timestamp").getValue();
                             String sender=""+ds.child("sender").getValue();
+                            String type = "" + ds.child("type").getValue();
 
-                            //convert time
-                            Calendar cal =Calendar.getInstance(Locale.ENGLISH);
-                            cal.setTimeInMillis(Long.parseLong(timestamp));
-                            String dateTime= DateFormat.format("dd/MM/yyyy hh:mm aa",cal).toString();
-
-                            holder.messageTv.setText(message);
-                            holder.timeTv.setText(dateTime);
+                            if(type.equals("image")){
+                                holder.messageTv.setText("Gửi hình ảnh");
+                            }
+                            else{
+                                holder.messageTv.setText(message);
+                            }
+                            holder.timeTv.setText(timestamp);
 
                             //get info of sender of last message
                             DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users");
-                            ref.orderByChild("uid").equalTo(sender)
-                                    .addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                            for(DataSnapshot ds: snapshot.getChildren()){
-                                                String name=""+ds.child("name").getValue();
-                                                holder.nameTv.setText(name);
-                                            }
+                            ref.orderByChild("id").equalTo(sender).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                        for(DataSnapshot ds: snapshot.getChildren()){
+                                            String name=""+ds.child("username").getValue();
+                                            holder.nameTv.setText(name);
                                         }
+                                    }
 
-                                        @Override
-                                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                                    @Override
+                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                                        }
-                                    });
+                                    }
+                                });
                         }
                     }
 
@@ -152,9 +146,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Hold
         //ui views
         private ImageView groupIconIv;
         private TextView groupTitleTv, nameTv, messageTv, timeTv;
-
-
-
 
         public HolderGroupChatList(@NonNull @NotNull View itemView) {
             super(itemView);

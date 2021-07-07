@@ -58,7 +58,7 @@
             android:layout_below="@id/nameTv"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
-            android:text="The message"
+            android:text="time"
             android:singleLine="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp" />

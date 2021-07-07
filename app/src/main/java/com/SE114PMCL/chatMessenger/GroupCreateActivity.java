@@ -173,6 +173,7 @@ public class GroupCreateActivity extends AppCompatActivity {
         hashMap.put("groupTitle",""+groupTitle);
         hashMap.put("groupDescription",""+groupDescription);
         hashMap.put("groupIcon",""+groupIcon);
+        hashMap.put("timkiemG", ""+ groupTitle.toLowerCase());
         hashMap.put("timestamp",""+g_timestamp);
         hashMap.put("createBy",""+firebaseAuth.getUid());
 

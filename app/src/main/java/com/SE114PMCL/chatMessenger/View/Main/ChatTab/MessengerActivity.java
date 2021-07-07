@@ -138,7 +138,7 @@ public class MessengerActivity extends AppCompatActivity {
             if (!msg.equals("")){
                 sendMessage(fuser.getUid(), userid, msg);
             } else {
-                Toast.makeText(MessengerActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MessengerActivity.this, "Không gửi trống tin nhắn", Toast.LENGTH_SHORT).show();
             }
             text_send.setText("");
         });

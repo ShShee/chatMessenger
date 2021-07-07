@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class FindFriendActivity extends AppCompatActivity {
 
-    FirebaseRecyclerOptions<UserModel>options;
+/*    FirebaseRecyclerOptions<UserModel>options;
     FirebaseRecyclerAdapter<UserModel, FindFriendViewHolder>adapter;
 
     DatabaseReference mUserRef;
@@ -71,13 +70,10 @@ public class FindFriendActivity extends AppCompatActivity {
                     holder.itemView.setVisibility(View.GONE);
                     holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                 }
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(FindFriendActivity.this, ViewFriendActivity.class);
-                        intent.putExtra("userKey", getRef(position).getKey().toString());
-                        startActivity(intent);
-                    }
+                holder.itemView.setOnClickListener(v -> {
+                    Intent intent = new Intent(FindFriendActivity.this, ViewFriendActivity.class);
+                    intent.putExtra("userKey", getRef(position).getKey().toString());
+                    startActivity(intent);
                 });
             }
 
@@ -92,5 +88,5 @@ public class FindFriendActivity extends AppCompatActivity {
         };
         adapter.startListening();
         recyclerView.setAdapter(adapter);
-    }
+    }*/
 }
