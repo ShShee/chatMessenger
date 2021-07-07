@@ -123,11 +123,12 @@ public class FriendList extends Fragment {
         adapter =new FirebaseRecyclerAdapter<Friends, FriendMyViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull @NotNull FriendMyViewHolder holder, int position, @NonNull @NotNull Friends model) {
-                Picasso.get().load(model.getImageURL()).into(holder.imageURl);
+                if(model.getImageURL().equals("default")){
+                    holder.imageURl.setImageResource(R.mipmap.ic_launcher);
+                }else{
+                    Picasso.get().load(model.getImageURL()).into(holder.imageURl);
+                }
                 holder.username.setText(model.getUsername());
-
-
-
 
             }
 

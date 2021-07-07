@@ -288,7 +288,12 @@ public class ViewFriendActivity extends AppCompatActivity {
                     imageviewFriend = snapshot.child("imageURL").getValue().toString();
                     nameviewFriend = snapshot.child("username").getValue().toString();
 
-                    Picasso.get().load(imageviewFriend).into(cirImage);
+                    if(imageviewFriend.equals("default")){
+                        cirImage.setImageResource(R.mipmap.ic_launcher);
+                    }else{
+                        Picasso.get().load(imageviewFriend).into(cirImage);
+                    }
+
                     cirName.setText(nameviewFriend);
 
                 }
