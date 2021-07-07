@@ -14,7 +14,6 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -30,17 +29,10 @@ import android.widget.Toast;
 import com.SE114PMCL.chatMessenger.Adapter.ChatAdapter;
 import com.SE114PMCL.chatMessenger.Model.ChatData;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
-import com.SE114PMCL.chatMessenger.Notifications.APIService;
-import com.SE114PMCL.chatMessenger.Notifications.Client;
-import com.SE114PMCL.chatMessenger.Notifications.Data;
-import com.SE114PMCL.chatMessenger.Notifications.MyResponse;
-import com.SE114PMCL.chatMessenger.Notifications.Sender;
-import com.SE114PMCL.chatMessenger.Notifications.Token;
+
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,29 +40,26 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class MessengerActivity extends AppCompatActivity {
 
@@ -86,7 +75,6 @@ public class MessengerActivity extends AppCompatActivity {
     Intent intent;
     ValueEventListener seenListener;
     String userid;
-    APIService apiService;
 
     boolean notify = false;
 
@@ -110,8 +98,6 @@ public class MessengerActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(view -> finish());
-
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -304,41 +290,6 @@ public class MessengerActivity extends AppCompatActivity {
     }
 
     private void sendNotifiaction(String receiver, final String username, final String message){
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(fuser.getUid(), R.mipmap.ic_launcher, username+": "+message, "New Message", userid);
-
-                    Sender sender = new Sender(data, token.getToken());
-
-                    apiService.sendNotification(sender)
-                            .enqueue(new Callback<MyResponse>() {
-                                @Override
-                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                    if (response.code() == 200){
-                                        if (response.body().success != 1){
-                                            Toast.makeText(MessengerActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void readMesagges(final String myid, final String userid, final String imageurl){

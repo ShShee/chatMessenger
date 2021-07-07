@@ -64,8 +64,6 @@ public class FriendList extends Fragment {
     DatabaseReference mRef;
     FirebaseUser mUser;
 
-
-
     public FriendList() {
         // Required empty public constructor
     }
@@ -144,26 +142,6 @@ public class FriendList extends Fragment {
         adapter.startListening();
         recyclerView.setAdapter(adapter);
 
-    }
-
-    
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
-        inflater.inflate(R.menu.friendmenu,menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.deleteFriend:
-                Toast.makeText(getActivity(), "CLick here to delete", Toast.LENGTH_SHORT).show();
-                return true;
-            default:break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }
