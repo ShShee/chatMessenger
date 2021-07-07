@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.SE114PMCL.chatMessenger.Holder.FindFriendViewHolder;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
@@ -27,12 +30,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class FindFriendActivity extends AppCompatActivity {
 
-/*    FirebaseRecyclerOptions<UserModel>options;
+    FirebaseRecyclerOptions<UserModel>options;
     FirebaseRecyclerAdapter<UserModel, FindFriendViewHolder>adapter;
 
     DatabaseReference mUserRef;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
+    EditText search;
 
     RecyclerView recyclerView;
 
@@ -46,13 +50,30 @@ public class FindFriendActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         recyclerView = findViewById(R.id.recyCleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        search = findViewById(R.id.searchFriend);
 
         loadUsers("");
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                loadUsers(charSequence.toString().toLowerCase());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void loadUsers(String s) {
-        Query query = mUserRef.orderByChild("username").startAt(s).endAt(s+"\uf8ff");
+        Query query = mUserRef.orderByChild("timkiem").startAt(s).endAt(s+"\uf8ff");
         options = new FirebaseRecyclerOptions.Builder<UserModel>().setQuery(query, UserModel.class).build();
 
         adapter = new FirebaseRecyclerAdapter<UserModel, FindFriendViewHolder>(options) {
@@ -88,5 +109,5 @@ public class FindFriendActivity extends AppCompatActivity {
         };
         adapter.startListening();
         recyclerView.setAdapter(adapter);
-    }*/
+    }
 }

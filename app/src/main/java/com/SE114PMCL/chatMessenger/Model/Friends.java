@@ -1,17 +1,25 @@
 package com.SE114PMCL.chatMessenger.Model;
 
 public class Friends {
-    private String  imageURL, username;
+    private String  imageURL, username, timkiem;
 
-    public Friends( String imageURL, String username){
+    public Friends( String imageURL, String username, String timkiem){
         this.imageURL=imageURL;
         this.username=username;
+        this.timkiem = timkiem;
     }
 
     public Friends(){
 
     }
 
+    public String getTimkiem() {
+        return timkiem;
+    }
+
+    public void setTimkiem(String timkiem) {
+        this.timkiem = timkiem;
+    }
 
     public String getImageURL(){
         return imageURL;

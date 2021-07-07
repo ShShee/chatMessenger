@@ -102,7 +102,7 @@ public class FriendList extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchUsers(charSequence.toString().toLowerCase());
+                LoadFriends(charSequence.toString().toLowerCase());
             }
 
             @Override
@@ -146,13 +146,7 @@ public class FriendList extends Fragment {
 
     }
 
-
-    private void searchUsers(String s) {
-    }
-
-    private void readUsers() {
-
-    }
+    
 
     @Override
     public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {

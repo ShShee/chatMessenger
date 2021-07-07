@@ -95,6 +95,7 @@ public class GroupChatActivity extends AppCompatActivity {
         sendBtn=findViewById(R.id.sendBtn);
 
         chatRv = findViewById(R.id.chatRv);
+        chatRv.setLayoutManager(new LinearLayoutManager(this));
 
         setSupportActionBar(toolbar);
 
