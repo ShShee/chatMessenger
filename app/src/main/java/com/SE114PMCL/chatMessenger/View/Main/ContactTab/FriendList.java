@@ -1,5 +1,6 @@
 package Main.ContactTab;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,11 +27,13 @@ import android.widget.Toast;
 import com.SE114PMCL.chatMessenger.Adapter.UserListAdapter;
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 
+import com.SE114PMCL.chatMessenger.FindFriendActivity;
 import com.SE114PMCL.chatMessenger.Holder.FriendMyViewHolder;
 import com.SE114PMCL.chatMessenger.Model.Friends;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 
 import com.SE114PMCL.chatMessenger.R;
+import com.SE114PMCL.chatMessenger.ViewFriendActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -127,6 +130,10 @@ public class FriendList extends Fragment {
                     Picasso.get().load(model.getImageURL()).into(holder.imageURl);
                 }
                 holder.username.setText(model.getUsername());
+
+                holder.itemView.setOnClickListener(v -> {
+                    Toast.makeText(getContext(), "This is "+model.getUsername(), Toast.LENGTH_SHORT).show();
+                });
 
             }
 
