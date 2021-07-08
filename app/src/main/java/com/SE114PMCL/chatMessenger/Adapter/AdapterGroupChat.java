@@ -29,16 +29,17 @@ import java.util.List;
 
 
 public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.ViewHolder> {
+
     private static final int MSG_TYPE_LEFT=0;
     private static final int MSG_TYPE_RIGHT=1;
 
-    private Context context;
+    private Context mContext;
     private List<ModelGroupChat> modelGroupChatList;
 
     private FirebaseAuth firebaseAuth;
 
     public AdapterGroupChat(Context context, List<ModelGroupChat> modelGroupChatList){
-        this.context=context;
+        this.mContext=context;
         this.modelGroupChatList=modelGroupChatList;
     }
 
@@ -47,18 +48,18 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
     public AdapterGroupChat.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflate layouts
         if(viewType==MSG_TYPE_RIGHT){
-            View view= LayoutInflater.from(context).inflate(R.layout.row_groupchat_right,parent,false);
+            View view= LayoutInflater.from(mContext).inflate(R.layout.row_groupchat_right,parent,false);
             return new AdapterGroupChat.ViewHolder(view);
         }
         else{
-            View view= LayoutInflater.from(context).inflate(R.layout.row_groupchat_left,parent,false);
+            View view= LayoutInflater.from(mContext).inflate(R.layout.row_groupchat_left,parent,false);
             return new AdapterGroupChat.ViewHolder(view);
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull AdapterGroupChat.ViewHolder holder, int position) {
-        //get data
+
         ModelGroupChat model = modelGroupChatList.get(position);
         String timestamp = model.getTimestamp();
         String message=model.getMessage();
@@ -75,7 +76,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
             holder.imageSend.setVisibility(View.VISIBLE);
             holder.messageTv.setVisibility(View.GONE);
 
-            Glide.with(context).load(message).into(holder.imageSend);
+            Glide.with(mContext).load(message).into(holder.imageSend);
 
         }
 
