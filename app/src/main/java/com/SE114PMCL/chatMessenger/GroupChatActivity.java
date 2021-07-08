@@ -160,7 +160,7 @@ public class GroupChatActivity extends AppCompatActivity {
                         groupChatList.add(model);
                     }
                     //adapter
-                    adapterGroupChat=new AdapterGroupChat(GroupChatActivity.this, groupChatList);
+                    adapterGroupChat = new AdapterGroupChat(GroupChatActivity.this, groupChatList);
                     chatRv.setAdapter(adapterGroupChat);
                 }
 
