@@ -54,21 +54,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class GroupChatActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
 
-    private String groupId, myGroupRole="";
+    FirebaseAuth firebaseAuth;
 
-    private Toolbar toolbar;
-    private ImageView groupIconIv;
-    private ImageButton attachBtn, sendBtn;
-    private TextView groupTitleTv;
-    private EditText messageEt;
-    private RecyclerView chatRv;
+    String groupId, myGroupRole="";
 
-    private ArrayList<ModelGroupChat> groupChatList;
-    private AdapterGroupChat adapterGroupChat;
+    Toolbar toolbar;
+    ImageView groupIconIv;
+    ImageButton attachBtn, sendBtn;
+    TextView groupTitleTv;
+    EditText messageEt;
+    RecyclerView chatRv;
+
+    List<ModelGroupChat> groupChatList;
+    AdapterGroupChat adapterGroupChat;
 
     private static final int CAMERA_REQUEST = 1;
     private static final int STORAGE_REQUEST = 2;
@@ -95,7 +97,7 @@ public class GroupChatActivity extends AppCompatActivity {
         sendBtn=findViewById(R.id.sendBtn);
 
         chatRv = findViewById(R.id.chatRv);
-        chatRv.setLayoutManager(new LinearLayoutManager(this));
+        //chatRv.setLayoutManager(new LinearLayoutManager(GroupChatActivity.this));
 
         setSupportActionBar(toolbar);
 
@@ -106,22 +108,16 @@ public class GroupChatActivity extends AppCompatActivity {
         firebaseAuth =FirebaseAuth.getInstance();
 
 
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message=messageEt.getText().toString().trim();
-                if(TextUtils.isEmpty(message)){
-                    Toast.makeText(GroupChatActivity.this,"Không gửi trống tin nhắn",Toast.LENGTH_SHORT).show();
-                }
-                else{ sendMessage(message); }
-
+        sendBtn.setOnClickListener(v -> {
+            String message=messageEt.getText().toString().trim();
+            if(TextUtils.isEmpty(message)){
+                Toast.makeText(GroupChatActivity.this,"Không gửi trống tin nhắn",Toast.LENGTH_SHORT).show();
             }
+            else{ sendMessage(message); }
+            messageEt.setText("");
         });
 
-        attachBtn.setOnClickListener(v -> {
-            showImagePickDialog();
-        });
-
+        attachBtn.setOnClickListener(v -> { showImagePickDialog(); });
 
         loadGroupInfo();
         loadGroupMessages();
@@ -132,7 +128,7 @@ public class GroupChatActivity extends AppCompatActivity {
     private void loadMyGroupRole() {
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups");
         ref.child(groupId).child("Participants")
-                .orderByChild("uid").equalTo(firebaseAuth.getUid())
+                .orderByChild("id").equalTo(firebaseAuth.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -221,10 +217,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
         //add in db
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
-        ref.child(groupId).child("Messages").child(timestamp)
-                .setValue(hashMap)
-                .addOnSuccessListener(aVoid -> messageEt.setText(""))
-                .addOnFailureListener(e -> Toast.makeText(GroupChatActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show());
+        ref.child(groupId).child("Messages").push().setValue(hashMap);
 
     }
 
@@ -260,20 +253,11 @@ public class GroupChatActivity extends AppCompatActivity {
                 DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
                 ref.child(groupId).child("Messages").child(timestamp)
                         .setValue(hashMap)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                messageEt.setText("");
+                        .addOnSuccessListener(aVoid -> messageEt.setText(""))
+                        .addOnFailureListener(e -> {
+                            //message sending failed
+                            Toast.makeText(GroupChatActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
 
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull @NotNull Exception e) {
-                                //message sending failed
-                                Toast.makeText(GroupChatActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-
-                            }
                         });
 
             }

@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.HolderGroupChat> {
@@ -32,11 +33,11 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.Hold
     private static final int MSG_TYPE_RIGHT=1;
 
     private Context context;
-    private ArrayList<ModelGroupChat> modelGroupChatList;
+    private List<ModelGroupChat> modelGroupChatList;
 
     private FirebaseAuth firebaseAuth;
 
-    public AdapterGroupChat(Context context, ArrayList<ModelGroupChat> modelGroupChatList){
+    public AdapterGroupChat(Context context, List<ModelGroupChat> modelGroupChatList){
         this.context=context;
         this.modelGroupChatList=modelGroupChatList;
 
