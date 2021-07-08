@@ -133,6 +133,9 @@ public class FriendList extends Fragment {
 
                 holder.itemView.setOnClickListener(v -> {
                     Toast.makeText(getContext(), "This is "+model.getUsername(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), ViewFriendActivity.class);
+                    intent.putExtra("userKey", getRef(position).getKey().toString());
+                    startActivity(intent);
                 });
 
             }
