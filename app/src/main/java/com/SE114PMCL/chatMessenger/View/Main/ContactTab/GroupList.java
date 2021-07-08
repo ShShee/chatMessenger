@@ -44,7 +44,7 @@ public class GroupList extends Fragment {
     private RecyclerView groupsRv;
 
     private FirebaseAuth firebaseAuth;
-
+    DatabaseReference databaseReference;
     private ArrayList<GroupData> groupData;
     private GroupListAdapter groupListAdapter;
     private EditText search;
@@ -59,10 +59,10 @@ public class GroupList extends Fragment {
         View view = inflater.inflate(R.layout.fragment_group_list, container, false);
 
         groupsRv = view.findViewById(R.id.groupsRv);
-
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Groups");
         firebaseAuth = FirebaseAuth.getInstance();
 
-        loadGroupChatList();
+        loadGroupChatList("");
 
         search = view.findViewById(R.id.searchGr);
         search.addTextChangedListener(new TextWatcher() {
@@ -73,7 +73,7 @@ public class GroupList extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchUsers(charSequence.toString().toLowerCase());
+                loadGroupChatList(charSequence.toString().toLowerCase());
             }
 
             @Override
@@ -85,11 +85,10 @@ public class GroupList extends Fragment {
         return view;
     }
 
-    private void loadGroupChatList() {
+    private void loadGroupChatList(String s) {
         groupData = new ArrayList<>();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Groups");
-        reference.addValueEventListener(new ValueEventListener() {
+        Query query=FirebaseDatabase.getInstance().getReference("Groups").orderByChild("timkiemG").startAt(s).endAt(s+"\uf8ff");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 groupData.size();
@@ -109,27 +108,5 @@ public class GroupList extends Fragment {
             }
         });
     }
-    private void searchUsers(String s) {
 
-        Query query = FirebaseDatabase.getInstance().getReference("Groups").orderByChild("timkiemG").startAt(s).endAt(s+"\uf8ff");
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                groupData.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    GroupData gr = snapshot.getValue(GroupData.class);
-                        groupData.add(gr);
-                    }
-                groupListAdapter = new GroupListAdapter(getActivity(), groupData);
-                groupsRv.setAdapter(groupListAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 }

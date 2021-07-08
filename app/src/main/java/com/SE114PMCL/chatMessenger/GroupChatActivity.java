@@ -69,8 +69,9 @@ public class GroupChatActivity extends AppCompatActivity {
     TextView groupTitleTv;
     EditText messageEt;
     RecyclerView chatRv;
+    Intent intent;
 
-    List<ModelGroupChat> groupChatList;
+    ArrayList<ModelGroupChat> groupChatList;
     AdapterGroupChat adapterGroupChat;
 
     private static final int CAMERA_REQUEST = 1;
@@ -99,10 +100,11 @@ public class GroupChatActivity extends AppCompatActivity {
         sendBtn=findViewById(R.id.sendBtn);
 
         chatRv = findViewById(R.id.chatRv);
+        chatRv.setHasFixedSize(true);
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
 
-
-        Intent intent=getIntent();
+        intent = getIntent();
         groupId=intent.getStringExtra("groupId");
 
         firebaseAuth =FirebaseAuth.getInstance();
@@ -158,7 +160,7 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void loadGroupMessages() {
-        groupChatList=new ArrayList<>();
+        groupChatList = new ArrayList<>();
 
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups")
                         .child(groupId)

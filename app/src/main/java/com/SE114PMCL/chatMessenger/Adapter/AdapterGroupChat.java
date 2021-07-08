@@ -34,11 +34,11 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
     private static final int MSG_TYPE_RIGHT=1;
 
     private Context mContext;
-    private List<ModelGroupChat> modelGroupChatList;
+    private ArrayList<ModelGroupChat> modelGroupChatList;
 
     private FirebaseAuth firebaseAuth;
 
-    public AdapterGroupChat(Context context, List<ModelGroupChat> modelGroupChatList){
+    public AdapterGroupChat(Context context, ArrayList<ModelGroupChat> modelGroupChatList){
         this.mContext=context;
         this.modelGroupChatList=modelGroupChatList;
     }
@@ -46,7 +46,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
     @NonNull
     @Override
     public AdapterGroupChat.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //inflate layouts
+
         if(viewType==MSG_TYPE_RIGHT){
             View view= LayoutInflater.from(mContext).inflate(R.layout.row_groupchat_right,parent,false);
             return new AdapterGroupChat.ViewHolder(view);
@@ -85,7 +85,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
     }
 
     private void setUserName(ModelGroupChat model, AdapterGroupChat.ViewHolder holder) {
-        //get sender info from uid in model
+
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
         ref.orderByChild("id").equalTo(model.getSender()).addValueEventListener(new ValueEventListener() {
                 @Override
