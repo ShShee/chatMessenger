@@ -59,6 +59,7 @@ import java.util.List;
 public class GroupChatActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
+    DatabaseReference databaseReference;
 
     String groupId, myGroupRole="";
 
@@ -68,8 +69,9 @@ public class GroupChatActivity extends AppCompatActivity {
     TextView groupTitleTv;
     EditText messageEt;
     RecyclerView chatRv;
+    Intent intent;
 
-    List<ModelGroupChat> groupChatList;
+    ArrayList<ModelGroupChat> groupChatList;
     AdapterGroupChat adapterGroupChat;
 
     private static final int CAMERA_REQUEST = 1;
@@ -88,8 +90,9 @@ public class GroupChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
 
-        //init views
         toolbar =findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         groupIconIv=findViewById(R.id.groupIconIv);
         groupTitleTv=findViewById(R.id.groupTitleTv);
         attachBtn=findViewById(R.id.attachBtn);
@@ -97,12 +100,11 @@ public class GroupChatActivity extends AppCompatActivity {
         sendBtn=findViewById(R.id.sendBtn);
 
         chatRv = findViewById(R.id.chatRv);
-        //chatRv.setLayoutManager(new LinearLayoutManager(GroupChatActivity.this));
+        chatRv.setHasFixedSize(true);
 
-        setSupportActionBar(toolbar);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
 
-        //get id of the group
-        Intent intent=getIntent();
+        intent = getIntent();
         groupId=intent.getStringExtra("groupId");
 
         firebaseAuth =FirebaseAuth.getInstance();
@@ -119,9 +121,19 @@ public class GroupChatActivity extends AppCompatActivity {
 
         attachBtn.setOnClickListener(v -> { showImagePickDialog(); });
 
-        loadGroupInfo();
-        loadGroupMessages();
-        loadMyGroupRole();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                loadGroupInfo();
+                loadGroupMessages();
+                loadMyGroupRole();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -148,10 +160,12 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void loadGroupMessages() {
-        groupChatList=new ArrayList<>();
+        groupChatList = new ArrayList<>();
 
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups");
-        ref.child(groupId).child("Messages").addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups")
+                        .child(groupId)
+                        .child("Messages");
+        ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     groupChatList.clear();
@@ -159,8 +173,7 @@ public class GroupChatActivity extends AppCompatActivity {
                         ModelGroupChat model = ds.getValue(ModelGroupChat.class);
                         groupChatList.add(model);
                     }
-                    //adapter
-                    adapterGroupChat=new AdapterGroupChat(GroupChatActivity.this, groupChatList);
+                    adapterGroupChat = new AdapterGroupChat(GroupChatActivity.this, groupChatList);
                     chatRv.setAdapter(adapterGroupChat);
                 }
 
