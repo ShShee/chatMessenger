@@ -96,23 +96,11 @@ public class GroupCreateActivity extends AppCompatActivity {
 
 
         //pick image
-        groupIconIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showImagePickDialog();
-
-            }
-        });
+        groupIconIv.setOnClickListener(v -> showImagePickDialog());
 
 
         //handle click event
-        createGroupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCreatingGroup();
-
-            }
-        });
+        createGroupBtn.setOnClickListener(v -> startCreatingGroup());
 
 
     }
@@ -187,7 +175,7 @@ public class GroupCreateActivity extends AppCompatActivity {
 
                         //setup member inf (add current in group's participants list)
                         HashMap<String,String>hashMap1=new HashMap<>();
-                        hashMap1.put("uid",firebaseAuth.getUid());
+                        hashMap1.put("id",firebaseAuth.getUid());
                         hashMap1.put("role", "creator");
                         hashMap1.put("timestamp",g_timestamp);
 
@@ -202,24 +190,18 @@ public class GroupCreateActivity extends AppCompatActivity {
                                         Toast.makeText(GroupCreateActivity.this,"Group created...",Toast.LENGTH_SHORT).show();
                                     }
                                 })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull @NotNull Exception e) {
-                                        //failed adding participant
-                                        progressDialog.dismiss();
-                                        Toast.makeText(GroupCreateActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-                                    }
+                                .addOnFailureListener(e -> {
+                                    //failed adding participant
+                                    progressDialog.dismiss();
+                                    Toast.makeText(GroupCreateActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
                                 });
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull @NotNull Exception e) {
-                        //failed
-                        progressDialog.dismiss();
-                        Toast.makeText(GroupCreateActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                .addOnFailureListener(e -> {
+                    //failed
+                    progressDialog.dismiss();
+                    Toast.makeText(GroupCreateActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
 
-                    }
                 });
 
     }
