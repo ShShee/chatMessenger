@@ -61,6 +61,7 @@
             android:ems="10"
             android:layout_weight="4"
             android:inputType="textMultiLine"
+            android:backgroundTint="@color/white"
             android:paddingLeft="16dp"
             android:paddingTop="8dp"
             android:paddingRight="16dp"
