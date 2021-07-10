@@ -17,7 +17,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,14 +27,10 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.SE114PMCL.chatMessenger.Adapter.AdapterGroupChat;
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
-import com.SE114PMCL.chatMessenger.Model.UserModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -99,8 +95,8 @@ public class GroupChatActivity extends AppCompatActivity {
         messageEt=findViewById(R.id.messageEt);
         sendBtn=findViewById(R.id.sendBtn);
 
-        chatRv = findViewById(R.id.chatRv);
-        chatRv.setHasFixedSize(true);
+        /*chatRv = findViewById(R.id.chatRv);
+        chatRv.setHasFixedSize(true);*/
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
 

@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linearchat"
-        android:layout_toRightOf="@id/profile_image"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/profile_image">
         <TextView
             android:id="@+id/show_message"
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
             android:background="@drawable/background_left"
             android:padding="8dp"
             android:visibility="gone"
-
+            android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_image_send" />
         <TextView
