@@ -16,6 +16,7 @@ import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,21 +26,20 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.ViewHolder> {
 
-    private static final int MSG_TYPE_LEFT=0;
-    private static final int MSG_TYPE_RIGHT=1;
+    public static final int MSG_TYPE_LEFT=0;
+    public static final int MSG_TYPE_RIGHT=1;
 
     private Context mContext;
-    private ArrayList<ModelGroupChat> modelGroupChatList;
+    private List<ModelGroupChat> modelGroupChatList;
+    private FirebaseUser fuser;
 
-    private FirebaseAuth firebaseAuth;
-
-    public AdapterGroupChat(Context context, ArrayList<ModelGroupChat> modelGroupChatList){
-        this.mContext=context;
+    public AdapterGroupChat(Context mContext, List<ModelGroupChat> modelGroupChatList){
+        this.mContext=mContext;
         this.modelGroupChatList=modelGroupChatList;
     }
 
@@ -64,8 +64,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
         String timestamp = model.getTimestamp();
         String message=model.getMessage();
         String type=model.getType();
-
-        holder.timeTv.setText(timestamp);
+        setUserName(model, holder);
 
         if(type.equals("text")){
             holder.imageSend.setVisibility(View.GONE);
@@ -75,12 +74,10 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
         else {
             holder.imageSend.setVisibility(View.VISIBLE);
             holder.messageTv.setVisibility(View.GONE);
-
             Glide.with(mContext).load(message).into(holder.imageSend);
-
         }
 
-        setUserName(model, holder);
+        holder.timeTv.setText(timestamp);
 
     }
 
@@ -126,8 +123,8 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
 
     @Override
     public int getItemViewType(int position) {
-        firebaseAuth = FirebaseAuth.getInstance();
-        if (modelGroupChatList.get(position).getSender().equals(firebaseAuth.getUid())){
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (modelGroupChatList.get(position).getSender().equals(fuser.getUid())){
             return MSG_TYPE_RIGHT;
         }
         else{
