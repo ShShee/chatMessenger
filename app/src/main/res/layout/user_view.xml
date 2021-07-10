@@ -53,7 +53,7 @@
                 app:civ_border_width="10dp"
                 app:civ_border_color="#bfbfbf"
                 android:id="@+id/img_off"
-
+                android:visibility="gone"
                 android:src="@mipmap/ic_launcher"
                 android:layout_below="@id/txtTenUser"
                 android:layout_marginTop="20dp"

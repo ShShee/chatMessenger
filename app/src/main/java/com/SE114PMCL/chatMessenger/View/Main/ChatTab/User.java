@@ -97,7 +97,7 @@ public class User extends Fragment {
                     mchatlist.add(chatlist);
                 }
 
-                chatList();
+                chatList("");
             }
 
             @Override
@@ -114,7 +114,7 @@ public class User extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               searchUsers(charSequence.toString().toLowerCase());
+               chatList(charSequence.toString().toLowerCase());
             }
 
             @Override
@@ -126,10 +126,12 @@ public class User extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    private void chatList() {
+    private void chatList(String s) {
         mUsers = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.addValueEventListener(new ValueEventListener() {
+        Query query=FirebaseDatabase.getInstance().getReference("Users")
+                .orderByChild("timkiem")
+                .startAt(s).endAt(s+"\uf8ff");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
@@ -151,34 +153,5 @@ public class User extends Fragment {
             }
         });
     }
-    private void searchUsers(String s) {
 
-        final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("timkiem").startAt(s).endAt(s+"\uf8ff");
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUsers.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    UserModel user = snapshot.getValue(UserModel.class);
-
-                    assert user != null;
-                    assert fuser != null;
-                    if (!user.getId().equals(fuser.getUid())){
-                        mUsers.add(user);
-                    }
-                }
-
-                userListAdapter = new UserListAdapter(getContext(), mUsers, false);
-                recyclerView.setAdapter(userListAdapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 }
