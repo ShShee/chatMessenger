@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.SE114PMCL.chatMessenger.Adapter.AdapterGroupChat;
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
@@ -59,7 +60,6 @@ public class GroupChatActivity extends AppCompatActivity {
 
     String groupId, myGroupRole="";
 
-    Toolbar toolbar;
     ImageView groupIconIv;
     ImageButton attachBtn, sendBtn;
     TextView groupTitleTv;
@@ -86,17 +86,17 @@ public class GroupChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
 
-        toolbar =findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         groupIconIv=findViewById(R.id.groupIconIv);
         groupTitleTv=findViewById(R.id.groupTitleTv);
         attachBtn=findViewById(R.id.attachBtn);
         messageEt=findViewById(R.id.messageEt);
         sendBtn=findViewById(R.id.sendBtn);
 
-        /*chatRv = findViewById(R.id.chatRv);
-        chatRv.setHasFixedSize(true);*/
+        chatRv = findViewById(R.id.chatRv);
+        chatRv.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        chatRv.setLayoutManager(linearLayoutManager);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
 

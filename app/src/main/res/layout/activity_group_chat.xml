@@ -41,11 +41,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRv"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/chatLayout"
-        app:stackFromEnd="true"
         android:layout_below="@+id/toolbar"/>
 
     <LinearLayout
