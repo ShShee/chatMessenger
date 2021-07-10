@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
+import com.SE114PMCL.chatMessenger.Controller.StartActivity;
 import com.SE114PMCL.chatMessenger.databinding.ActivityLoginGgBinding;
 import com.SE114PMCL.chatMessenger.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -52,6 +53,12 @@ public class LoginActivityGg extends AppCompatActivity {
     Button btnOut;
 
     private static final  String TAG = "GOOGLE_SIGN_IN_TAG";
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), StartActivity.class));
+        finish();
+    }
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {

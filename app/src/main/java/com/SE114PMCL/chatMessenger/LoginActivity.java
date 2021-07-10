@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 
+import com.SE114PMCL.chatMessenger.Controller.StartActivity;
 import com.facebook.AccessToken;
 
 import com.facebook.CallbackManager;
@@ -43,6 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference reference;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), StartActivity.class));
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
