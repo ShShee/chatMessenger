@@ -5,33 +5,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/aa"
     tools:context=".VerifyActivity">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_background"
+            android:padding="20dp">
     <TextView
         android:id="@+id/txtVerify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:text="Please Verify your Email Address"
-        android:textSize="22dp"
+        android:textSize="25dp"
         tools:layout_editor_absoluteX="190dp"
         tools:layout_editor_absoluteY="65dp" />
 
     <Button
         android:id="@+id/btnVerify"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtVerify"
+        android:background="@drawable/hover"
         android:layout_centerHorizontal="true"
-        android:text="verify now"
+        android:text="verify email"
         android:textSize="18sp" />
 
     <Button
         android:id="@+id/btnStart"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnVerify"
+        android:layout_margin="10dp"
+        android:background="@drawable/hover"
         android:layout_centerInParent="true"
         android:textSize="18sp"
         android:text="Start with chat app" />
-
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

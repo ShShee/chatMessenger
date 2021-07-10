@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity{
                 if(R.id.friendList==currentFragment || R.id.groupList==currentFragment) {
                     bottomNav.setVisibility(View.VISIBLE);
                     navController.popBackStack();
-                    setSupportActionBar(toolbar);
+                    //setSupportActionBar(toolbar);
                     /*getSupportActionBar().setDisplayShowTitleEnabled(false);
                     getSupportActionBar().show();*/
                 }

@@ -5,33 +5,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".ForgotpassActivity">
-
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            >
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="214dp"
-        android:layout_height="208dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
-        android:layout_marginTop="82dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
-        app:srcCompat="@drawable/password"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="105dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/password" />
 
     <Button
         android:id="@+id/btnForgot"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Forgot Password"
+        android:text="Reset Password"
+        android:layout_marginTop="4dp"
         android:layout_centerInParent="true"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="320dp" />
+        android:background="@drawable/hover"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="14dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/imageView3"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

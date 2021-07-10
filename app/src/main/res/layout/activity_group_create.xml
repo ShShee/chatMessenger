@@ -4,31 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="#eee"
+    android:background="@drawable/aa"
     tools:context=".GroupCreateActivity">
 
     <include
         android:id="@+id/tlbCreateGroup"
         layout="@layout/tlbcreategroup"/>
-
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tlbCreateGroup"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_background">
     <ImageView
         android:id="@+id/groupIconIv"
-        android:layout_width="189dp"
+        android:layout_width="match_parent"
         android:layout_height="112dp"
-        android:layout_below="@+id/tlbCreateGroup"
-        android:layout_alignEnd="@+id/tlbCreateGroup"
-        android:layout_alignRight="@+id/tlbCreateGroup"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="105dp"
-        android:layout_marginLeft="105dp"
-        android:layout_marginTop="74dp"
-        android:layout_marginEnd="77dp"
-        android:layout_marginRight="77dp"
-        android:layout_marginBottom="469dp"
         app:srcCompat="@drawable/ic_creategroup"
         tools:ignore="VectorDrawableCompat" />
 
@@ -36,37 +35,29 @@
         android:id="@+id/groupTitleEt"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_alignStart="@+id/groupIconIv"
-        android:layout_alignLeft="@+id/groupIconIv"
-        android:layout_alignEnd="@+id/groupIconIv"
-        android:layout_alignRight="@+id/groupIconIv"
-        android:layout_alignBottom="@+id/groupIconIv"
-        android:layout_marginStart="-63dp"
-        android:layout_marginLeft="-63dp"
-        android:layout_marginEnd="-57dp"
-        android:layout_marginRight="-57dp"
-        android:layout_marginBottom="-129dp"
-        android:background="@color/white"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/white"
+        android:layout_below="@id/groupIconIv"
+        android:background="@drawable/input_bg"
         android:ems="10"
         android:hint="Group Title"
+        android:paddingLeft="20dp"
         android:layout_centerHorizontal="true"/>
 
     <EditText
         android:id="@+id/groupDescriptionEt"
-        android:layout_width="304dp"
-        android:layout_height="133dp"
-        android:layout_alignStart="@+id/groupTitleEt"
-        android:layout_alignLeft="@+id/groupTitleEt"
-        android:layout_alignEnd="@+id/groupTitleEt"
-        android:layout_alignRight="@+id/groupTitleEt"
-        android:layout_alignBottom="@+id/groupTitleEt"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/groupTitleEt"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginBottom="-162dp"
-        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/input_description"
+        android:paddingLeft="17dp"
         android:ems="10"
         android:gravity="top"
         android:hint="Group Description"
@@ -74,14 +65,15 @@
 
     <Button
         android:background="@drawable/btn_creategroup"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
         android:id="@+id/createGroupBtn"
-        android:src="@drawable/ic_done"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
-
-
-
-
+        android:text="Create your group"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/groupDescriptionEt"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

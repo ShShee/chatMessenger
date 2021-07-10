@@ -60,7 +60,7 @@ public class FriendList extends Fragment {
     FirebaseRecyclerAdapter<Friends, FriendMyViewHolder>adapter;
 
     RecyclerView recyclerView;
-    Toolbar toolbar;
+    //Toolbar toolbar;
     EditText search_users;
 
     FirebaseAuth mAuth;
@@ -82,7 +82,7 @@ public class FriendList extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toolbar=view.findViewById(R.id.toolbarFriend);
+        //toolbar=view.findViewById(R.id.toolbarFriend);
 
         recyclerView=view.findViewById(R.id.friendView);
         recyclerView.setHasFixedSize(true);
@@ -113,9 +113,9 @@ public class FriendList extends Fragment {
         });
 
 
-        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
-        setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //((MainActivity) getActivity()).setSupportActionBar(toolbar);
+        //setHasOptionsMenu(true);
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void LoadFriends(String s) {

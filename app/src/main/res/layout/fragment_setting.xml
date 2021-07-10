@@ -4,14 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/aa"
     tools:context="Main.AccountTab.Setting">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
+        android:layout_width="match_parent"
+        app:cardBackgroundColor="@android:color/transparent"
+        android:layout_height="wrap_content">
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
         android:id="@+id/accountView"
-        android:layout_centerHorizontal="true">
 
+        android:padding="4dp"
+        >
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/Avatar"
@@ -19,6 +25,7 @@
         android:layout_height="110dp"
         android:padding="12dp"
         android:layout_marginRight="8dp"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/avatar3"
         app:civ_border_width="0dp"
         app:civ_border_color="#FF000000"/>
@@ -28,104 +35,100 @@
         android:layout_height="110dp"
         android:padding="5dp"
         app:avvy_border_color="#33cc33"
+        android:layout_centerHorizontal="true"
         app:avvy_border_highlight_color="#00cc00"
-        app:avvy_border_highlight_color_end="#ffff1a"
+        app:avvy_border_highlight_color_end="#ffff00"
         app:avvy_border_thickness="2dp"
         app:avvy_border_thickness_highlight="3dp"
         app:avvy_distance_to_border="3dp"
         app:avvy_highlighted="true"
         app:avvy_loading_arches="5"
         app:avvy_loading_arches_degree_area="90"/>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/Avatar"
-            android:layout_centerHorizontal="true">
         <TextView
             android:id="@+id/Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#268F26"
+            android:textColor="@color/white"
             android:text="@string/userName"
             android:layout_centerHorizontal="true"
             android:textStyle="bold"
             android:textSize="27dp"
+            android:layout_below="@id/Avatar"
             />
-        <TextView
-            android:id="@+id/UID"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:id="@+id/divider"
+            android:layout_below="@id/Name"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"/>
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Name"
+            android:orientation="horizontal"
             android:layout_centerHorizontal="true"
-            android:text="@string/userID"
-            android:textSize="15dp"
-            />
-    </RelativeLayout>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/accountView"
-        android:id="@+id/nameView">
+            android:layout_below="@id/divider"
+            android:id="@+id/nameView">
 
-        <ImageButton
-            android:id="@+id/changeName"
-            android:src="@drawable/edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:selectableItemBackground"/>
-        <ImageButton
-            android:id="@+id/changeAvatar"
-            android:src="@drawable/account1"
-            android:layout_width="70dp"
-            android:layout_toRightOf="@id/changeName"
-            android:layout_height="wrap_content"
-            android:background="?android:selectableItemBackground"/>
-        <com.ebanx.swipebtn.SwipeButton
-            android:id="@+id/swipe_btn"
-            android:layout_width="200dp"
-            android:layout_toRightOf="@id/changeAvatar"
-            android:layout_height="70dp"
-            app:inner_text="Swipe"
-            app:inner_text_color="@android:color/white"
-            app:inner_text_size="16sp"
-            app:inner_text_top_padding="18dp"
-            app:inner_text_bottom_padding="18dp"
-            app:inner_text_background="@drawable/shape_rounded"
-            app:button_image_height="70dp"
-            app:button_image_width="70dp"
-            app:button_background="@drawable/swipe_background"
-            app:button_image_disabled="@drawable/logout"
-            app:button_image_enabled="@drawable/login"
-            app:button_right_padding="5dp"
-            app:has_activate_state="true"
-            />
+            <ImageButton
+                android:id="@+id/changeName"
+                android:src="@drawable/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"/>
+            <ImageButton
+                android:id="@+id/changeAvatar"
+                android:src="@drawable/account1"
+                android:layout_width="70dp"
+                android:layout_toRightOf="@id/changeName"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"/>
+            <com.ebanx.swipebtn.SwipeButton
+                android:id="@+id/swipe_btn"
+                android:layout_width="200dp"
+                android:layout_toRightOf="@id/changeAvatar"
+                android:layout_height="70dp"
+                app:inner_text="Swipe"
+                app:inner_text_color="@android:color/white"
+                app:inner_text_size="16sp"
+                app:inner_text_top_padding="18dp"
+                app:inner_text_bottom_padding="18dp"
+                app:inner_text_background="@drawable/shape_rounded"
+                app:button_background="@drawable/swipe_background"
+                app:button_image_height="70dp"
+                app:button_image_width="70dp"
+                app:button_image_disabled="@drawable/logout"
+                app:button_image_enabled="@drawable/login"
+                app:button_right_padding="5dp"
+                app:has_activate_state="true"
+                />
+        </RelativeLayout>
     </RelativeLayout>
-    <View
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:id="@+id/divider"
-        android:layout_below="@id/nameView"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/white"/>
+        app:cardBackgroundColor="@android:color/white"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="20dp"
+        android:layout_below="@+id/cardView1"
+        android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/divider">
+        android:background="@drawable/aa">
         <TextView
             android:id="@+id/pendingRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="14dp"
             android:layout_marginBottom="14dp"
-            android:textColor="@color/white"
             android:text="Pending"
+            android:textColor="@color/white"
             android:textSize="27dp"
             android:textStyle="bold"
             />
@@ -147,4 +150,5 @@
 <!--            />-->
 
     </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
