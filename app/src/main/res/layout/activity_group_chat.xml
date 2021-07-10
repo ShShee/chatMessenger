@@ -6,47 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/aa"
-    tools:context=".GroupChatActivity">
+    tools:context="Main.ContactTab.GroupChatActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarGr"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@drawable/gradient_background"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_background">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/groupIconIv"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:scaleType="centerCrop"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_group_white"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/groupIconIv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_group_white"/>
 
-            <TextView
-                android:id="@+id/groupTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/groupIconIv"
-                android:text="Group Title"
-                android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/groupIconIv" />
+        <TextView
+            android:id="@+id/groupTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/groupIconIv"
+            android:text="Group Title"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/groupIconIv" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRv"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/chatLayout"
-        app:stackFromEnd="true"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_below="@+id/toolbarGr"/>
 
     <LinearLayout
         android:id="@+id/chatLayout"

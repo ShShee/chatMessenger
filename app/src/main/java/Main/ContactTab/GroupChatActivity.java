@@ -1,9 +1,13 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -15,22 +19,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import com.SE114PMCL.chatMessenger.Adapter.AdapterGroupChat;
+import com.SE114PMCL.chatMessenger.Model.GroupData;
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
-
+import com.SE114PMCL.chatMessenger.R;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,35 +40,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.acl.Group;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+
+import Main.ChatTab.MessengerActivity;
 
 public class GroupChatActivity extends AppCompatActivity {
 
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
-
-    String groupId, myGroupRole="";
-
-    Toolbar toolbar;
-    ImageView groupIconIv;
-    ImageButton attachBtn, sendBtn;
-    TextView groupTitleTv;
-    EditText messageEt;
-    RecyclerView chatRv;
+    FirebaseAuth fauth;
+    DatabaseReference reference;
+    String groupId, myGroupRole;
+    Toolbar toolbarGr;
+    ImageView icon;
+    TextView tenGr;
+    ImageButton btnText, btnImage;
+    EditText textSend;
+    RecyclerView chatGr;
     Intent intent;
-
-    ArrayList<ModelGroupChat> groupChatList;
-    AdapterGroupChat adapterGroupChat;
+    ArrayList<ModelGroupChat> mGroupChat;
+    AdapterGroupChat GrAdapter;
 
     private static final int CAMERA_REQUEST = 1;
     private static final int STORAGE_REQUEST = 2;
@@ -80,49 +78,36 @@ public class GroupChatActivity extends AppCompatActivity {
 
     Uri imageUri = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
 
-        toolbar =findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        icon = findViewById(R.id.groupIconIv);
+        tenGr = findViewById(R.id.groupTitleTv);
+        btnText = findViewById(R.id.sendBtn);
+        btnImage = findViewById(R.id.attachBtn);
+        fauth = FirebaseAuth.getInstance();
 
-        groupIconIv=findViewById(R.id.groupIconIv);
-        groupTitleTv=findViewById(R.id.groupTitleTv);
-        attachBtn=findViewById(R.id.attachBtn);
-        messageEt=findViewById(R.id.messageEt);
-        sendBtn=findViewById(R.id.sendBtn);
-
-        /*chatRv = findViewById(R.id.chatRv);
-        chatRv.setHasFixedSize(true);*/
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
+        chatGr = findViewById(R.id.chatRv);
+        chatGr.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        chatGr.setLayoutManager(linearLayoutManager);
 
         intent = getIntent();
-        groupId=intent.getStringExtra("groupId");
+        groupId = intent.getStringExtra("groupId");
 
-        firebaseAuth =FirebaseAuth.getInstance();
-
-
-        sendBtn.setOnClickListener(v -> {
-            String message=messageEt.getText().toString().trim();
-            if(TextUtils.isEmpty(message)){
-                Toast.makeText(GroupChatActivity.this,"Không gửi trống tin nhắn",Toast.LENGTH_SHORT).show();
-            }
-            else{ sendMessage(message); }
-            messageEt.setText("");
-        });
-
-        attachBtn.setOnClickListener(v -> { showImagePickDialog(); });
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        reference = FirebaseDatabase.getInstance().getReference("Groups").child(groupId);
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                loadGroupInfo();
+                String Gtitle = "" + snapshot.child("groupTitle").getValue();
+                tenGr.setText(Gtitle);
+                String Gicon = "" + snapshot.child("groupIcon").getValue();
+                if(Gicon == "") { icon.setImageResource(R.drawable.ic_creategroup); }
+                else{Glide.with(getApplicationContext()).load(Gicon).into(icon);}
                 loadGroupMessages();
-                loadMyGroupRole();
             }
 
             @Override
@@ -131,80 +116,33 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
 
-    }
+        btnText.setOnClickListener(v -> {
+            String message=textSend.getText().toString();
+            if(!message.equals("")){
+                Toast.makeText(GroupChatActivity.this,"Không gửi trống tin nhắn",Toast.LENGTH_SHORT).show();
+            }
+            else { sendMessage(message); }
+            textSend.setText("");
+        });
 
-    private void loadMyGroupRole() {
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups");
-        ref.child(groupId).child("Participants")
-                .orderByChild("id").equalTo(firebaseAuth.getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds: snapshot.getChildren()){
-                            myGroupRole=""+ds.child("role").getValue();
-                            //refresh menu items
-                            invalidateOptionsMenu();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                    }
-                });
+        btnImage.setOnClickListener(v -> { showImagePickDialog(); });
 
     }
 
     private void loadGroupMessages() {
-        groupChatList = new ArrayList<>();
+        mGroupChat = new ArrayList<>();
+        DatabaseReference refG = FirebaseDatabase.getInstance().getReference();
 
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups")
-                        .child(groupId)
-                        .child("Messages");
-        ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    groupChatList.clear();
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        ModelGroupChat model = ds.getValue(ModelGroupChat.class);
-                        groupChatList.add(model);
-                    }
-                    adapterGroupChat = new AdapterGroupChat(GroupChatActivity.this, groupChatList);
-                    chatRv.setAdapter(adapterGroupChat);
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-    }
-
-    private void loadGroupInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Groups");
-        ref.orderByChild("groupId").equalTo(groupId).addValueEventListener(new ValueEventListener() {
+        refG.child("Groups").child(groupId).child("Messages").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for(DataSnapshot ds: snapshot.getChildren()){
-                    String groupTitle=""+ds.child("groupTitle").getValue();
-                    String groupDescription=""+ds.child("groupDescription").getValue();
-                    String groupIcon=""+ds.child("groupIcon").getValue();
-                    String timestamp=""+ds.child("timestamp").getValue();
-                    String createBy=""+ds.child("createBy").getValue();
-
-                    groupTitleTv.setText(groupTitle);
-                    try {
-                        Picasso.get().load(groupIcon).placeholder(R.drawable.ic_group_white).into(groupIconIv);
-
-                    }
-                    catch(Exception e){
-                        groupIconIv.setImageResource(R.drawable.ic_group_white);
-                    }
-
-
-
+                mGroupChat.clear();
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    ModelGroupChat model = ds.getValue(ModelGroupChat.class);
+                    mGroupChat.add(model);
                 }
-
+                GrAdapter = new AdapterGroupChat(GroupChatActivity.this, mGroupChat);
+                chatGr.setAdapter(GrAdapter);
             }
 
             @Override
@@ -216,17 +154,17 @@ public class GroupChatActivity extends AppCompatActivity {
 
     private void sendMessage(String message) {
 
+        DatabaseReference refG = FirebaseDatabase.getInstance().getReference();
+
         String timestamp = getCurrentTimeStamp();
 
         HashMap<String, Object> hashMap =new HashMap<>();
-        hashMap.put("sender", firebaseAuth.getUid());
+        hashMap.put("sender", fauth.getUid());
         hashMap.put("message", message);
-        hashMap.put("timestamp",timestamp);
-        hashMap.put("type","text");
+        hashMap.put("timestamp", timestamp);
+        hashMap.put("type", "text");
 
-        //add in db
-        DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
-        ref.child(groupId).child("Messages").push().setValue(hashMap);
+        refG.child("Groups").child(groupId).child("Messages").push().setValue(hashMap);
 
     }
 
@@ -254,15 +192,14 @@ public class GroupChatActivity extends AppCompatActivity {
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
                 HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("sender", firebaseAuth.getUid());
+                hashMap.put("sender", fauth.getUid());
                 hashMap.put("message", downloadUri);
                 hashMap.put("timestamp", timestamp);
                 hashMap.put("type", "image");
 
                 DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
-                ref.child(groupId).child("Messages").child(timestamp)
-                        .setValue(hashMap)
-                        .addOnSuccessListener(aVoid -> messageEt.setText(""))
+                ref.child(groupId).child("Messages").setValue(hashMap)
+                        .addOnSuccessListener(aVoid -> textSend.setText(""))
                         .addOnFailureListener(e -> {
                             //message sending failed
                             Toast.makeText(GroupChatActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -271,6 +208,13 @@ public class GroupChatActivity extends AppCompatActivity {
 
             }
         }).addOnFailureListener(e -> progressDialog.dismiss());
+    }
+
+    public static String getCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
     }
 
     private void showImagePickDialog(){
@@ -327,39 +271,6 @@ public class GroupChatActivity extends AppCompatActivity {
 
     private void requestCameraPer(){
         ActivityCompat.requestPermissions(this, cameraPer, CAMERA_REQUEST);
-    }
-
-    public static String getCurrentTimeStamp() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        Date now = new Date();
-        String strDate = sdfDate.format(now);
-        return strDate;
-    }
-
-
-
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.groupmenu, menu);
-
-        if(myGroupRole.equals("creator")||myGroupRole.equals("admin")){
-            //in admin/creator, show add person option
-            menu.findItem(R.id.action_add_participant).setVisible(true);
-        }
-        else{
-            menu.findItem(R.id.action_add_participant).setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        if(id == R.id.action_add_participant){
-            Intent intent=new Intent(this,GroupParticipantAddActivity.class);
-            intent.putExtra("groupId",groupId);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
