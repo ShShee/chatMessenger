@@ -73,16 +73,12 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Hold
         }
 
         //handle group click
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //open group chat
-                Intent intent = new Intent(context, GroupChatActivity.class);
-                intent.putExtra("groupId",groupId);
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, GroupChatActivity.class);
+            intent.putExtra("groupId",groupId);
 
-                context.startActivity(intent);
+            context.startActivity(intent);
 
-            }
         });
     }
 

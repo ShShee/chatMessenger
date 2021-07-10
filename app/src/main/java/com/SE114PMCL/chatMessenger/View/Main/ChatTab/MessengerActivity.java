@@ -129,9 +129,7 @@ public class MessengerActivity extends AppCompatActivity {
             text_send.setText("");
         });
 
-        btn_image.setOnClickListener(v -> {
-            showImagePickDialog();
-        });
+        btn_image.setOnClickListener(v -> showImagePickDialog());
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
