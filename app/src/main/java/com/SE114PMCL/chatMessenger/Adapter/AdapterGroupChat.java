@@ -1,13 +1,11 @@
 package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,123 +14,120 @@ import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.List;
 
-import java.util.ArrayList;
+public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.ViewHolder>{
 
-
-
-public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.ViewHolder> {
-
-    private static final int MSG_TYPE_LEFT=0;
-    private static final int MSG_TYPE_RIGHT=1;
+    public static final int MSG_TYPE_LEFT=0;
+    public static final int MSG_TYPE_RIGHT=1;
 
     private Context mContext;
-    private ArrayList<ModelGroupChat> modelGroupChatList;
+    private List<ModelGroupChat> mChat;
+    FirebaseUser fuser;
 
-    private FirebaseAuth firebaseAuth;
-
-    public AdapterGroupChat(Context context, ArrayList<ModelGroupChat> modelGroupChatList){
-        this.mContext=context;
-        this.modelGroupChatList=modelGroupChatList;
+    public AdapterGroupChat(Context mContext, List<ModelGroupChat> mChat){
+        this.mChat=mChat;
+        this.mContext=mContext;
     }
 
     @NonNull
     @Override
-    public AdapterGroupChat.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        if(viewType==MSG_TYPE_RIGHT){
-            View view= LayoutInflater.from(mContext).inflate(R.layout.row_groupchat_right,parent,false);
+    public AdapterGroupChat.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        //if(viewType==MSG_TYPE_RIGHT){
+            View view= LayoutInflater.from(mContext).inflate(R.layout.chat_item_right,parent,false);
             return new AdapterGroupChat.ViewHolder(view);
-        }
-        else{
-            View view= LayoutInflater.from(mContext).inflate(R.layout.row_groupchat_left,parent,false);
+        /*}else{
+            View view=LayoutInflater.from(mContext).inflate(R.layout.chat_item_left,parent,false);
             return new AdapterGroupChat.ViewHolder(view);
-        }
+        }*/
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterGroupChat.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterGroupChat.ViewHolder holder,int position){
 
-        ModelGroupChat model = modelGroupChatList.get(position);
-        String timestamp = model.getTimestamp();
-        String message=model.getMessage();
-        String type=model.getType();
+        ModelGroupChat chat = mChat.get(position);
+        String type = chat.getType();
 
-        holder.timeTv.setText(timestamp);
+        holder.thoigian.setText(chat.getTimestamp());
+        String message = chat.getMessage();
 
         if(type.equals("text")){
-            holder.imageSend.setVisibility(View.GONE);
-            holder.messageTv.setVisibility(View.VISIBLE);
-            holder.messageTv.setText(message);
+            holder.show_message.setVisibility(View.VISIBLE);
+            holder.show_image.setVisibility((View.GONE));
+
+            holder.show_message.setText(chat.getMessage());
         }
-        else {
-            holder.imageSend.setVisibility(View.VISIBLE);
-            holder.messageTv.setVisibility(View.GONE);
-
-            Glide.with(mContext).load(message).into(holder.imageSend);
-
+        else{
+            holder.show_message.setVisibility(View.GONE);
+            holder.show_image.setVisibility((View.VISIBLE));
+            Glide.with(mContext).load(message).into(holder.show_image);
         }
 
-        setUserName(model, holder);
+        setavatar(chat, holder);
 
-    }
-
-    private void setUserName(ModelGroupChat model, AdapterGroupChat.ViewHolder holder) {
-
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("id").equalTo(model.getSender()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    for(DataSnapshot ds:snapshot.getChildren()){
-                        String name = "" + ds.child("username").getValue();
-
-                        holder.nameTv.setText(name);
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
     }
 
     @Override
-    public int getItemCount() {
-        return modelGroupChatList.size();
+    public int getItemCount(){
+        return mChat.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView nameTv, messageTv, timeTv;
-        private ImageView imageSend;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView show_message;
+        public ImageView profile_image, show_image;
+        public TextView thoigian;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            nameTv=itemView.findViewById(R.id.nameTv);
-            messageTv=itemView.findViewById(R.id.messageTv);
-            timeTv=itemView.findViewById(R.id.timeTv);
-            imageSend = itemView.findViewById(R.id.ImageSend);
+            show_message = itemView.findViewById(R.id.show_message);
+            show_image = itemView.findViewById(R.id.show_image);
+            profile_image = itemView.findViewById(R.id.profile_image);
+            thoigian = itemView.findViewById(R.id.timestamp);
         }
+
     }
 
-    @Override
+    private void setavatar(ModelGroupChat model, AdapterGroupChat.ViewHolder holder) {
+
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("id").equalTo(model.getSender()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds:snapshot.getChildren()){
+                    String avatar = "" + ds.child("imageURL").getValue();
+
+                    if(avatar.equals("default")){
+                        holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+                    }else{
+                        Glide.with(mContext).load(avatar).into(holder.profile_image);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    /*@Override
     public int getItemViewType(int position) {
-        firebaseAuth = FirebaseAuth.getInstance();
-        if (modelGroupChatList.get(position).getSender().equals(firebaseAuth.getUid())){
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mChat.get(position).getSender().equals(fuser.getUid())) {
             return MSG_TYPE_RIGHT;
-        }
-        else{
+        } else {
             return MSG_TYPE_LEFT;
         }
-    }
-
+    }*/
 }

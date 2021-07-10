@@ -49,6 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class GroupChatActivity extends AppCompatActivity {
 
@@ -63,7 +64,7 @@ public class GroupChatActivity extends AppCompatActivity {
     RecyclerView chatGroup;
     Intent intent;
 
-    ArrayList<ModelGroupChat> mGroupChat;
+    List<ModelGroupChat> mGroupChat;
     AdapterGroupChat adapterGroupChat;
 
     private static final int CAMERA_REQUEST = 1;
@@ -121,7 +122,7 @@ public class GroupChatActivity extends AppCompatActivity {
                 else {
                     Glide.with(getApplicationContext()).load(groupIcon).into(icongr);
                 }
-                //loadGroupMessages();
+                loadGroupMessages();
             }
 
             @Override
@@ -130,15 +131,15 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void loadGroupMessages() {
         mGroupChat = new ArrayList<>();
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId);
-
-        ref.child("Messages").addValueEventListener(new ValueEventListener() {
+        reference = FirebaseDatabase.getInstance().getReference().child("Groups")
+                .child(groupId)
+                .child("Messages");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 mGroupChat.clear();
@@ -162,8 +163,8 @@ public class GroupChatActivity extends AppCompatActivity {
         String timestamp = getCurrentTimeStamp();
 
         HashMap<String, Object> hashMap =new HashMap<>();
-        hashMap.put("sender", fauth.getUid());
         hashMap.put("message", message);
+        hashMap.put("sender", fauth.getUid());
         hashMap.put("timestamp",timestamp);
         hashMap.put("type","text");
 
@@ -196,8 +197,8 @@ public class GroupChatActivity extends AppCompatActivity {
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
                 HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("sender", fauth.getUid());
                 hashMap.put("message", downloadUri);
+                hashMap.put("sender", fauth.getUid());
                 hashMap.put("timestamp", timestamp);
                 hashMap.put("type", "image");
 
