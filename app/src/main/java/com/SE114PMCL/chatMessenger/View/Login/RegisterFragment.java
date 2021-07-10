@@ -107,7 +107,14 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         //send user to next page
-                        startActivity(new Intent(getActivity().getApplicationContext(), VerifyActivity.class));
+                        auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(getContext(), "Verification Email Sent.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        startActivity(new Intent(getActivity().getApplicationContext(), LoginFragment.class));
                         getActivity().finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

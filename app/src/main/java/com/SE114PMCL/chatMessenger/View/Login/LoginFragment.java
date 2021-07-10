@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 import com.SE114PMCL.chatMessenger.ForgotpassActivity;
@@ -93,8 +94,21 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         //Login is successful
-                        startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-                        getActivity().finish();
+
+                        if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                            Toast.makeText(getContext(), "please verify your email", Toast.LENGTH_SHORT).show();
+
+                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    //Toast.makeText(getContext(), "Verification Email Sent.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else {
+                            startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
+                            getActivity().finish();
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
