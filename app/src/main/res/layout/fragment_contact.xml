@@ -4,16 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="@drawable/aa"
     tools:context="Main.ContactTab.Contact">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:cardBackgroundColor="@android:color/transparent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="@drawable/gradient_background">
     <TextView
         android:id="@+id/friendName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="6dp"
+        android:layout_marginTop="12dp"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginBottom="5dp"
@@ -24,11 +33,11 @@
         android:id="@+id/openFriendList"
         android:layout_width="69dp"
         android:layout_height="50dp"
+        android:layout_marginTop="12dp"
         android:layout_alignParentRight="true"
         android:layout_gravity="center"
         android:background="?android:selectableItemBackground"
         android:src="@drawable/send"
-        android:layout_marginTop="12dp"
         android:textAlignment="center" />
 
     <View
@@ -37,15 +46,15 @@
         android:layout_height="3dp"
         android:layout_below="@+id/friendName"
         android:layout_marginBottom="10dp"
-        android:layout_toLeftOf="@+id/openFriendList"
+        android:layout_toLeftOf="@+id/findFriend"
         android:background="@color/white" />
 
     <ImageButton
         android:id="@+id/findFriend"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/divider1"
-        android:layout_alignParentLeft="true"
+        android:layout_marginTop="12dp"
+        android:layout_toLeftOf="@+id/openFriendList"
         android:layout_gravity="center"
         android:layout_marginLeft="6dp"
         android:layout_marginBottom="20dp"
@@ -53,35 +62,24 @@
         android:src="@drawable/addfr"
         android:textAlignment="center" />
 
-    <EditText
-        android:id="@+id/inputID"
-        android:layout_width="320dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/divider1"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="10dp"
-        android:backgroundTint="@color/white"
-        android:layout_toRightOf="@+id/findFriend"
-        android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_addfriend"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:inputType="number"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
-        android:textColorHint="@color/black"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="126dp" />
 
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardView1"
+                app:cardBackgroundColor="@android:color/transparent">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:layout_marginTop="12dp">
     <TextView
         android:id="@+id/groupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/inputID"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="6dp"
         android:layout_marginBottom="5dp"
@@ -94,7 +92,6 @@
         android:id="@+id/openGroupList"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/inputID"
         android:layout_alignParentRight="true"
         android:layout_gravity="center"
         android:background="?android:selectableItemBackground"
@@ -107,15 +104,14 @@
         android:layout_height="3dp"
         android:layout_below="@+id/groupName"
         android:layout_marginBottom="10dp"
-        android:layout_toLeftOf="@id/openGroupList"
+        android:layout_toLeftOf="@id/addGroup"
         android:background="@color/white" />
 
     <ImageButton
         android:id="@+id/addGroup"
         android:layout_width="69dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/divider2"
-        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/openGroupList"
         android:layout_gravity="center"
         android:layout_marginLeft="6dp"
         android:layout_marginBottom="20dp"
@@ -123,28 +119,54 @@
         android:src="@drawable/add"
         android:textAlignment="center" />
 
-    <EditText
-        android:id="@+id/inputGroupName"
-        android:layout_width="320dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/divider2"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="9dp"
-        android:layout_toRightOf="@+id/addGroup"
-        android:background="@drawable/input_bg"
-        android:layout_marginRight="10dp"
-        android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/ic_group"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:inputType="text"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
-        android:textColorHint="@color/black"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="126dp" />
 
 
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 </RelativeLayout>
+
+<!--<EditText
+android:id="@+id/inputID"
+android:layout_width="320dp"
+android:layout_height="50dp"
+android:layout_below="@+id/divider1"
+android:layout_marginLeft="15dp"
+android:layout_marginBottom="20dp"
+android:layout_marginRight="10dp"
+android:backgroundTint="@color/white"
+android:layout_toRightOf="@+id/findFriend"
+android:background="@drawable/input_bg"
+android:drawableLeft="@drawable/ic_addfriend"
+android:drawablePadding="10dp"
+android:ems="10"
+android:inputType="number"
+android:paddingLeft="16dp"
+android:paddingTop="8dp"
+android:paddingRight="16dp"
+android:paddingBottom="8dp"
+android:textColorHint="@color/black"
+tools:layout_editor_absoluteX="34dp"
+tools:layout_editor_absoluteY="126dp" />
+
+<EditText
+android:id="@+id/inputGroupName"
+android:layout_width="320dp"
+android:layout_height="50dp"
+android:layout_below="@+id/divider2"
+android:layout_marginLeft="15dp"
+android:layout_marginBottom="9dp"
+android:layout_toRightOf="@+id/addGroup"
+android:background="@drawable/input_bg"
+android:layout_marginRight="10dp"
+android:backgroundTint="@color/white"
+android:drawableLeft="@drawable/ic_group"
+android:drawablePadding="10dp"
+android:ems="10"
+android:inputType="text"
+android:paddingLeft="16dp"
+android:paddingTop="8dp"
+android:paddingRight="16dp"
+android:paddingBottom="8dp"
+android:textColorHint="@color/black"
+tools:layout_editor_absoluteX="34dp"
+tools:layout_editor_absoluteY="126dp" /> -->

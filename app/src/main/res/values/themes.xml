@@ -3,7 +3,7 @@
     <style name="Theme.LoginAndRegistration" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/blue</item>
+        <item name="colorPrimaryVariant">#66ff66</item>
         <item name="colorOnPrimary">#90caf9</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
