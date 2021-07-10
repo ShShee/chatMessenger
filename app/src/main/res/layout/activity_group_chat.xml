@@ -1,53 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/aa"
-    tools:context=".GroupChatActivity">
+    tools:context="Main.ContactTab.GroupChatActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@drawable/gradient_background"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbarGr"
+        android:background="@drawable/gradient_background">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/groupIconIv"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:scaleType="centerCrop"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_group_white"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/GrIcon"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_group_white"/>
 
-            <TextView
-                android:id="@+id/groupTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/groupIconIv"
-                android:text="Group Title"
-                android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/groupIconIv" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/GrName"
+            android:text="Group Name"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
 
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/chatLayout"
-        android:layout_below="@+id/toolbar"/>
+        android:id="@+id/chatGroup"
+        android:layout_below="@id/toolbarGr"
+        android:layout_above="@id/bottom"/>
 
     <LinearLayout
-        android:id="@+id/chatLayout"
+        android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -56,15 +50,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/messageEt"
+            android:id="@+id/inputMessage"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
             android:background="@drawable/input_bg"
             android:drawablePadding="10dp"
             android:ems="10"
             android:layout_weight="4"
-            android:backgroundTint="@color/white"
             android:inputType="textMultiLine"
+            android:backgroundTint="@color/white"
             android:paddingLeft="16dp"
             android:paddingTop="8dp"
             android:paddingRight="16dp"
@@ -72,7 +66,7 @@
             android:textColorHint="@color/black" />
 
         <ImageButton
-            android:id="@+id/attachBtn"
+            android:id="@+id/sendImage"
             android:layout_width="70dp"
             android:layout_height="52dp"
             android:layout_weight="1"
@@ -80,11 +74,13 @@
             android:src="@drawable/plane2" />
 
         <ImageButton
-            android:id="@+id/sendBtn"
+            android:id="@+id/btn_send"
             android:layout_width="70dp"
             android:layout_height="52dp"
             android:layout_weight="1"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/plane" />
     </LinearLayout>
+
+
 </RelativeLayout>
