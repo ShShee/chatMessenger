@@ -140,6 +140,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
                                 HashMap hashMap = new HashMap();
                                 hashMap.put("username",renametxt.getText().toString());
+                                hashMap.put("timkiem", renametxt.getText().toString().toLowerCase());
                                 reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
                                     @Override
                                     public void onSuccess(Object o) {
@@ -197,6 +198,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 //                                });
                                 HashMap hashMap = new HashMap();
                                 hashMap.put("username",renametxt.getText().toString());
+                                hashMap.put("timkiem", renametxt.getText().toString().toLowerCase());
                                 reference.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
                                     @Override
                                     public void onSuccess(Object o) {
