@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                             hashMap.put("id", userid);
                             hashMap.put("username", name);
                             hashMap.put("imageURL", photoURL);
+                            hashMap.put("timkiem", name.toLowerCase());
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

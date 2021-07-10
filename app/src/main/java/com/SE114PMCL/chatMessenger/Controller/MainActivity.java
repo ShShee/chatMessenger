@@ -7,10 +7,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,7 +20,9 @@ import com.SE114PMCL.chatMessenger.Friends;
 
 import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
+import com.SE114PMCL.chatMessenger.RegisterActivity;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
+import Login.LoginFragment;
 import Main.AccountTab.Setting;
 import Main.ChatTab.Chat;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -46,10 +51,14 @@ public class MainActivity extends AppCompatActivity{
     FirebaseUser firebaseUser;
     DatabaseReference reference;
 
+    FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        auth = FirebaseAuth.getInstance();
 
         bottomNav=findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
