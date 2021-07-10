@@ -138,8 +138,7 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void loadMyGroupRole() {
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups");
-        ref.child(groupId).child("Participants")
+        databaseReference.child(groupId).child("Participants")
                 .orderByChild("id").equalTo(firebaseAuth.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -162,10 +161,7 @@ public class GroupChatActivity extends AppCompatActivity {
     private void loadGroupMessages() {
         groupChatList = new ArrayList<>();
 
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups")
-                        .child(groupId)
-                        .child("Messages");
-        ref.addValueEventListener(new ValueEventListener() {
+        databaseReference.child(groupId).child("Messages").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     groupChatList.clear();
@@ -185,8 +181,7 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void loadGroupInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Groups");
-        ref.orderByChild("groupId").equalTo(groupId).addValueEventListener(new ValueEventListener() {
+        databaseReference.orderByChild("groupId").equalTo(groupId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
@@ -204,8 +199,6 @@ public class GroupChatActivity extends AppCompatActivity {
                     catch(Exception e){
                         groupIconIv.setImageResource(R.drawable.ic_group_white);
                     }
-
-
 
                 }
 
