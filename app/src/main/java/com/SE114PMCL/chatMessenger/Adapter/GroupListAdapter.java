@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.SE114PMCL.chatMessenger.GroupChatActivity;
 import com.SE114PMCL.chatMessenger.Model.GroupData;
 import com.SE114PMCL.chatMessenger.R;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +25,8 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import Main.ContactTab.GroupChatActivity;
 
 public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.HolderGroupChatList> {
 
@@ -154,6 +155,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.Hold
 
         }
     }
+
 }
 
 
