@@ -6,43 +6,34 @@
     android:background="@drawable/gradient_background"
     android:layout_height="match_parent"
     tools:context="Main.ContactTab.FriendList">
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="40dp"
-        app:cardElevation="10dp"
-        app:cardUseCompatPadding="true">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
-        android:orientation="vertical"
-        >
-    <EditText
-        android:id="@+id/searchFriend"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_margin="5dp"
-        android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_search"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Search"
-        android:inputType="text"
-        android:paddingLeft="20dp"
-        android:backgroundTint="@color/white"
-        android:textColorHint="@color/black"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="126dp" />
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/searchFriend"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/input_bg"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Search"
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:backgroundTint="@color/white"
+            android:textColorHint="@color/black"
+            tools:layout_editor_absoluteX="34dp"
+            tools:layout_editor_absoluteY="126dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friendView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/searchFriend"
-        android:layout_marginTop="11dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/friendView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/searchFriend"
+            android:layout_marginTop="11dp" />
     </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>

@@ -103,7 +103,7 @@ public class FriendList extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                LoadFriends(charSequence.toString().toLowerCase());
+                LoadFriends(charSequence.toString());
             }
 
             @Override
@@ -112,10 +112,6 @@ public class FriendList extends Fragment {
             }
         });
 
-
-        //((MainActivity) getActivity()).setSupportActionBar(toolbar);
-        //setHasOptionsMenu(true);
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void LoadFriends(String s) {

@@ -11,9 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="5dp">
+        app:cardBackgroundColor="@android:color/transparent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
