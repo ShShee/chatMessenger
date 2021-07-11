@@ -165,7 +165,7 @@ public class GroupChatActivity extends AppCompatActivity {
         HashMap<String, Object> hashMap =new HashMap<>();
         hashMap.put("message", message);
         hashMap.put("sender", fauth.getUid());
-        hashMap.put("timestamp",timestamp);
+        hashMap.put("timestamp", timestamp);
         hashMap.put("type","text");
 
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
+import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,13 +41,13 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
     @NonNull
     @Override
     public AdapterGroupChat.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        //if(viewType==MSG_TYPE_RIGHT){
+        if(viewType==MSG_TYPE_RIGHT){
             View view= LayoutInflater.from(mContext).inflate(R.layout.chat_item_right,parent,false);
             return new AdapterGroupChat.ViewHolder(view);
-        /*}else{
+        }else{
             View view=LayoutInflater.from(mContext).inflate(R.layout.chat_item_left,parent,false);
             return new AdapterGroupChat.ViewHolder(view);
-        }*/
+        }
     }
 
     @Override
@@ -54,6 +55,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
 
         ModelGroupChat chat = mChat.get(position);
         String type = chat.getType();
+        String sender = chat.getSender();
 
         holder.thoigian.setText(chat.getTimestamp());
         String message = chat.getMessage();
@@ -70,8 +72,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
             Glide.with(mContext).load(message).into(holder.show_image);
         }
 
-        setavatar(chat, holder);
-
+        setUserInfo(sender, holder);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView show_message;
+        public TextView show_message, chatname;
         public ImageView profile_image, show_image;
         public TextView thoigian;
 
@@ -92,26 +93,25 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
             show_image = itemView.findViewById(R.id.show_image);
             profile_image = itemView.findViewById(R.id.profile_image);
             thoigian = itemView.findViewById(R.id.timestamp);
+            chatname = itemView.findViewById(R.id.tenchat);
         }
 
     }
 
-    private void setavatar(ModelGroupChat model, AdapterGroupChat.ViewHolder holder) {
-
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("id").equalTo(model.getSender()).addValueEventListener(new ValueEventListener() {
+    private void setUserInfo(String sender, AdapterGroupChat.ViewHolder holder){
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users").child(sender);
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds:snapshot.getChildren()){
-                    String avatar = "" + ds.child("imageURL").getValue();
-
-                    if(avatar.equals("default")){
-                        holder.profile_image.setImageResource(R.mipmap.ic_launcher);
-                    }else{
-                        Glide.with(mContext).load(avatar).into(holder.profile_image);
-                    }
+                UserModel user = snapshot.getValue(UserModel.class);
+                String avatar = user.getImageURL();
+                String name = user.getUsername();
+                if(avatar.equals("default")){
+                    holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+                }else{
+                    Glide.with(mContext).load(avatar).into(holder.profile_image);
                 }
-
+                holder.chatname.setText(name);
             }
 
             @Override
@@ -121,7 +121,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
         });
     }
 
-    /*@Override
+    @Override
     public int getItemViewType(int position) {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         if (mChat.get(position).getSender().equals(fuser.getUid())) {
@@ -129,5 +129,5 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
         } else {
             return MSG_TYPE_LEFT;
         }
-    }*/
+    }
 }

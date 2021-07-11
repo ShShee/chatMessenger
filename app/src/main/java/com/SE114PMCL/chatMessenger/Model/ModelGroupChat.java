@@ -26,7 +26,7 @@ public class ModelGroupChat {
     }
 
     public void setSender(String sender){
-        this.message=sender;
+        this.sender=sender;
     }
 
     public String getTimestamp(){
