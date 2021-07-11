@@ -66,15 +66,25 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtTenUser"
                 android:layout_toRightOf="@id/imgAvatar"
-                android:text="Connect with this person"
                 android:layout_marginTop="5dp"
                 android:textSize="17sp"
+                android:id="@+id/senderName"
+                android:textColor="@color/black"
                 android:paddingTop="5dp"
-                android:id="@+id/last_msg"
-                android:textColor="#226e6e"
                 android:layout_marginLeft="20dp"
                 android:maxLines="1"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/last_msg"
+                android:layout_below="@id/txtTenUser"
+                android:layout_toRightOf="@id/senderName"
+                android:textSize="17sp"
+                android:paddingTop="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#226e6e" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

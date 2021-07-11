@@ -32,6 +32,7 @@ import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -179,7 +180,7 @@ public class GroupChatActivity extends AppCompatActivity {
         progressDialog.setMessage("Đang gửi");
         progressDialog.show();
 
-        String timestamp = "" + getCurrentTimeStamp();
+        String timestamp = getCurrentTimeStamp();
         String filePath = "ChatImages/" + "post_" + timestamp;
 
         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
@@ -194,7 +195,6 @@ public class GroupChatActivity extends AppCompatActivity {
             String downloadUri = uriTask.getResult().toString();
 
             if(uriTask.isSuccessful()){
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("message", downloadUri);
@@ -203,15 +203,7 @@ public class GroupChatActivity extends AppCompatActivity {
                 hashMap.put("type", "image");
 
                 DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
-                ref.child(groupId).child("Messages")
-                        .setValue(hashMap)
-                        .addOnSuccessListener(aVoid -> textSend.setText(""))
-                        .addOnFailureListener(e -> {
-                            //message sending failed
-                            Toast.makeText(GroupChatActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-
-                        });
-
+                ref.child(groupId).child("Messages").push().setValue(hashMap);
             }
         }).addOnFailureListener(e -> progressDialog.dismiss());
     }
@@ -337,5 +329,25 @@ public class GroupChatActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void status(String status){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
+    }
 }
