@@ -56,6 +56,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         holder.thoigian.setText(chat.getTimestamp());
         String message = chat.getMessage();
 
+        holder.tenchat.setVisibility(View.GONE);
+
         if(type.equals("text")){
             holder.show_message.setVisibility(View.VISIBLE);
             holder.show_image.setVisibility((View.GONE));
@@ -97,6 +99,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         public ImageView profile_image, show_image;
         public TextView txt_seen;
         public TextView thoigian;
+        public TextView tenchat;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -106,6 +109,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_seen = itemView.findViewById(R.id.txt_seen);
             thoigian = itemView.findViewById(R.id.timestamp);
+            tenchat = itemView.findViewById(R.id.tenchat);
         }
 
     }

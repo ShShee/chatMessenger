@@ -5,18 +5,23 @@
     android:padding="8dp"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/profile_image"
-        android:src="@mipmap/ic_launcher"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tenchat"
+        android:textSize="15sp"
+        android:text="username"
+        android:textColor="#9874a7"
+        android:background="@color/white"
+        android:layout_marginLeft="45dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linearchat"
         android:orientation="vertical"
-        android:layout_toRightOf="@id/profile_image">
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_below="@id/tenchat">
         <TextView
             android:id="@+id/show_message"
             android:layout_width="wrap_content"
@@ -47,6 +52,13 @@
             android:text="14/09/2001 11:00AM"
             android:textColor="@color/black"/>
     </LinearLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/profile_image"
+        android:src="@mipmap/ic_launcher"
+        android:layout_below="@id/tenchat" />
 
     <TextView
         android:id="@+id/txt_seen"
