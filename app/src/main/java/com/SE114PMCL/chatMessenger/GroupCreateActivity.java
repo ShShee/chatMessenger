@@ -36,10 +36,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+
+import Main.ContactTab.GroupChatActivity;
 
 public class GroupCreateActivity extends AppCompatActivity {
 
@@ -114,7 +117,7 @@ public class GroupCreateActivity extends AppCompatActivity {
         String groupDescription=groupDescriptionEt.getText().toString().trim();
         //validation
         if(TextUtils.isEmpty(groupTitle)){
-            Toast.makeText(this,"Please enter group title...",Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(GroupCreateActivity.this,"Please enter group title !",TastyToast.LENGTH_SHORT,TastyToast.WARNING);
             return;//don't procede further
         }
 
@@ -187,20 +190,20 @@ public class GroupCreateActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         //participant added
                                         progressDialog.dismiss();
-                                        Toast.makeText(GroupCreateActivity.this,"Group created...",Toast.LENGTH_SHORT).show();
+                                        TastyToast.makeText(GroupCreateActivity.this,"Group created",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                                     }
                                 })
                                 .addOnFailureListener(e -> {
                                     //failed adding participant
                                     progressDialog.dismiss();
-                                    Toast.makeText(GroupCreateActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                    TastyToast.makeText(GroupCreateActivity.this,""+e.getMessage(),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                                 });
                     }
                 })
                 .addOnFailureListener(e -> {
                     //failed
                     progressDialog.dismiss();
-                    Toast.makeText(GroupCreateActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(GroupCreateActivity.this,""+e.getMessage(),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
 
                 });
 

@@ -91,7 +91,8 @@ public class GroupList extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                groupData.size();
+                groupData.clear();
+                System.out.println(groupData.size());
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.child("Participants").child(firebaseAuth.getUid()).exists()) {
                         GroupData model = ds.getValue(GroupData.class);

@@ -4,10 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/aa"
     tools:context=".GroupParticipantAddActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbarRole"
+        android:background="@drawable/gradient_background">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/roleName"
+            android:text="Your role"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="30sp"/>
+
+    </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/usersRv"
+        android:layout_below="@id/toolbarRole"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/row_participant"

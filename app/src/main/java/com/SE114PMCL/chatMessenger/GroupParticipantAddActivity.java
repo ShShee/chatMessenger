@@ -3,9 +3,11 @@ package com.SE114PMCL.chatMessenger;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.SE114PMCL.chatMessenger.Adapter.AdapterParticipantAdd;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
@@ -24,12 +26,12 @@ public class GroupParticipantAddActivity extends AppCompatActivity {
 
     private RecyclerView usersRv;
 
-    private ActionBar actionBar;
+    private Toolbar toolbar;
 
     private FirebaseAuth firebaseAuth;
 
     private String groupId;
-
+    private TextView roleName;
     private String myGroupRole;
 
     private ArrayList<UserModel> userList;
@@ -39,41 +41,61 @@ public class GroupParticipantAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_participant_add);
-        actionBar=getSupportActionBar();
-        actionBar.setTitle("Add Participants");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        roleName = findViewById(R.id.roleName);
+        toolbar = findViewById(R.id.toolbarRole);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
         //init views
-        usersRv=findViewById(R.id.usersRv);
+        usersRv = findViewById(R.id.usersRv);
 
-        groupId=getIntent().getStringExtra("groupId");
-        loadGroupInfo();
+        groupId = getIntent().getStringExtra("groupId");
+        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference("Groups");
+        ref1.child(groupId).child("Participants").child(firebaseAuth.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            myGroupRole = "" + snapshot.child("role").getValue();
+                            roleName.setText(myGroupRole.toUpperCase());
+                            //getAllUsers();
+                        }
 
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                        System.out.println(error);
+                    }
+                });
+
+        getFriends();
     }
 
-    private void getAllUsers() {
+    private void getFriends() {
         //init list
-        userList=new ArrayList<>();
+        userList = new ArrayList<>();
         //load users from db
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 userList.clear();
-                for(DataSnapshot ds: snapshot.getChildren()){
-                    UserModel modelUser=ds.getValue(UserModel.class);
-                    //get all users accept currently signed in
-                    if(!firebaseAuth.getUid().equals(modelUser.getId())){
-                        //not my uid
-                        userList.add(modelUser);
-                    }
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    UserModel modelUser = new UserModel(ds.child("id").getValue(String.class),
+                            ds.child("username").getValue(String.class),
+                            ds.child("imageURL").getValue(String.class),
+                            ds.child("status").getValue(String.class),
+                            ds.child("timkiem").getValue(String.class));
+                    userList.add(modelUser);
                 }
                 //setup adapter
-                adapterParticipantAdd =new AdapterParticipantAdd(GroupParticipantAddActivity.this,userList,""+groupId,""+myGroupRole);
+                adapterParticipantAdd = new AdapterParticipantAdd(GroupParticipantAddActivity.this, userList, "" + groupId, myGroupRole);
                 usersRv.setAdapter(adapterParticipantAdd);
             }
 
@@ -82,52 +104,6 @@ public class GroupParticipantAddActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    private void loadGroupInfo() {
-        final DatabaseReference ref1= FirebaseDatabase.getInstance().getReference("Groups");
-
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Groups");
-        ref.orderByChild("groupId").equalTo(groupId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for(DataSnapshot ds: snapshot.getChildren()){
-                    String groupId=""+ds.child("groupId").getValue();
-                    final String groupTitle=""+ds.child("groupTitle").getValue();
-                    String groupDescription=""+ds.child("groupDescription").getValue();
-                    String groupIcon=""+ds.child("groupIcon").getValue();
-                    String createBy=""+ds.child("createBy").getValue();
-                    String timestamp=""+ds.child("timestamp").getValue();
-                    actionBar.setTitle("Add Participants");
-
-                    ref1.child(groupId).child("Participants").child(firebaseAuth.getUid())
-                            .addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                    if(snapshot.exists()){
-                                        myGroupRole=""+snapshot.child("role").getValue();
-                                        actionBar.setTitle(groupTitle+"("+myGroupRole+")");
-                                        getAllUsers();
-                                    }
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                                }
-                            });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-
 
     }
 

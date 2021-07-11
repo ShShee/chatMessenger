@@ -81,6 +81,7 @@
                 android:layout_below="@id/txtTenUser"
                 android:layout_toRightOf="@id/senderName"
                 android:textSize="17sp"
+                android:singleLine="true"
                 android:paddingTop="5dp"
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="5dp"

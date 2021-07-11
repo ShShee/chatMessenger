@@ -53,6 +53,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/groupTitleTv"
                     android:text="Sender Name"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textStyle="bold"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -60,17 +63,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/groupTitleTv"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:padding="5dp"
                     android:layout_toRightOf="@id/nameTv"
                     android:singleLine="true"
+                    android:textColor="#226e6e"
                     android:text="The message" />
 
                 <TextView
                     android:id="@+id/timeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/groupTitleTv"
+                    android:layout_below="@id/messageTv"
                     android:layout_alignParentRight="true"
+                    android:visibility="gone"
                     android:layout_marginRight="12dp"
                     android:singleLine="true"
                     android:text="time" />

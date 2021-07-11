@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Adapter.AdapterGroupChat;
+import com.SE114PMCL.chatMessenger.GroupParticipantAddActivity;
 import com.SE114PMCL.chatMessenger.Model.GroupData;
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
@@ -63,6 +67,7 @@ public class GroupChatActivity extends AppCompatActivity {
     TextView namegr;
     EditText textSend;
     RecyclerView chatGroup;
+    Toolbar toolbar;
     Intent intent;
 
     List<ModelGroupChat> mGroupChat;
@@ -85,9 +90,13 @@ public class GroupChatActivity extends AppCompatActivity {
 
         fauth = FirebaseAuth.getInstance();
 
+        toolbar = findViewById(R.id.toolbarGr);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         intent = getIntent();
         groupId = intent.getStringExtra("groupId");
-
+        System.out.println("UID: " + groupId);
         icongr = findViewById(R.id.GrIcon);
         namegr = findViewById(R.id.GrName);
         textSend = findViewById(R.id.inputMessage);
@@ -105,25 +114,32 @@ public class GroupChatActivity extends AppCompatActivity {
 
         btnText.setOnClickListener(view -> {
             String msg = textSend.getText().toString();
-            if(!msg.equals("")){sendMessage(msg);}
-            else {Toast.makeText(GroupChatActivity.this,"Không gửi trống tin nhắn",Toast.LENGTH_SHORT).show();}
+            if (!msg.equals("")) {
+                sendMessage(msg);
+            } else {
+                Toast.makeText(GroupChatActivity.this, "Không gửi trống tin nhắn", Toast.LENGTH_SHORT).show();
+            }
             textSend.setText("");
         });
 
-        btnImage.setOnClickListener(v -> { showImagePickDialog(); });
+        btnImage.setOnClickListener(v -> {
+            showImagePickDialog();
+        });
 
         reference = FirebaseDatabase.getInstance().getReference().child("Groups").child(groupId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                String groupTitle=""+snapshot.child("groupTitle").getValue();
-                String groupIcon=""+snapshot.child("groupIcon").getValue();
+                String groupTitle = "" + snapshot.child("groupTitle").getValue();
+                String groupIcon = "" + snapshot.child("groupIcon").getValue();
                 namegr.setText(groupTitle);
-                if(groupIcon.equals("")){icongr.setImageResource(R.drawable.ic_creategroup);}
-                else {
+                if (groupIcon.equals("")) {
+                    icongr.setImageResource(R.drawable.ic_creategroup);
+                } else {
                     Glide.with(getApplicationContext()).load(groupIcon).into(icongr);
                 }
                 loadGroupMessages();
+                loadMyGroupRole();
             }
 
             @Override
@@ -131,8 +147,28 @@ public class GroupChatActivity extends AppCompatActivity {
 
             }
         });
-
     }
+
+    private void loadMyGroupRole() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Groups");
+        ref.child(groupId).child("Participants")
+                .orderByChild("id").equalTo(fauth.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            myGroupRole = "" + ds.child("role").getValue();
+                            invalidateOptionsMenu();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+    }
+
 
     private void loadGroupMessages() {
         mGroupChat = new ArrayList<>();
@@ -144,7 +180,7 @@ public class GroupChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 mGroupChat.clear();
-                for(DataSnapshot ds : snapshot.getChildren()){
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     ModelGroupChat model = ds.getValue(ModelGroupChat.class);
                     mGroupChat.add(model);
                 }
@@ -163,13 +199,13 @@ public class GroupChatActivity extends AppCompatActivity {
 
         String timestamp = getCurrentTimeStamp();
 
-        HashMap<String, Object> hashMap =new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("message", message);
         hashMap.put("sender", fauth.getUid());
         hashMap.put("timestamp", timestamp);
-        hashMap.put("type","text");
+        hashMap.put("type", "text");
 
-        DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Groups");
         ref.child(groupId).child("Messages").push().setValue(hashMap);
 
     }
@@ -191,35 +227,49 @@ public class GroupChatActivity extends AppCompatActivity {
         r.putBytes(data).addOnSuccessListener(taskSnapshot -> {
             progressDialog.dismiss();
             Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-            while(!uriTask.isSuccessful());
+            while (!uriTask.isSuccessful()) ;
             String downloadUri = uriTask.getResult().toString();
 
-            if(uriTask.isSuccessful()){
 
+            if (uriTask.isSuccessful()) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("message", downloadUri);
                 hashMap.put("sender", fauth.getUid());
                 hashMap.put("timestamp", timestamp);
                 hashMap.put("type", "image");
 
-                DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
-                ref.child(groupId).child("Messages").push().setValue(hashMap);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Groups");
+                ref.child(groupId).child("Messages")
+                        .setValue(hashMap)
+                        .addOnSuccessListener(aVoid -> textSend.setText(""))
+                        .addOnFailureListener(e -> {
+                            //message sending failed
+                            Toast.makeText(GroupChatActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        });
             }
         }).addOnFailureListener(e -> progressDialog.dismiss());
     }
 
-    private void showImagePickDialog(){
+    private void showImagePickDialog() {
         String[] options = {"Chụp", "Thư viện"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Chọn ảnh từ");
         builder.setItems(options, (dialog, which) -> {
-            if (which == 0){
-                if (!checkCameraPer()) {requestCameraPer();}
-                else { pickFromCamera(); }
+            if (which == 0) {
+                if (!checkCameraPer()) {
+                    requestCameraPer();
+                } else {
+                    pickFromCamera();
+                }
             }
-            if (which == 1){
-                if (!checkStoragePer()) { requestStoragePer(); }
-                else { pickFromStorage(); }
+            if (which == 1) {
+                if (!checkStoragePer()) {
+                    requestStoragePer();
+                } else {
+                    pickFromStorage();
+                }
             }
         });
         builder.create().show();
@@ -231,7 +281,7 @@ public class GroupChatActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_GALLERY);
     }
 
-    private void pickFromCamera(){
+    private void pickFromCamera() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Images.Media.TITLE, "Chọn");
         contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Miêu tả");
@@ -242,17 +292,17 @@ public class GroupChatActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_CAMERA);
     }
 
-    private boolean checkStoragePer(){
+    private boolean checkStoragePer() {
         boolean kq = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
         return kq;
     }
 
-    private void requestStoragePer(){
+    private void requestStoragePer() {
         ActivityCompat.requestPermissions(this, storagePer, STORAGE_REQUEST);
     }
 
-    private boolean checkCameraPer(){
+    private boolean checkCameraPer() {
         boolean kq1 = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
         boolean kq2 = ContextCompat.checkSelfPermission(this,
@@ -260,7 +310,7 @@ public class GroupChatActivity extends AppCompatActivity {
         return kq1 && kq2;
     }
 
-    private void requestCameraPer(){
+    private void requestCameraPer() {
         ActivityCompat.requestPermissions(this, cameraPer, CAMERA_REQUEST);
     }
 
@@ -275,32 +325,30 @@ public class GroupChatActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode){
-            case CAMERA_REQUEST:{
-                if (grantResults.length>0){
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0) {
                     boolean camera = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean storage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if(camera && storage){
+                    if (camera && storage) {
                         pickFromCamera();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(this, "Cần sự cho phép của máy ảnh hoặc thư viên", Toast.LENGTH_SHORT).show();
                     }
+                } else {
                 }
-                else{}
             }
             break;
-            case STORAGE_REQUEST:{
-                if (grantResults.length>0){
+            case STORAGE_REQUEST: {
+                if (grantResults.length > 0) {
                     boolean storage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if(storage){
+                    if (storage) {
                         pickFromStorage();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(this, "Cần sự cho phép của thư viên", Toast.LENGTH_SHORT).show();
                     }
+                } else {
                 }
-                else{}
             }
             break;
         }
@@ -308,8 +356,8 @@ public class GroupChatActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        if(resultCode == RESULT_OK){
-            if(requestCode == IMAGE_PICK_GALLERY){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_GALLERY) {
                 imageUri = data.getData();
                 try {
                     sendImageMessage(imageUri);
@@ -317,7 +365,7 @@ public class GroupChatActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            if(requestCode == IMAGE_PICK_CAMERA){
+            if (requestCode == IMAGE_PICK_CAMERA) {
                 try {
                     sendImageMessage(imageUri);
                 } catch (IOException e) {
@@ -349,5 +397,33 @@ public class GroupChatActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         status("offline");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.groupmenu, menu);
+        System.out.println("Role: " + myGroupRole);
+        if (myGroupRole != null) {
+            if (myGroupRole.equals("creator") || myGroupRole.equals("admin")) {
+                menu.findItem(R.id.action_add_participant).setVisible(true);
+            } else {
+                menu.findItem(R.id.action_add_participant).setVisible(false);
+            }
+        } else {
+            menu.findItem(R.id.action_add_participant).setVisible(false);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add_participant) {
+            Intent intent = new Intent(this, GroupParticipantAddActivity.class);
+            intent.putExtra("groupId", groupId);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

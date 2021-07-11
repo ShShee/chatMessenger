@@ -1,6 +1,8 @@
 package com.SE114PMCL.chatMessenger.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
@@ -114,6 +117,7 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
     private void setUserInfo(String sender, AdapterGroupChat.ViewHolder holder){
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users").child(sender);
         ref.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel user = snapshot.getValue(UserModel.class);
@@ -122,7 +126,10 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
                 if(avatar.equals("default")){
                     holder.profile_image.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(mContext).load(avatar).into(holder.profile_image);
+                    if (isValidContextForGlide(mContext)){
+                        // Load image via Glide lib using context
+                        Glide.with(mContext).load(avatar).into(holder.profile_image);
+                    }
                 }
                 holder.chatname.setText(name);
             }
@@ -142,5 +149,19 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
         } else {
             return MSG_TYPE_LEFT;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static boolean isValidContextForGlide(final Context context) {
+        if (context == null) {
+            return false;
+        }
+        if (context instanceof Activity) {
+            final Activity activity = (Activity) context;
+            if (activity.isDestroyed() || activity.isFinishing()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

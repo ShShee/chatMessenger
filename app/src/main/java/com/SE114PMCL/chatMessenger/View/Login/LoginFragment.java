@@ -96,8 +96,7 @@ public class LoginFragment extends Fragment {
                         //Login is successful
 
                         if(!firebaseAuth.getCurrentUser().isEmailVerified()){
-                            Toast.makeText(getContext(), "please verify your email", Toast.LENGTH_SHORT).show();
-
+                            TastyToast.makeText(getActivity(), "Please verify your email", TastyToast.LENGTH_LONG,TastyToast.WARNING);
                             firebaseAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -113,7 +112,6 @@ public class LoginFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         TastyToast.makeText(getActivity(), e.getMessage(), TastyToast.LENGTH_LONG, TastyToast.ERROR);
                     }
                 });

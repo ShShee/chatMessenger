@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,11 +35,11 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
     private ArrayList<UserModel> userList;
     private String groupId, myGroupRole; //creator/admin/participant
 
-    public AdapterParticipantAdd(Context context, ArrayList<UserModel> userList, String s, String s1){
+    public AdapterParticipantAdd(Context context, ArrayList<UserModel> userList, String groupID, String role){
         this.context=context;
         this.userList=userList;
-        this.groupId=groupId;
-        this.myGroupRole=myGroupRole;
+        this.groupId=groupID;
+        this.myGroupRole=role;
     }
 
     @NonNull
@@ -75,6 +76,7 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Groups");
                 ref.child(groupId).child("Participants").child(uid)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,8 +88,7 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
 
                                     //options to display in dialog
                                     String[] options;
-
-                                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                                    AlertDialog.Builder builder=new AlertDialog.Builder(context,R.style.dialog_text_color);
                                     builder.setTitle("Choose Option");
                                     if(myGroupRole.equals("creator")){
                                         if(hisPreviousRole.equals("admin")){
@@ -131,7 +132,7 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
                                     else if(myGroupRole.equals("admin")){
                                         if(hisPreviousRole.equals("creator")){
                                             //in admin, he is creator
-                                            Toast.makeText(context,"Creator of Group...",Toast.LENGTH_SHORT).show();
+                                            TastyToast.makeText(context, "Creator of this group", TastyToast.LENGTH_SHORT,TastyToast.INFO);
                                         }
                                         else if(hisPreviousRole.equals("admin")){
                                             //in admin, he is admin too
@@ -174,7 +175,7 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
                                 }
                                 else {
                                     //user doesn't exists/not participant: add
-                                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                                    AlertDialog.Builder builder=new AlertDialog.Builder(context,R.style.dialog_text_color);
                                     builder.setTitle("Add Participant")
                                             .setMessage("Add this user in this group?")
                                             .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
@@ -211,7 +212,7 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
         //setup user data
         String timestamp=""+System.currentTimeMillis();
         HashMap<String, String> hashMap=new HashMap<>();
-        hashMap.put("uid",modelUser.getId());
+        hashMap.put("id",modelUser.getId());
         hashMap.put("role","participant");
         hashMap.put("timestamp",""+timestamp);
         //add that user in Groups>groupId>Participants
@@ -221,14 +222,14 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
                     @Override
                     public void onSuccess(Void avoid) {
                         //added successfully
-                        Toast.makeText(context,"Added successfully...",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(context, "Added successfully", TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
                         //failed adding user in group
-                        Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(context, ""+e.getMessage(), TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 });
 
@@ -245,14 +246,14 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
                     @Override
                     public void onSuccess(Void avoid) {
                         //make admin
-                        Toast.makeText(context,"This user in now admin...",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(context, "Now this user is the admin", TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
                         //failed making admin
-                        Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(context, ""+e.getMessage(), TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 });
 
@@ -266,12 +267,14 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
                     @Override
                     public void onSuccess(Void avoid) {
                         //removed successfully
+                        TastyToast.makeText(context, ""+"This user has been removed from your group", TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
                         //failed making admin
+                        TastyToast.makeText(context, ""+e.getMessage(), TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 });
     }
@@ -288,14 +291,14 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
                     @Override
                     public void onSuccess(Void avoid) {
                         //make admin
-                        Toast.makeText(context,"This user in no longer admin...",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(context, "This user is no longer an admin", TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
                         //failed making admin
-                        Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(context, ""+e.getMessage(), TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 });
 
@@ -328,7 +331,7 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
 
     @Override
     public int getItemCount() {
-        return 0;
+        return userList.size();
     }
 
 
