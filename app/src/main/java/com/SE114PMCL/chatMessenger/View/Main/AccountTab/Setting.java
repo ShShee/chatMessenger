@@ -114,7 +114,7 @@ public class Setting extends Fragment implements PendingListAdapter.OnPendingLis
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
 
-        rename_alert = new AlertDialog.Builder(getContext());
+        rename_alert = new AlertDialog.Builder(getContext(),R.style.dialog_text_color);
 
         change_name.setOnClickListener(new View.OnClickListener() {
             @Override

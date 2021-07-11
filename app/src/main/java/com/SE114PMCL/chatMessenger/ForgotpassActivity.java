@@ -44,7 +44,7 @@ public class ForgotpassActivity extends AppCompatActivity {
 
         forgotBtn = (Button) findViewById(R.id.btnForgot);
 
-        reset_alert = new AlertDialog.Builder(this);
+        reset_alert = new AlertDialog.Builder(this,R.style.dialog_text_color);
         inflater = this.getLayoutInflater();
 
         forgotBtn.setOnClickListener(new View.OnClickListener() {
