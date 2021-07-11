@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
@@ -28,6 +29,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     private String imageurl;
 
     FirebaseUser fuser;
+    boolean s = true;
 
     public ChatAdapter(Context mContext,List<ChatData> mChat,String imageurl){
         this.mChat=mChat;
@@ -52,10 +54,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
         ChatData chat=mChat.get(position);
         String type = chat.getType();
-
         holder.thoigian.setText(chat.getTimestamp());
         String message = chat.getMessage();
-
         holder.tenchat.setVisibility(View.GONE);
 
         if(type.equals("text")){
@@ -86,6 +86,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         }else{
             holder.txt_seen.setVisibility(View.GONE);
         }
+        holder.show_message.setOnClickListener(v -> {
+            if(s){
+                holder.thoigian.setVisibility(View.VISIBLE);
+                s = false;
+            }
+            else {
+                holder.thoigian.setVisibility(View.GONE);
+                s = true;
+            }
+        });
+
     }
 
     @Override

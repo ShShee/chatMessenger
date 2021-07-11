@@ -33,6 +33,8 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
     private List<ModelGroupChat> mChat;
     FirebaseUser fuser;
 
+    boolean s = true;
+
     public AdapterGroupChat(Context mContext, List<ModelGroupChat> mChat){
         this.mChat=mChat;
         this.mContext=mContext;
@@ -71,6 +73,17 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
             holder.show_image.setVisibility((View.VISIBLE));
             Glide.with(mContext).load(message).into(holder.show_image);
         }
+
+        holder.show_message.setOnClickListener(v -> {
+            if(s){
+                holder.thoigian.setVisibility(View.VISIBLE);
+                s = false;
+            }
+            else {
+                holder.thoigian.setVisibility(View.GONE);
+                s = true;
+            }
+        });
 
         setUserInfo(sender, holder);
     }
