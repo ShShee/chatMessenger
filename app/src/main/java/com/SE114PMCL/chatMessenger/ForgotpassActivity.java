@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.SE114PMCL.chatMessenger.Controller.StartActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +30,12 @@ public class ForgotpassActivity extends AppCompatActivity {
     FirebaseUser user;
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), StartActivity.class));
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgotpass);
@@ -36,7 +44,7 @@ public class ForgotpassActivity extends AppCompatActivity {
 
         forgotBtn = (Button) findViewById(R.id.btnForgot);
 
-        reset_alert = new AlertDialog.Builder(this);
+        reset_alert = new AlertDialog.Builder(this,R.style.dialog_text_color);
         inflater = this.getLayoutInflater();
 
         forgotBtn.setOnClickListener(new View.OnClickListener() {
