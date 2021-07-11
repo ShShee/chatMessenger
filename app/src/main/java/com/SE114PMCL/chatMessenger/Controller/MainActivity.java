@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity{
                 if(userModel.getImageURL().equals("default")){
                     image_chat.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    //Glide.with(MainActivity.this).load(userModel.getImageURL()).into(image_chat);
                     Picasso.get().load(userModel.getImageURL()).into(image_chat);
                 }
             }
@@ -96,28 +95,25 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(MenuItem item) {
-                    Fragment selectedFragment=null;
-                    switch (item.getItemId()) {
-                        case R.id.nav_chat:
-                            getSupportActionBar().show();
-                            selectedFragment = new Chat();
-                            break;
-                        case R.id.nav_friends:
-                            selectedFragment = new Friends();
-                            getSupportActionBar().hide();
-                            break;
-                        case R.id.nav_setting:
-                            selectedFragment = new Setting();
-                            getSupportActionBar().hide();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
-                            selectedFragment).commit();
-                    return true;
+            item -> {
+                Fragment selectedFragment=null;
+                switch (item.getItemId()) {
+                    case R.id.nav_chat:
+                        getSupportActionBar().show();
+                        selectedFragment = new Chat();
+                        break;
+                    case R.id.nav_friends:
+                        selectedFragment = new Friends();
+                        getSupportActionBar().hide();
+                        break;
+                    case R.id.nav_setting:
+                        selectedFragment = new Setting();
+                        getSupportActionBar().hide();
+                        break;
                 }
+                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
+                        selectedFragment).commit();
+                return true;
             };
 
     private void Reset(int name) {
