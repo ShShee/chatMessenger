@@ -12,7 +12,7 @@
         android:textSize="15sp"
         android:text="username"
         android:textColor="#9874a7"
-        android:background="@color/white"
+        android:background="@android:color/transparent"
         android:layout_marginLeft="45dp"/>
 
     <LinearLayout
