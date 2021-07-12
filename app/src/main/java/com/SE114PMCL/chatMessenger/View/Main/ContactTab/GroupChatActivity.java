@@ -230,24 +230,21 @@ public class GroupChatActivity extends AppCompatActivity {
             while (!uriTask.isSuccessful()) ;
             String downloadUri = uriTask.getResult().toString();
 
-
             if (uriTask.isSuccessful()) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("message", downloadUri);
                 hashMap.put("sender", fauth.getUid());
                 hashMap.put("timestamp", timestamp);
                 hashMap.put("type", "image");
 
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Groups");
-                ref.child(groupId).child("Messages")
-                        .setValue(hashMap)
+                DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Groups");
+                ref.child(groupId).child("Messages").push().setValue(hashMap)
                         .addOnSuccessListener(aVoid -> textSend.setText(""))
                         .addOnFailureListener(e -> {
                             //message sending failed
                             Toast.makeText(GroupChatActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        });
+                        });;
             }
         }).addOnFailureListener(e -> progressDialog.dismiss());
     }
