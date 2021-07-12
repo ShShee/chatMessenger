@@ -134,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         });
 
-                                        TastyToast.makeText(RegisterActivity.this, "Register Successfully", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                                        TastyToast.makeText(RegisterActivity.this, "Register Successfully. Verification Email Sent.", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                                         Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
