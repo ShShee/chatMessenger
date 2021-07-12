@@ -90,7 +90,7 @@ public class SwipeSelection extends Fragment {
                         userModel.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             UserModel user = snapshot.getValue(UserModel.class);
-                            if (user.getId().equals(id_request)) {
+                            if (id_request.equals(user.getId())) {
                                 userModel.add(user);
                             }
                             adapter = new SwipeAdapter(getContext(), userModel);
