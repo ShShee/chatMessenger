@@ -31,7 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewFriendActivity extends AppCompatActivity {
 
-    DatabaseReference mUserRef, requestRef, friendRef;
+    DatabaseReference mUserRef, requestRef, friendRef, noteRef;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
@@ -55,6 +55,7 @@ public class ViewFriendActivity extends AppCompatActivity {
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         requestRef = FirebaseDatabase.getInstance().getReference().child("Requests");
         friendRef = FirebaseDatabase.getInstance().getReference().child("Friends");
+        noteRef = FirebaseDatabase.getInstance().getReference().child("NoteRequest");
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -217,6 +218,17 @@ public class ViewFriendActivity extends AppCompatActivity {
                         btnDecline.setVisibility(View.GONE);
                         CurrentState = "I_sent_pending";
                         btnPerform.setText("Cancel Friend Request");
+
+                        noteRef = FirebaseDatabase.getInstance().getReference("NoteRequest").child(userID);
+                        HashMap<String, String> hashMap=new HashMap<>();
+                        hashMap.put("id", mUser.getUid());
+                        noteRef.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull @com.google.firebase.database.annotations.NotNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                }
+                            }
+                        });
                     }
                     else{
                         Toast.makeText(ViewFriendActivity.this, ""+task.getException().toString(), Toast.LENGTH_SHORT).show();
