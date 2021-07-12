@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.HashMap;
 
@@ -133,6 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         });
 
+                                        TastyToast.makeText(RegisterActivity.this, "Register Successfully", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                                         Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);

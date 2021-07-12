@@ -18,7 +18,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
    protected void onStart() {
        super.onStart();
-      if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+      if (FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
          startActivity(new Intent(getApplicationContext(), MainActivity.class));
          finish();
       }
