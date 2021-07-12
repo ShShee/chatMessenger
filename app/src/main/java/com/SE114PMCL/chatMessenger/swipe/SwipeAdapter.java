@@ -17,16 +17,25 @@ import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHolder> {
     //1-
     private Context context;
     private ArrayList<UserModel> usermodel;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+
+    DatabaseReference noteRef;
+    FirebaseUser fuser;
 
     public SwipeAdapter(Context context, ArrayList<UserModel> usermodel) {
         this.context = context;
@@ -86,9 +95,21 @@ public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHol
             txtDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Deleted.", Toast.LENGTH_SHORT).show();
-                    usermodel.remove(getAbsoluteAdapterPosition());
-                    notifyItemRemoved(getAbsoluteAdapterPosition());
+                    fuser = FirebaseAuth.getInstance().getCurrentUser();
+                    noteRef = FirebaseDatabase.getInstance().getReference("NoteRequest");
+
+                    HashMap hashMap = new HashMap();
+                    hashMap.put("id","none");
+                    noteRef.child(fuser.getUid()).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            Toast.makeText(context, "Deleted.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+//                    usermodel.remove(getAbsoluteAdapterPosition());
+//                    notifyItemRemoved(getAbsoluteAdapterPosition());
                 }
             });
         }
