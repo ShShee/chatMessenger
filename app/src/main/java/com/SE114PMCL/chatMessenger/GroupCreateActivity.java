@@ -139,19 +139,16 @@ public class GroupCreateActivity extends AppCompatActivity {
 
             StorageReference storageReference= FirebaseStorage.getInstance().getReference(fileNameAndPath);
             storageReference.putFile(image_uri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //image upload, get uri
-                            Task<Uri> p_uriTask=taskSnapshot.getStorage().getDownloadUrl();
-                            while (!p_uriTask.isSuccessful());
-                            Uri p_downloadUri=p_uriTask.getResult();
-                            if(p_uriTask.isSuccessful()){
-                                createGroup(""+g_timestamp,
-                                        ""+groupTitle,
-                                        ""+groupDescription,
-                                        ""+p_downloadUri);
-                            }
+                    .addOnSuccessListener(taskSnapshot -> {
+                        //image upload, get uri
+                        Task<Uri> p_uriTask=taskSnapshot.getStorage().getDownloadUrl();
+                        while (!p_uriTask.isSuccessful());
+                        Uri p_downloadUri=p_uriTask.getResult();
+                        if(p_uriTask.isSuccessful()){
+                            createGroup(""+g_timestamp,
+                                    ""+groupTitle,
+                                    ""+groupDescription,
+                                    ""+p_downloadUri);
                         }
                     });
         }

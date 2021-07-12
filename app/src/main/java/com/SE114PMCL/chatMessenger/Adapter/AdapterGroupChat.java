@@ -88,6 +88,17 @@ public class AdapterGroupChat extends RecyclerView.Adapter<AdapterGroupChat.View
             }
         });
 
+        holder.show_image.setOnClickListener(v -> {
+            if(s){
+                holder.thoigian.setVisibility(View.VISIBLE);
+                s = false;
+            }
+            else {
+                holder.thoigian.setVisibility(View.GONE);
+                s = true;
+            }
+        });
+
         setUserInfo(sender, holder);
     }
 
