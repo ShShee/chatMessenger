@@ -71,22 +71,24 @@ public class SwipeAdapter extends RecyclerView.Adapter<SwipeAdapter.SwipeViewHol
         public SwipeViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
-            txtAdd = itemView.findViewById(R.id.txtAddFriend);
+            //txtAdd = itemView.findViewById(R.id.txtAddFriend);
             txtDelete = itemView.findViewById(R.id.txtDeleteFriend);
             swipeRevealLayout = itemView.findViewById(R.id.swipelayout);
             profile_image = itemView.findViewById(R.id.imgAvatar);
 
-            txtAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Accept is clicked.", Toast.LENGTH_SHORT).show();
-                }
-            });
+//            txtAdd.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(context, "Accept is clicked.", Toast.LENGTH_SHORT).show();
+//                }
+//            });
 
             txtDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Delete is clicked.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Deleted.", Toast.LENGTH_SHORT).show();
+                    usermodel.remove(getAbsoluteAdapterPosition());
+                    notifyItemRemoved(getAbsoluteAdapterPosition());
                 }
             });
         }

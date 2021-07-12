@@ -48,7 +48,7 @@ public class LoginActivityGg extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     FirebaseDatabase database;
-    DatabaseReference reference;
+    DatabaseReference reference, noteRef;
 
     Button btnOut;
 
@@ -147,6 +147,7 @@ public class LoginActivityGg extends AppCompatActivity {
                         String userid = firebaseUser.getUid();
 
                         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+                        noteRef = FirebaseDatabase.getInstance().getReference("NoteRequest").child(userid);
 
                         String name = firebaseUser.getDisplayName();
                         String email = firebaseUser.getEmail();
@@ -158,6 +159,9 @@ public class LoginActivityGg extends AppCompatActivity {
                         hashMap.put("imageURL", photoURL);
                         hashMap.put("timkiem", name.toLowerCase());
 
+                        HashMap<String, String> hashMap1 = new HashMap<>();
+                        hashMap1.put("id", "none");
+
                         reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull @com.google.firebase.database.annotations.NotNull Task<Void> task) {
@@ -166,6 +170,13 @@ public class LoginActivityGg extends AppCompatActivity {
 //                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //                                        startActivity(intent);
 //                                        finish();
+                                    noteRef.setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                            }
+                                        }
+                                    });
                                     startActivity(new Intent(LoginActivityGg.this, MainActivity.class));
                                     finish();
                                 }

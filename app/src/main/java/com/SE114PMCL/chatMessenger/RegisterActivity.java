@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button btn_register;
 
     FirebaseAuth auth;
-    DatabaseReference reference;
+    DatabaseReference reference, noteRef;
     FirebaseDatabase database;
 
     @Override
@@ -103,12 +103,16 @@ public class RegisterActivity extends AppCompatActivity {
                             String userid = firebaseUser.getUid();
 
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+                            noteRef = FirebaseDatabase.getInstance().getReference("NoteRequest").child(userid);
 
                             HashMap<String, String> hashMap=new HashMap<>();
                             hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("imageURL", "default");
                             hashMap.put("timkiem", username.toLowerCase());
+
+                            HashMap<String, String> hashMap1 = new HashMap<>();
+                            hashMap1.put("id", "none");
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -119,6 +123,14 @@ public class RegisterActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void unused) {
                                                 Toast.makeText(RegisterActivity.this, "Verification Email Sent.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                        noteRef.setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                }
                                             }
                                         });
 

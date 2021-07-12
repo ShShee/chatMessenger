@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseDatabase database;
-    DatabaseReference reference;
+    DatabaseReference reference, noteRef;
 
     @Override
     public void onBackPressed() {
@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             String userid = user.getUid();
 
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+                            noteRef = FirebaseDatabase.getInstance().getReference("NoteRequest").child(userid);
 
                             String name = user.getDisplayName();
                             String mail = user.getEmail();
@@ -115,6 +116,9 @@ public class LoginActivity extends AppCompatActivity {
                             hashMap.put("imageURL", photoURL);
                             hashMap.put("timkiem", name.toLowerCase());
 
+                            HashMap<String, String> hashMap1 = new HashMap<>();
+                            hashMap1.put("id", "none");
+
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull @NotNull Task<Void> task) {
@@ -123,6 +127,13 @@ public class LoginActivity extends AppCompatActivity {
 //                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //                                        startActivity(intent);
 //                                        finish();
+                                        noteRef.setValue(hashMap1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                }
+                                            }
+                                        });
                                         updateUI(user);
                                     }
                                 }
