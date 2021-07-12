@@ -96,6 +96,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
                 s = true;
             }
         });
+        holder.show_image.setOnClickListener(v -> {
+            if(s){
+                holder.thoigian.setVisibility(View.VISIBLE);
+                s = false;
+            }
+            else {
+                holder.thoigian.setVisibility(View.GONE);
+                s = true;
+            }
+        });
 
     }
 
