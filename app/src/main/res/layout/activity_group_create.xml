@@ -61,7 +61,7 @@
         android:ems="10"
         android:gravity="top"
         android:hint="Group Description"
-        android:inputType="textImeMultiLine|textCapSentences" />
+        android:inputType="textMultiLine" />
 
     <Button
         android:background="@drawable/btn_creategroup"

@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginAndRegistration"
         tools:replace="android:label">
-        <activity android:name="Main.ContactTab.GroupInfoActivity"></activity>
+        <activity android:name="Main.ContactTab.GroupEditActivity"></activity>
+        <activity android:name="Main.ContactTab.GroupInfoActivity" />
         <activity android:name="Main.ContactTab.GroupChatActivity" />
         <activity android:name="Main.ContactTab.ViewFriendActivity" />
         <activity android:name="Main.ContactTab.FindFriendActivity" />

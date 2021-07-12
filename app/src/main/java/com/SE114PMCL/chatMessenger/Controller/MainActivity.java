@@ -7,12 +7,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import Main.ContactTab.Contact;
 import Main.ContactTab.Friends;
 
 import com.SE114PMCL.chatMessenger.Model.UserModel;
@@ -33,9 +35,10 @@ import java.util.HashMap;
 
 import Main.AccountTab.Setting;
 import Main.ChatTab.Chat;
+import Main.ContactTab.GroupList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     BottomNavigationView bottomNav;
 
@@ -53,12 +56,16 @@ public class MainActivity extends AppCompatActivity{
 
         auth = FirebaseAuth.getInstance();
 
-        bottomNav=findViewById(R.id.bottom_navigation);
+        bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        toolbar=findViewById(R.id.toolbarUsername);
+        toolbar = findViewById(R.id.toolbarUsername);
 
         image_chat = (CircleImageView) findViewById(R.id.chatImage);
         username_chat = (TextView) findViewById(R.id.chatName);
+
+        /*Intent i = getIntent();
+        String fragmentName = i.getStringExtra("fragment");
+        String contact = "contact";*/
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -68,9 +75,9 @@ public class MainActivity extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserModel userModel = dataSnapshot.getValue(UserModel.class);
                 username_chat.setText(userModel.getUsername());
-                if(userModel.getImageURL().equals("default")){
+                if (userModel.getImageURL().equals("default")) {
                     image_chat.setImageResource(R.mipmap.ic_launcher);
-                }else{
+                } else {
                     Picasso.get().load(userModel.getImageURL()).into(image_chat);
                 }
             }
@@ -82,14 +89,22 @@ public class MainActivity extends AppCompatActivity{
 
         setSupportActionBar(toolbar);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new Chat()).commit();
+            //System.out.println("Fragment:"+fragmentName);
+            /*if (fragmentName != null && fragmentName.equals("contact")) {
+                bottomNav.setSelectedItemId(R.id.nav_friends);
+                getSupportActionBar().hide();
+                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fragment_open_enter, R.anim.fragment_fade_exit).replace(R.id.fragment_container,
+                        new GroupList()).commit();
+            } else {*/
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Chat()).commit();
+           // }
         }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
-                Fragment selectedFragment=null;
+                Fragment selectedFragment = null;
                 switch (item.getItemId()) {
                     case R.id.nav_chat:
                         getSupportActionBar().show();
@@ -112,6 +127,7 @@ public class MainActivity extends AppCompatActivity{
     private void Reset(int name) {
 
     }
+
     @Override
     public void onBackPressed() {
         NavController navController;
@@ -120,8 +136,8 @@ public class MainActivity extends AppCompatActivity{
         switch (seletedItemId) {
             case R.id.nav_friends:
                 navController = Navigation.findNavController(this, R.id.fragmentContainerView3);
-                currentFragment=navController.getCurrentDestination().getId();
-                if(R.id.friendList==currentFragment || R.id.groupList==currentFragment) {
+                currentFragment = navController.getCurrentDestination().getId();
+                if (R.id.friendList == currentFragment || R.id.groupList == currentFragment) {
                     bottomNav.setVisibility(View.VISIBLE);
                     navController.popBackStack();
                     //setSupportActionBar(toolbar);
@@ -141,7 +157,7 @@ public class MainActivity extends AppCompatActivity{
         //
         //if (R.id.nav_chat != seletedItemId) {
         //    setHomeItem(MainActivity.this);
-       // } else {
+        // } else {
         //    super.onBackPressed();
         //}
     }
@@ -151,7 +167,8 @@ public class MainActivity extends AppCompatActivity{
                 activity.findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_chat);
     }
-    private void status(String status){
+
+    private void status(String status) {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();
