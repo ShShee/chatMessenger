@@ -1,7 +1,6 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.SE114PMCL.chatMessenger.Adapter.AdapterParticipantAdd;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
+import com.SE114PMCL.chatMessenger.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -74,10 +74,10 @@ public class GroupParticipantAddActivity extends AppCompatActivity {
                     }
                 });
 
-        getFriends();
+        getUsers();
     }
 
-    private void getFriends() {
+    private void getUsers() {
         //init list
         userList = new ArrayList<>();
         //load users from db

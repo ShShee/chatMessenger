@@ -1,5 +1,5 @@
 
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
         import android.os.Bundle;
         import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ package com.SE114PMCL.chatMessenger;
         import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
         import androidx.fragment.app.Fragment;
+
+        import com.SE114PMCL.chatMessenger.R;
 
 public class Friends extends Fragment {
     @Nullable

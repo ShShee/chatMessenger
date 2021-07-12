@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.SE114PMCL.chatMessenger.R;
-import com.SE114PMCL.chatMessenger.RegisterActivity;
 
 import org.jetbrains.annotations.NotNull;
 

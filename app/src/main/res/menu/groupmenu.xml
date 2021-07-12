@@ -2,15 +2,15 @@
 <menu
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--<item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_menu_search"
-        android:title="Search"
-        app:showAsAction="always"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />-->
+
     <item
         android:id="@+id/action_add_participant"
         android:icon="@drawable/ic_addperson_white"
         android:title="Add Group Participant"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_groupinfo"
+        android:icon="@drawable/ic_info_white"
+        android:title="Group info"
         app:showAsAction="always" />
 </menu>

@@ -2,6 +2,7 @@ package com.SE114PMCL.chatMessenger.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.icu.text.SymbolTable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +36,11 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
     private ArrayList<UserModel> userList;
     private String groupId, myGroupRole; //creator/admin/participant
 
-    public AdapterParticipantAdd(Context context, ArrayList<UserModel> userList, String groupID, String role){
+    public AdapterParticipantAdd(Context context, ArrayList<UserModel> userList, String groupId, String myGroupRole){
         this.context=context;
         this.userList=userList;
-        this.groupId=groupID;
-        this.myGroupRole=role;
+        this.groupId=groupId;
+        this.myGroupRole=myGroupRole;
     }
 
     @NonNull
@@ -70,6 +71,7 @@ public class AdapterParticipantAdd extends RecyclerView.Adapter<AdapterParticipa
             holder.avatarIv.setImageResource(R.mipmap.ic_launcher);
         }
 
+        //System.out.println("Id: "+uid+"- GroupId: "+groupId+"- Role:"+myGroupRole);
         checkIfAlreadyExists(modellUser,holder);
 
         //handle click

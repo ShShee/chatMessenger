@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import android.widget.EditText;
 
 import com.SE114PMCL.chatMessenger.Holder.FindFriendViewHolder;
 import com.SE114PMCL.chatMessenger.Model.UserModel;
-import com.bumptech.glide.Glide;
+import com.SE114PMCL.chatMessenger.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;

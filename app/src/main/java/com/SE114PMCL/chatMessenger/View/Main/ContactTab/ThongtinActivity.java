@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Main.ContactTab;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;

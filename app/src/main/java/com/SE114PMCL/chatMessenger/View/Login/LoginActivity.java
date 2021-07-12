@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.SE114PMCL.chatMessenger.Controller.MainActivity;
 
 import com.SE114PMCL.chatMessenger.Controller.StartActivity;
+import com.SE114PMCL.chatMessenger.R;
 import com.facebook.AccessToken;
 
 import com.facebook.CallbackManager;

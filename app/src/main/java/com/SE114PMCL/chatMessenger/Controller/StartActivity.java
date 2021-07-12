@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.SE114PMCL.chatMessenger.LoginActivity;
 import com.SE114PMCL.chatMessenger.R;
 import com.google.firebase.auth.FirebaseAuth;
 

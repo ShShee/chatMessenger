@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/aa"
-    tools:context=".ViewFriendActivity">
+    tools:context="Main.ContactTab.ViewFriendActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -21,7 +21,10 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageViewFriend"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:scaleType="fitXY"
+                android:minHeight="200dp"
+                android:adjustViewBounds="true"
                 android:layout_height="wrap_content"
                 android:src="@drawable/com_facebook_profile_picture_blank_portrait"
                 android:layout_centerHorizontal="true" />

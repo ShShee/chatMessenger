@@ -1,4 +1,4 @@
-package com.SE114PMCL.chatMessenger;
+package Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Controller.StartActivity;
+import com.SE114PMCL.chatMessenger.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

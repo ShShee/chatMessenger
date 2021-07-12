@@ -28,10 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SE114PMCL.chatMessenger.Adapter.AdapterGroupChat;
-import com.SE114PMCL.chatMessenger.GroupParticipantAddActivity;
-import com.SE114PMCL.chatMessenger.Model.GroupData;
 import com.SE114PMCL.chatMessenger.Model.ModelGroupChat;
-import com.SE114PMCL.chatMessenger.Model.UserModel;
 import com.SE114PMCL.chatMessenger.R;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +43,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -418,6 +414,11 @@ public class GroupChatActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_add_participant) {
             Intent intent = new Intent(this, GroupParticipantAddActivity.class);
+            intent.putExtra("groupId", groupId);
+            startActivity(intent);
+        }
+        else if (id == R.id.action_groupinfo) {
+            Intent intent = new Intent(this, GroupInfoActivity.class);
             intent.putExtra("groupId", groupId);
             startActivity(intent);
         }
