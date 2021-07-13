@@ -122,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         auth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Toast.makeText(RegisterActivity.this, "Verification Email Sent.", Toast.LENGTH_SHORT).show();
+                                                TastyToast.makeText(RegisterActivity.this, "Register Successfully. Verification Email Sent.", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                                             }
                                         });
 
@@ -134,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         });
 
-                                        TastyToast.makeText(RegisterActivity.this, "Register Successfully. Verification Email Sent.", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+
                                         Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
