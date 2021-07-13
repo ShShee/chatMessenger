@@ -3,6 +3,7 @@ package com.SE114PMCL.chatMessenger.Adapter;
 import android.content.Context;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,8 +128,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                     if (firebaseUser != null && chat != null) {
                         String recv = chat.getReceiver();
                         String send = chat.getSender();
+                        Boolean read = chat.isIsseen();
                         if (recv.equals(firebaseUser.getUid()) && send.equals(userid) ||
                                 recv.equals(userid) && send.equals(firebaseUser.getUid())){
+                            if(read==false) {holder.last_msg.setTextColor(Color.RED);}
                             if(chat.getType().equals("image")) { theLastMessage = "Gửi hình ảnh";}
                             else {theLastMessage = chat.getMessage();}
                             DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users");
