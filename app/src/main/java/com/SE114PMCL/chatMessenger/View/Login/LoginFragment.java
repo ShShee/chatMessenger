@@ -1,5 +1,6 @@
 package Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,7 +27,6 @@ import com.sdsmdg.tastytoast.TastyToast;
 import org.jetbrains.annotations.NotNull;
 
 public class LoginFragment extends Fragment {
-
     FirebaseAuth firebaseAuth;
     EditText logEmail,logPassword;
     Button btnLogin;
@@ -93,31 +93,6 @@ public class LoginFragment extends Fragment {
 
                         if(!firebaseAuth.getCurrentUser().isEmailVerified()){
                             TastyToast.makeText(getActivity(), "Please verify your email", TastyToast.LENGTH_LONG,TastyToast.WARNING);
-                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    //Toast.makeText(getContext(), "Verification Email Sent.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                        else {
-                            startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
-                            getActivity().finish();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        TastyToast.makeText(getActivity(), e.getMessage(), TastyToast.LENGTH_LONG, TastyToast.ERROR);
-                    }
-                });
-                firebaseAuth.signInWithEmailAndPassword(logEmail.getText().toString(), logPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        //Login is successful
-
-                        if(!firebaseAuth.getCurrentUser().isEmailVerified()){
-                            TastyToast.makeText(getActivity(), "Please verify your email", TastyToast.LENGTH_SHORT,TastyToast.WARNING);
                             firebaseAuth.getCurrentUser().sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
